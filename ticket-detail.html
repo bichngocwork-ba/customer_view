@@ -1,0 +1,763 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Ticket Detail - GameSupport</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script src="supabase-config.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Inter:wght@600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+            <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "tertiary-fixed": "#e0e3e5",
+                        "tertiary-container": "#a2a5a7",
+                        "on-secondary-container": "#606366",
+                        "error": "#ba1a1a",
+                        "primary-container": "#2563eb",
+                        "on-error-container": "#93000a",
+                        "on-background": "#141d23",
+                        "background": "#f6faff",
+                        "on-secondary-fixed-variant": "#44474a",
+                        "tertiary": "#5c5f61",
+                        "on-primary-fixed": "#00174b",
+                        "error-container": "#ffdad6",
+                        "tertiary-fixed-dim": "#c4c7c9",
+                        "surface-variant": "#dbe4ed",
+                        "outline": "#6d797e",
+                        "on-primary": "#ffffff",
+                        "on-tertiary-fixed": "#191c1e",
+                        "on-tertiary": "#ffffff",
+                        "secondary-fixed-dim": "#c5c6ca",
+                        "secondary-fixed": "#e1e2e6",
+                        "surface-tint": "#0053db",
+                        "on-surface": "#141d23",
+                        "inverse-primary": "#b4c5ff",
+                        "outline-variant": "#bcc9ce",
+                        "secondary-container": "#dee0e4",
+                        "primary": "#004ac6",
+                        "primary-fixed": "#dbe1ff",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-dim": "#d2dbe4",
+                        "on-tertiary-container": "#383b3d",
+                        "on-surface-variant": "#3d494d",
+                        "surface-container": "#e6eff8",
+                        "inverse-surface": "#293138",
+                        "on-secondary": "#ffffff",
+                        "on-primary-container": "#eeefff",
+                        "secondary": "#5c5f62",
+                        "surface-container-highest": "#dbe4ed",
+                        "primary-fixed-dim": "#b4c5ff",
+                        "surface-container-low": "#ecf5fe",
+                        "on-secondary-fixed": "#191c1f",
+                        "on-primary-fixed-variant": "#003ea8",
+                        "inverse-on-surface": "#e9f2fb",
+                        "on-error": "#ffffff",
+                        "surface": "#f6faff",
+                        "surface-container-high": "#e0e9f2",
+                        "on-tertiary-fixed-variant": "#444749",
+                        "surface-bright": "#f6faff",
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "2xl": "1rem",
+                        "full": "9999px"
+                    },
+                    spacing: {
+                        "xl": "48px",
+                        "sm": "16px",
+                        "base": "4px",
+                        "md": "24px",
+                        "gutter": "24px",
+                        "xs": "8px",
+                        "container-max": "1440px",
+                        "lg": "32px"
+                    },
+                    fontFamily: {
+                        "sans": ["Inter", "sans-serif"],
+                        "headline": ["Inter", "sans-serif"]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        body {
+            background-color: #f7f9fb;
+            color: #191c1e;
+        }
+    </style>
+</head>
+<body class="min-h-screen">
+<!-- Sidebar Navigation -->
+<!-- CONSISTENT TOP BAR (RIOT STYLE) -->
+<header id="topbar-shell" class="h-[56px] bg-[#f3f7fc] border-b border-[#c3c6d7]/50 flex items-center justify-between px-6 z-50 fixed top-0 left-0 right-0">
+  <!-- Left Logo -->
+  <div class="flex items-center gap-3">
+    <div class="flex items-center gap-2 cursor-pointer" onclick="navigateTo('index.html')">
+      <svg class="w-8 h-8 text-[#004ac6] fill-current" viewBox="0 0 24 24" style="color: #004ac6; fill: #004ac6;"><path d="M21 6H3c-1.1 0-2 .9-2 2v8c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm-10 7H8v3H6v-3H3v-2h3V8h2v3h3v2zm4.5 3c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zm3-3c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/></svg>
+    </div>
+  </div>
+  
+  <!-- Center Navigation Links -->
+  <nav class="flex items-center gap-6">
+    <a id="nav-item-horiz-home" onclick="navigateTo('index.html')" class="text-slate-500 hover:text-[#004ac6] text-[12px] font-bold tracking-wider cursor-pointer py-4 uppercase transition-all">HOME</a>
+    <a id="nav-item-horiz-kb" onclick="navigateTo('knowledge-base.html')" class="text-slate-500 hover:text-[#004ac6] text-[12px] font-bold tracking-wider cursor-pointer py-4 uppercase transition-all">KNOWLEDGE BASE</a>
+    <a id="nav-item-horiz-submit" onclick="navigateTo('submit-ticket.html')" class="text-slate-500 hover:text-[#004ac6] text-[12px] font-bold tracking-wider cursor-pointer py-4 uppercase transition-all">SUBMIT A TICKET</a>
+    <a id="nav-item-horiz-tickets" onclick="navigateTo('tickets.html')" class="text-[#004ac6] text-[12px] font-bold tracking-wider cursor-pointer py-4 uppercase transition-all">MY TICKETS</a>
+  </nav>
+  
+  <!-- Right Actions -->
+  <div class="flex items-center gap-4">
+    <div class="text-slate-500 hover:text-slate-800 cursor-pointer flex items-center transition-colors" onclick="alert('English')" title="Select Language">
+      <span class="material-symbols-outlined">language</span>
+    </div>
+    
+    <div class="h-5 w-[1px] bg-slate-300 mx-1"></div>
+    
+    <div id="user-menu" class="flex items-center gap-2 py-1.5 px-4 bg-[#e2edf8] border border-[#cbd5e1] rounded-full cursor-pointer hover:bg-[#d2e3fc] hover:border-[#b0c6f1] transition-all" onclick="logout()" title="Log Out">
+      <span class="material-symbols-outlined text-[#004ac6] text-[18px]">account_circle</span>
+      <span id="header-username" class="text-slate-700 text-[12px] font-semibold">...</span>
+      <span class="material-symbols-outlined text-slate-500 text-[16px] hover:text-red-500 flex items-center">logout</span>
+    </div>
+  </div>
+</header>
+<!-- Main Content Area -->
+<main class="pt-[56px] min-h-screen">
+<!-- Top Nav Bar -->
+<!-- Top Nav Bar - Removed as requested -->
+<!-- Content Canvas -->
+<div class="max-w-5xl mx-auto p-md">
+  <!-- Back Button -->
+  <div class="mb-lg">
+    <button class="flex items-center gap-2 text-blue-600 text-xs font-bold border border-blue-600/80 px-4 py-2.5 rounded-lg hover:bg-blue-50 transition-all shadow-sm" onclick="navigateTo('tickets.html')">
+      <span class="material-symbols-outlined text-[18px]">arrow_back</span>
+      <span>Back to My Tickets</span>
+    </button>
+  </div>
+  
+  <!-- Header Section -->
+  <div class="mb-lg">
+    <div class="flex items-center gap-sm mb-1">
+      <h1 id="ticket-id-title" class="font-headline font-extrabold text-3xl uppercase tracking-tight text-slate-900">Ticket #...</h1>
+      <span id="ticket-status-tag" class="px-2.5 py-0.5 rounded-md text-[10px] font-bold uppercase tracking-wider border hidden">
+        ...
+      </span>
+    </div>
+    <p id="ticket-date-submitted" class="text-slate-500 text-xs font-medium">Loading submission date...</p>
+  </div>
+
+  <!-- Status Banner for Desktop -->
+  <div id="ticket-banner-container" class="bg-[#eef2ff] px-md py-4 border border-[#e2e8f0] rounded-xl flex items-center justify-between mb-lg shadow-sm">
+    <div class="flex items-center gap-sm text-[#2563eb]">
+      <span class="material-symbols-outlined text-xl" style="font-variation-settings: 'FILL' 1;">info</span>
+      <span id="ticket-banner-text" class="text-xs font-semibold text-[#1e40af]">Loading details...</span>
+    </div>
+    <span id="ticket-banner-expected" class="text-slate-500 text-[11px] font-medium">...</span>
+  </div>
+
+  <!-- Main Split Grid -->
+  <div class="grid grid-cols-12 gap-md items-start">
+    <!-- Left Column (Product & Category) -->
+    <div class="col-span-12 md:col-span-4 space-y-md">
+      <div>
+        <label class="block text-[11px] text-slate-500 font-bold uppercase tracking-widest mb-2">Product</label>
+        <div id="ticket-product" class="bg-white px-md py-4 rounded-xl border border-slate-200/80 text-slate-800 text-xs font-bold shadow-sm flex items-center min-h-[48px]">
+          ...
+        </div>
+      </div>
+      <div>
+        <label class="block text-[11px] text-slate-500 font-bold uppercase tracking-widest mb-2">Category</label>
+        <div id="ticket-category" class="bg-white px-md py-4 rounded-xl border border-slate-200/80 text-slate-800 text-xs font-bold shadow-sm flex items-center min-h-[48px]">
+          ...
+        </div>
+      </div>
+    </div>
+    
+    <!-- Right Column (Additional Information & User Description) -->
+    <div class="col-span-12 md:col-span-8 space-y-lg">
+      <!-- Questions & Answers -->
+      <div class="space-y-sm">
+        <h3 class="text-xs font-bold text-[#1e40af] uppercase tracking-widest border-b border-blue-100 pb-2">Additional Information</h3>
+        <div id="ticket-qa-grid" class="grid grid-cols-1 md:grid-cols-2 gap-md">
+          <div class="col-span-2 text-xs text-slate-500 italic">Loading additional info...</div>
+        </div>
+      </div>
+      
+      <!-- User Description -->
+      <div class="space-y-sm">
+        <h3 class="text-xs font-bold text-[#1e40af] uppercase tracking-widest border-b border-blue-100 pb-2">User Description</h3>
+        <div id="ticket-user-description" class="bg-white p-md rounded-xl border border-slate-200/80 min-h-[80px] leading-relaxed text-xs shadow-sm text-slate-700 whitespace-pre-wrap">
+          Loading...
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', async () => {
+  // Auth check
+  const user = getCurrentUser();
+  if (!user) { navigateTo('login.html'); return; }
+
+  // Update header
+  const headerUsername = document.getElementById('header-username');
+  if (headerUsername) headerUsername.textContent = user.full_name || user.username || user.email || 'User';
+
+  // Parse ticket ID from URL
+  const urlParams = new URLSearchParams(window.location.search);
+  const ticketId = urlParams.get('id');
+  if (!ticketId) { navigateTo('tickets.html'); return; }
+
+  await new Promise(resolve => setTimeout(resolve, 300)); // wait for supabase lib
+  const db = getSupabase();
+
+  // Helper: status badge
+  function statusBadge(status) {
+    const s = (status || '').toLowerCase();
+    if (s === 'open') return { cls: 'bg-green-100 text-green-700 border-green-200', label: 'Open' };
+    if (s === 'in progress') return { cls: 'bg-amber-100 text-amber-800 border-amber-200', label: 'In Progress' };
+    if (s === 'resolved') return { cls: 'bg-slate-100 text-slate-700 border-slate-200', label: 'Resolved' };
+    return { cls: 'bg-slate-100 text-slate-700 border-slate-200', label: status };
+  }
+
+  // Load ticket detail
+  try {
+    const { data: ticket, error } = await db
+      .from('tickets')
+      .select(`
+        id, status, created_at, description,
+        game_id, category_id,
+        games(game_name),
+        ticket_categories(category_name)
+      `)
+      .eq('id', ticketId)
+      .single();
+
+    if (error || !ticket) throw error || new Error('Ticket not found');
+
+    // Populate header fields
+    document.getElementById('ticket-id-title').textContent = 'Ticket #' + ticket.id;
+    const badge = statusBadge(ticket.status || 'open');
+    const statusTag = document.getElementById('ticket-status-tag');
+    statusTag.textContent = badge.label;
+    statusTag.className = `${badge.cls} px-2.5 py-0.5 rounded text-[10px] font-bold uppercase border`;
+    statusTag.classList.remove('hidden');
+
+    const dateStr = ticket.created_at ? new Date(ticket.created_at).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) : '—';
+    document.getElementById('ticket-date-submitted').textContent = 'Submitted on ' + dateStr;
+    document.getElementById('ticket-product').textContent = ticket.games?.game_name || ticket.game_id || '—';
+    document.getElementById('ticket-category').textContent = ticket.ticket_categories?.category_name || ticket.category_id || '—';
+
+    // Banner logic based on status
+    const bannerText = document.getElementById('ticket-banner-text');
+    const bannerExpected = document.getElementById('ticket-banner-expected');
+    const bannerContainer = document.getElementById('ticket-banner-container');
+    if (ticket.status === 'resolved') {
+      bannerText.textContent = 'This ticket has been resolved. Thank you for contacting support.';
+      bannerExpected.textContent = 'Closed';
+      bannerContainer.className = 'bg-green-50 px-md py-4 border border-green-200 rounded-xl flex items-center justify-between mb-lg shadow-sm text-green-800';
+      bannerContainer.querySelector('.material-symbols-outlined').className = 'material-symbols-outlined text-xl text-green-600';
+    } else {
+      bannerText.textContent = 'An agent is currently reviewing your technical log files.';
+      bannerExpected.textContent = 'Expected update in: 4 hours';
+      bannerContainer.className = 'bg-[#eef2ff] px-md py-4 border border-[#cbd5e1] rounded-xl flex items-center justify-between mb-lg shadow-sm';
+      bannerContainer.querySelector('.material-symbols-outlined').className = 'material-symbols-outlined text-xl text-[#2563eb]';
+    }
+
+    // Parse description for category answers
+    let rawDescription = ticket.description || '';
+    let parsedUserDescription = rawDescription;
+    let additionalInfoHtml = '';
+
+    const markerEnglish = "-- Category Details --";
+    const markerVietnamese = "-- Chi tiết danh mục --";
+    let marker = null;
+    if (rawDescription.includes(markerEnglish)) {
+      marker = markerEnglish;
+    } else if (rawDescription.includes(markerVietnamese)) {
+      marker = markerVietnamese;
+    }
+
+    if (marker) {
+      const parts = rawDescription.split(marker);
+      parsedUserDescription = parts[0].trim();
+      const details = parts[1].trim().split('\n');
+
+      details.forEach(line => {
+        const colonIndex = line.indexOf(':');
+        if (colonIndex !== -1) {
+          const label = line.substring(0, colonIndex).trim();
+          const value = line.substring(colonIndex + 1).trim();
+          
+          if (value) {
+            additionalInfoHtml += `
+              <div class="p-md bg-white rounded-xl border border-outline-variant/40 shadow-sm flex flex-col justify-center min-h-[72px]">
+                <p class="text-label-sm text-on-surface-variant mb-xs font-medium text-[10px] text-slate-500 uppercase tracking-wider">${label}</p>
+                <p class="text-xs font-bold text-slate-900">${value}</p>
+              </div>
+            `;
+          }
+        }
+      });
+    }
+
+    // Render parsed Q&A
+    const qaGrid = document.getElementById('ticket-qa-grid');
+    if (additionalInfoHtml) {
+      qaGrid.innerHTML = additionalInfoHtml;
+    } else {
+      qaGrid.innerHTML = '<div class="col-span-2 text-xs text-on-surface-variant italic">No additional details recorded.</div>';
+    }
+
+    // Render User Description
+    document.getElementById('ticket-user-description').innerHTML = parsedUserDescription ? `"${parsedUserDescription}"` : '(No description provided)';
+
+  } catch(err) {
+    console.error('Error loading ticket:', err);
+    document.getElementById('ticket-id-title').textContent = 'Ticket #' + ticketId;
+    document.getElementById('ticket-user-description').textContent = 'Could not load ticket details. Please try again.';
+  }
+});
+</script>
+</div>
+</div>
+</div>
+</div>
+<!-- Footer Meta -->
+
+</div>
+
+</main>
+<!-- Visual Polish: Soft Glow Effect (Floating atmospheric element) -->
+<div class="fixed -bottom-32 -left-32 w-96 h-96 bg-primary/5 rounded-full blur-[100px] pointer-events-none"></div>
+<div class="fixed -top-32 -right-32 w-96 h-96 bg-secondary-container/10 rounded-full blur-[100px] pointer-events-none"></div>
+
+
+<!-- INTERACTIVE PREVIEW HELPER (DO NOT REMOVE) -->
+<script id="interactive-preview-helper">
+  (function() {
+    let isInsideIframe = false;
+    try {
+      isInsideIframe = (window.self !== window.top);
+    } catch (e) {
+      isInsideIframe = true;
+    }
+    
+    window.navigateTo = function(target) {
+      if (isInsideIframe) {
+        window.parent.postMessage({ type: 'NAVIGATE', to: target }, '*');
+      } else {
+        window.location.href = target;
+      }
+    };
+    
+    /* Run in both iframe and standalone modes */
+
+    // Bind click events on elements based on the current page URL/filename
+    document.addEventListener('DOMContentLoaded', () => {
+      const path = window.location.pathname;
+      const file = path.substring(path.lastIndexOf('/') + 1);
+
+      // login.html
+      if (file.includes('login')) {
+        const form = document.querySelector('form');
+        if (form) {
+          form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            navigateTo('index.html');
+          });
+        }
+        const loginBtn = document.querySelector('button[type="submit"]');
+        if (loginBtn) {
+          loginBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            navigateTo('index.html');
+          });
+        }
+      }
+
+      // index.html
+      if (file.includes('index')) {
+        document.querySelectorAll('button, a, div.group').forEach(el => {
+          const text = el.textContent || '';
+          if (text.includes('Start Live Chat') || text.includes('Trò chuyện')) {
+            el.addEventListener('click', (e) => { e.preventDefault(); e.stopPropagation(); navigateTo('live-chat.html'); });
+          } else if (text.includes('Open a Ticket') || text.includes('Gửi yêu cầu') || text.includes('Submit A Ticket') || text.includes('New Support Case')) {
+            el.addEventListener('click', (e) => { e.preventDefault(); e.stopPropagation(); navigateTo('submit-ticket.html'); });
+          } else if (text.includes('Technical Issues') || text.includes('Lỗi Kỹ thuật')) {
+            el.addEventListener('click', (e) => { e.preventDefault(); e.stopPropagation(); navigateTo('knowledge-base-category.html?category=technical'); });
+          } else if (text.includes('Account & Security') || text.includes('Tài khoản & Bảo mật')) {
+            el.addEventListener('click', (e) => { e.preventDefault(); e.stopPropagation(); navigateTo('knowledge-base-category.html?category=account'); });
+          } else if (text.includes('Billing & Purchases') || text.includes('Thanh toán')) {
+            el.addEventListener('click', (e) => { e.preventDefault(); e.stopPropagation(); navigateTo('knowledge-base-category.html?category=billing'); });
+          }
+        });
+      }
+
+      // submit-ticket.html
+      if (file.includes('submit-ticket')) {
+        const form = document.querySelector('form');
+        if (form) {
+          form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            navigateTo('ticket-confirmation.html');
+          });
+        }
+        const submitBtn = document.querySelector('button[type="submit"]');
+        if (submitBtn) {
+          submitBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            navigateTo('ticket-confirmation.html');
+          });
+        }
+      }
+
+      // ticket-confirmation.html
+      if (file.includes('ticket-confirmation')) {
+        document.querySelectorAll('button, a').forEach(el => {
+          const text = el.textContent || '';
+          if (text.toLowerCase().includes('view') || text.toLowerCase().includes('xem') || text.toLowerCase().includes('ticket')) {
+            el.addEventListener('click', (e) => { e.preventDefault(); navigateTo('ticket-detail.html'); });
+          } else if (text.toLowerCase().includes('home') || text.toLowerCase().includes('chủ') || text.toLowerCase().includes('quay lại')) {
+            el.addEventListener('click', (e) => { e.preventDefault(); navigateTo('index.html'); });
+          }
+        });
+      }
+
+      // tickets.html
+      if (file.includes('tickets')) {
+        document.querySelectorAll('tr, li, div.cursor-pointer, .border-outline-variant').forEach(el => {
+          if (el.textContent.includes('TK-') || el.textContent.includes('Ticket') || el.textContent.includes('Yêu cầu')) {
+            el.addEventListener('click', (e) => {
+              e.preventDefault();
+              navigateTo('ticket-detail.html');
+            });
+          }
+        });
+      }
+
+      // ticket-detail.html
+      if (file.includes('ticket-detail')) {
+        document.querySelectorAll('a, button').forEach(el => {
+          const text = el.textContent || '';
+          if (text.toLowerCase().includes('back') || text.toLowerCase().includes('quay lại') || text.toLowerCase().includes('danh sách')) {
+            el.addEventListener('click', (e) => { e.preventDefault(); navigateTo('tickets.html'); });
+          }
+        });
+      }
+
+      // knowledge-base.html
+      if (file.includes('knowledge-base')) {
+        // Setup View all 12 categories button interaction
+        const viewAllBtn = document.getElementById('view-all-categories-btn');
+        const grid = document.getElementById('categories-grid');
+        if (viewAllBtn && grid) {
+          viewAllBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            
+            // Check if cards already added
+            if (document.getElementById('added-card-7')) {
+              // Toggle off
+              for (let i = 7; i <= 12; i++) {
+                const card = document.getElementById('added-card-' + i);
+                if (card) card.remove();
+              }
+              viewAllBtn.innerHTML = 'View all 12 categories <span class="material-symbols-outlined text-sm">arrow_forward</span>';
+              return;
+            }
+            
+            // Append 6 new categories
+            const extraCategories = [
+              { id: 7, title: "Game Downloads & Updates", icon: "download", count: 2, bg: "#E0F7FA", desc: "Troubleshoot patcher loops, file verification, launcher freezes, and download speed optimization." },
+              { id: 8, title: "Esports & Tournaments", icon: "emoji_events", count: 2, bg: "#FFF9C4", desc: "Get schedules, team statistics, reward drops, ticket bookings, and tournament rules." },
+              { id: 9, title: "Merchandise Support", icon: "shopping_bag", count: 2, bg: "#F5F5F5", desc: "Inquire about clothing apparel sizes, order shipping status, tracking numbers, and damage refunds." },
+              { id: 10, title: "Creator Partner Program", icon: "video_camera_front", count: 2, bg: "#E1BEE7", desc: "How to join our creator network, access early updates, custom overlays, and monetization benefits." },
+              { id: 11, title: "Localization & Language", icon: "translate", count: 2, bg: "#DCEDC8", desc: "Change in-game audio dubbing, client text translation, regional settings, and server transfers." },
+              { id: 12, title: "Feedback & Suggestions", icon: "rate_review", count: 2, bg: "#FFE0B2", desc: "Submit game ideas directly to designers, vote on feature requests, and report in-game bugs." }
+            ];
+            
+            extraCategories.forEach(cat => {
+              const card = document.createElement('div');
+              card.id = 'added-card-' + cat.id;
+              card.className = 'category-card bg-white border border-[#E0E0E0] rounded-[12px] p-8 transition-all duration-300 flex flex-col group cursor-pointer';
+              card.innerHTML = `
+                <div class="flex justify-between items-start mb-6">
+                  <div class="w-14 h-14 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300" style="background-color: ${cat.bg};">
+                    <span class="material-symbols-outlined text-primary text-3xl">${cat.icon}</span>
+                  </div>
+                  <span class="text-[10px] font-bold uppercase tracking-wider text-tertiary-container bg-surface-container-low px-2 py-1 rounded">${cat.count} Articles</span>
+                </div>
+                <h3 class="font-bold text-sm uppercase tracking-wider text-primary text-on-surface mb-3 group-hover:text-primary transition-colors">${cat.title}</h3>
+                <p class="text-xs text-on-surface-variant text-on-surface-variant flex-1">${cat.desc}</p>
+                <div class="mt-6 pt-6 border-t border-outline-variant flex items-center text-primary text-xs font-bold opacity-0 group-hover:opacity-100 transition-opacity">
+                  Explore category guides
+                  <span class="material-symbols-outlined ml-2">chevron_right</span>
+                </div>
+              `;
+              
+              // Bind click to the card
+              card.addEventListener('click', (ev) => {
+                ev.preventDefault();
+                navigateTo('knowledge-base-category.html?category=technical'); // Default mock redirect
+              });
+              
+              grid.appendChild(card);
+            });
+            
+            viewAllBtn.innerHTML = 'Show less categories <span class="material-symbols-outlined text-sm">arrow_back</span>';
+          });
+        }
+
+        // Bind main categories
+        document.querySelectorAll('.category-card').forEach(el => {
+          const text = el.textContent || '';
+          let catQuery = 'technical';
+          if (text.includes('Technical Issues')) catQuery = 'technical';
+          else if (text.includes('Account & Security')) catQuery = 'account';
+          else if (text.includes('Billing & Purchases')) catQuery = 'billing';
+          else if (text.includes('In-Game Content')) catQuery = 'content';
+          else if (text.includes('Report a Player')) catQuery = 'report';
+          else if (text.includes('Community Support')) catQuery = 'community';
+          
+          el.addEventListener('click', (e) => {
+            e.preventDefault();
+            navigateTo('knowledge-base-category.html?category=' + catQuery);
+          });
+        });
+      }
+
+      // knowledge-base-category.html (Dynamic categories content rendering)
+      if (file.includes('knowledge-base-category')) {
+        const urlParams = new URLSearchParams(window.location.search);
+        const category = urlParams.get('category') || 'technical';
+        
+        const categoryData = {
+          technical: {
+            title: "Technical Issues",
+            desc: "Find solutions for crashes, lag, installation errors, and performance optimization.",
+            icon: "settings",
+            bg: "#E0F2F1",
+            articles: [
+              { title: "How to fix random client crashes after patch v11.2", desc: "Some users are experiencing unexpected crashes when entering matchmade games. Follow these steps to verify your local files and reset your shader cache.", read: "3 min read", updated: "2 days ago" },
+              { title: "Resolving high latency and packet loss issues", desc: "If you are seeing the yellow network warning icon, your connection might be experiencing instability. Check our recommended DNS settings.", read: "5 min read", updated: "1 week ago" },
+              { title: "Installation stuck at 99% - Comprehensive Guide", desc: "Common troubleshooting steps for the 'Finalizing...' stage of the installation process including disk space management and antivirus exceptions.", read: "4 min read", updated: "3 days ago" },
+              { title: "NVIDIA/AMD Driver Compatibility List", desc: "Ensure your graphics card drivers are optimized for the latest seasonal update to prevent visual glitches and stuttering.", read: "2 min read", updated: "Yesterday" }
+            ]
+          },
+          account: {
+            title: "Account & Security",
+            desc: "Manage your profile, password recovery, two-factor authentication, and account linking.",
+            icon: "security",
+            bg: "#2170e4",
+            articles: [
+              { title: "How to recover your password and security questions", desc: "Forgot your password or locked out? Here is the step-by-step guide to verifying your ownership and resetting your security credentials.", read: "4 min read", updated: "3 days ago" },
+              { title: "Setting up Two-Factor Authentication (2FA) for your account", desc: "Protect your account from unauthorized access by setting up 2FA using email, SMS, or an authenticator app.", read: "3 min read", updated: "Yesterday" },
+              { title: "Linking third-party console accounts (PlayStation/Xbox/Switch)", desc: "Step-by-step guide to cross-play account linking, progression syncing, and troubleshooting common link errors.", read: "5 min read", updated: "2 weeks ago" }
+            ]
+          },
+          billing: {
+            title: "Billing & Purchases",
+            desc: "Questions about payment methods, refund requests, and premium currencies.",
+            icon: "payments",
+            bg: "#dbe1ff",
+            articles: [
+              { title: "Refund Policy for in-game purchases and bundles", desc: "Understand our refund rules for digital skins, battle passes, and virtual currency packages before submitting a request.", read: "4 min read", updated: "1 week ago" },
+              { title: "Troubleshooting failed transactions and billing errors", desc: "If your transaction failed but you were charged, or you are seeing error code B-102, read these solutions.", read: "6 min read", updated: "5 days ago" }
+            ]
+          },
+          content: {
+            title: "In-Game Content",
+            desc: "Guides for seasons, event schedules, item descriptions, and mechanics.",
+            icon: "sports_esports",
+            bg: "#d4e3ff",
+            articles: [
+              { title: "Season pass rewards and weekly challenge guides", desc: "View the full catalog of rewards for this season and learn the most efficient ways to complete your active weekly quests.", read: "5 min read", updated: "4 days ago" },
+              { title: "Missing virtual items or quest rewards troubleshooting", desc: "If you completed a challenge or made a purchase but did not receive the items in your inventory, follow these sync steps.", read: "3 min read", updated: "2 days ago" },
+              { title: "Patch notes detail list and balance changes", desc: "Review the full developer notes for the latest game balance update, character adjustments, and system bug fixes.", read: "8 min read", updated: "Yesterday" }
+            ]
+          },
+          report: {
+            title: "Report a Player",
+            desc: "Learn how to report toxicity, cheating, or harassment.",
+            icon: "flag",
+            bg: "#FFDAD6",
+            articles: [
+              { title: "Submitting reports for toxic chat, griefing, or cheating", desc: "Help us keep matches fair and friendly. Learn how to capture evidence and file player reports in-game or via portal.", read: "3 min read", updated: "3 days ago" },
+              { title: "Ban appeals policy and security review procedure", desc: "If your account was restricted or suspended, understand the review process, code of conduct, and how to file a valid appeal.", read: "5 min read", updated: "1 week ago" }
+            ]
+          },
+          community: {
+            title: "Community Support",
+            desc: "Connect with our community forums, join discord servers, and wikis.",
+            icon: "forum",
+            bg: "#d8e2ff",
+            articles: [
+              { title: "Joining official Discord channels and community guidelines", desc: "Get in touch with other players, find groups, and chat directly with community managers in our official server.", read: "2 min read", updated: "Yesterday" },
+              { title: "Finding player-driven wikis, fansites, and tournaments", desc: "A curated list of community resources, strategic guides, gameplay wikis, and player-run competitive tournaments.", read: "4 min read", updated: "1 week ago" }
+            ]
+          }
+        };
+
+        const data = categoryData[category] || categoryData.technical;
+
+        // Update title and subtitle
+        const h1 = document.querySelector('h1');
+        if (h1) h1.textContent = data.title;
+        const pDesc = h1?.nextElementSibling;
+        if (pDesc) pDesc.textContent = data.desc;
+        
+        // Update breadcrumb
+        const breadcrumbCat = document.querySelector('span.text-primary.font-bold') || document.querySelector('.breadcrumbs span:last-child');
+        if (breadcrumbCat) breadcrumbCat.textContent = data.title;
+
+        // Render articles list
+        const section = document.querySelector('section.space-y-4');
+        if (section) {
+          section.innerHTML = '';
+          data.articles.forEach((art, aIdx) => {
+            const card = document.createElement('div');
+            card.className = 'article-card group bg-white border border-outline-variant rounded-xl p-6 transition-all hover:border-primary-container cursor-pointer';
+            card.innerHTML = `
+              <div class="flex justify-between items-start">
+                <div class="space-y-2">
+                  <h4 class="font-bold text-sm uppercase tracking-wider text-primary text-on-surface transition-colors">${art.title}</h4>
+                  <p class="text-xs text-on-surface-variant text-on-surface-variant max-w-3xl">${art.desc}</p>
+                  <div class="flex items-center gap-3 pt-2">
+                    <span class="text-[10px] font-bold uppercase tracking-wider text-tertiary">${art.read}</span>
+                    <span class="w-1.5 h-1.5 rounded-full bg-outline-variant"></span>
+                    <span class="text-[10px] font-bold uppercase tracking-wider text-tertiary">Updated ${art.updated}</span>
+                  </div>
+                </div>
+                <span class="material-symbols-outlined text-outline-variant group-hover:text-primary transition-colors">chevron_right</span>
+              </div>
+            `;
+            
+            // Add click navigation to detail page
+            card.addEventListener('click', (e) => {
+              e.preventDefault();
+              navigateTo('knowledge-base-detail.html?category=' + category + '&article=' + aIdx);
+            });
+            section.appendChild(card);
+          });
+        }
+        
+        // Add click navigation to "Back to Categories" button
+        const backBtn = document.querySelector('button:has(.material-symbols-outlined)') || document.querySelector('button:contains("Back")') || document.querySelectorAll('button')[0];
+        if (backBtn) {
+          backBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            navigateTo('knowledge-base.html');
+          });
+        }
+      }
+
+      // knowledge-base-detail.html (Dynamic articles content rendering)
+      if (file.includes('knowledge-base-detail')) {
+        const urlParams = new URLSearchParams(window.location.search);
+        const category = urlParams.get('category') || 'technical';
+        const articleIdx = parseInt(urlParams.get('article') || '0', 10);
+        
+        const categoryData = {
+          technical: {
+            catTitle: "Technical Issues",
+            articles: [
+              { title: "How to fix random client crashes after patch v11.2", read: "3 min read", updated: "2 days ago" },
+              { title: "Resolving high latency and packet loss issues", read: "5 min read", updated: "1 week ago" },
+              { title: "Installation stuck at 99% - Comprehensive Guide", read: "4 min read", updated: "3 days ago" },
+              { title: "NVIDIA/AMD Driver Compatibility List", read: "2 min read", updated: "Yesterday" }
+            ]
+          },
+          account: {
+            catTitle: "Account & Security",
+            articles: [
+              { title: "How to recover your password and security questions", read: "4 min read", updated: "3 days ago" },
+              { title: "Setting up Two-Factor Authentication (2FA) for your account", read: "3 min read", updated: "Yesterday" },
+              { title: "Linking third-party console accounts (PlayStation/Xbox/Switch)", read: "5 min read", updated: "2 weeks ago" }
+            ]
+          },
+          billing: {
+            catTitle: "Billing & Purchases",
+            articles: [
+              { title: "Refund Policy for in-game purchases and bundles", read: "4 min read", updated: "1 week ago" },
+              { title: "Troubleshooting failed transactions and billing errors", read: "6 min read", updated: "5 days ago" }
+            ]
+          },
+          content: {
+            catTitle: "In-Game Content",
+            articles: [
+              { title: "Season pass rewards and weekly challenge guides", read: "5 min read", updated: "4 days ago" },
+              { title: "Missing virtual items or quest rewards troubleshooting", read: "3 min read", updated: "2 days ago" },
+              { title: "Patch notes detail list and balance changes", read: "8 min read", updated: "Yesterday" }
+            ]
+          },
+          report: {
+            catTitle: "Report a Player",
+            articles: [
+              { title: "Submitting reports for toxic chat, griefing, or cheating", read: "3 min read", updated: "3 days ago" },
+              { title: "Ban appeals policy and security review procedure", read: "5 min read", updated: "1 week ago" }
+            ]
+          },
+          community: {
+            catTitle: "Community Support",
+            articles: [
+              { title: "Joining official Discord channels and community guidelines", read: "2 min read", updated: "Yesterday" },
+              { title: "Finding player-driven wikis, fansites, and tournaments", read: "4 min read", updated: "1 week ago" }
+            ]
+          }
+        };
+        
+        const catData = categoryData[category] || categoryData.technical;
+        const art = catData.articles[articleIdx] || catData.articles[0];
+
+        // Update Title
+        const h1 = document.querySelector('h1');
+        if (h1) h1.textContent = art.title;
+        
+        // Update breadcrumbs
+        const breadcrumbLinks = document.querySelectorAll('nav.flex.items-center a');
+        if (breadcrumbLinks.length >= 2) {
+          breadcrumbLinks[1].textContent = catData.catTitle;
+          breadcrumbLinks[1].addEventListener('click', (e) => {
+            e.preventDefault();
+            navigateTo('knowledge-base-category.html?category=' + category);
+          });
+        }
+        
+        // Update back button
+        const backBtn = document.querySelector('button:has(.material-symbols-outlined)') || document.querySelector('button:contains("Back")') || document.querySelectorAll('button')[0];
+        if (backBtn) {
+          backBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            navigateTo('knowledge-base-category.html?category=' + category);
+          });
+        }
+      }
+
+      // live-chat.html
+      if (file.includes('live-chat')) {
+        document.querySelectorAll('button, a').forEach(el => {
+          const text = el.textContent || '';
+          if (text.toLowerCase().includes('end') || text.toLowerCase().includes('kết thúc') || text.toLowerCase().includes('close') || text.toLowerCase().includes('home') || text.toLowerCase().includes('thoát')) {
+            el.addEventListener('click', (e) => { e.preventDefault(); navigateTo('index.html'); });
+          }
+        });
+      }
+    });
+  })();
+</script>
+
+</body></html>

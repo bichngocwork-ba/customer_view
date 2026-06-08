@@ -1,0 +1,1007 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Submit a Ticket | Gaming Support Portal</title>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Inter:wght@400;500;600&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&amp;family=Inter:wght@100..900&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="supabase-config.js"></script>
+<script>
+  checkAuth();
+</script>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+            <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "tertiary-fixed": "#e0e3e5",
+                        "tertiary-container": "#a2a5a7",
+                        "on-secondary-container": "#606366",
+                        "error": "#ba1a1a",
+                        "primary-container": "#2563eb",
+                        "on-error-container": "#93000a",
+                        "on-background": "#141d23",
+                        "background": "#f6faff",
+                        "on-secondary-fixed-variant": "#44474a",
+                        "tertiary": "#5c5f61",
+                        "on-primary-fixed": "#00174b",
+                        "error-container": "#ffdad6",
+                        "tertiary-fixed-dim": "#c4c7c9",
+                        "surface-variant": "#dbe4ed",
+                        "outline": "#6d797e",
+                        "on-primary": "#ffffff",
+                        "on-tertiary-fixed": "#191c1e",
+                        "on-tertiary": "#ffffff",
+                        "secondary-fixed-dim": "#c5c6ca",
+                        "secondary-fixed": "#e1e2e6",
+                        "surface-tint": "#0053db",
+                        "on-surface": "#141d23",
+                        "inverse-primary": "#b4c5ff",
+                        "outline-variant": "#bcc9ce",
+                        "secondary-container": "#dee0e4",
+                        "primary": "#004ac6",
+                        "primary-fixed": "#dbe1ff",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-dim": "#d2dbe4",
+                        "on-tertiary-container": "#383b3d",
+                        "on-surface-variant": "#3d494d",
+                        "surface-container": "#e6eff8",
+                        "inverse-surface": "#293138",
+                        "on-secondary": "#ffffff",
+                        "on-primary-container": "#eeefff",
+                        "secondary": "#5c5f62",
+                        "surface-container-highest": "#dbe4ed",
+                        "primary-fixed-dim": "#b4c5ff",
+                        "surface-container-low": "#ecf5fe",
+                        "on-secondary-fixed": "#191c1f",
+                        "on-primary-fixed-variant": "#003ea8",
+                        "inverse-on-surface": "#e9f2fb",
+                        "on-error": "#ffffff",
+                        "surface": "#f6faff",
+                        "surface-container-high": "#e0e9f2",
+                        "on-tertiary-fixed-variant": "#444749",
+                        "surface-bright": "#f6faff",
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "2xl": "1rem",
+                        "full": "9999px"
+                    },
+                    spacing: {
+                        "xl": "48px",
+                        "sm": "16px",
+                        "base": "4px",
+                        "md": "24px",
+                        "gutter": "24px",
+                        "xs": "8px",
+                        "container-max": "1440px",
+                        "lg": "32px"
+                    },
+                    fontFamily: {
+                        "sans": ["Inter", "sans-serif"],
+                        "headline": ["Inter", "sans-serif"]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body {
+            background-color: #f7f9fb;
+            color: #191c1e;
+        }
+        .form-shadow {
+            box-shadow: 0px 4px 20px rgba(0,0,0,0.05);
+        }
+    </style>
+</head>
+<body class="text-xs text-on-surface-variant overflow-hidden">
+<!-- Fixed SideNavBar (The Anchor) -->
+<!-- Applying style_component_shape: h-screen w-64 fixed left-0 top-0 -->
+<!-- Applying style_bg_color: bg-surface -->
+<!-- Applying style_separation_logic: border-r border-surface-variant -->
+<!-- CONSISTENT TOP BAR (RIOT STYLE) -->
+<header id="topbar-shell" class="h-[56px] bg-[#f3f7fc] border-b border-[#c3c6d7]/50 flex items-center justify-between px-6 z-50 fixed top-0 left-0 right-0">
+  <!-- Left Logo -->
+  <div class="flex items-center gap-3">
+    <div class="flex items-center gap-2 cursor-pointer" onclick="navigateTo('index.html')">
+      <svg class="w-8 h-8 text-[#004ac6] fill-current" viewBox="0 0 24 24" style="color: #004ac6; fill: #004ac6;"><path d="M21 6H3c-1.1 0-2 .9-2 2v8c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm-10 7H8v3H6v-3H3v-2h3V8h2v3h3v2zm4.5 3c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zm3-3c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/></svg>
+    </div>
+  </div>
+  
+  <!-- Center Navigation Links -->
+  <nav class="flex items-center gap-6">
+    <a id="nav-item-horiz-home" onclick="navigateTo('index.html')" class="text-slate-500 hover:text-[#004ac6] text-[12px] font-bold tracking-wider cursor-pointer py-4 uppercase transition-all">HOME</a>
+    <a id="nav-item-horiz-kb" onclick="navigateTo('knowledge-base.html')" class="text-slate-500 hover:text-[#004ac6] text-[12px] font-bold tracking-wider cursor-pointer py-4 uppercase transition-all">KNOWLEDGE BASE</a>
+    <a id="nav-item-horiz-submit" onclick="navigateTo('submit-ticket.html')" class="text-[#004ac6] text-[12px] font-bold tracking-wider cursor-pointer py-4 uppercase transition-all">SUBMIT A TICKET</a>
+    <a id="nav-item-horiz-tickets" onclick="navigateTo('tickets.html')" class="text-slate-500 hover:text-[#004ac6] text-[12px] font-bold tracking-wider cursor-pointer py-4 uppercase transition-all">MY TICKETS</a>
+  </nav>
+  
+  <!-- Right Actions -->
+  <div class="flex items-center gap-4">
+    <div class="text-slate-500 hover:text-slate-800 cursor-pointer flex items-center transition-colors" onclick="alert('English')" title="Select Language">
+      <span class="material-symbols-outlined">language</span>
+    </div>
+    
+    <div class="h-5 w-[1px] bg-slate-300 mx-1"></div>
+    
+    <div class="flex items-center gap-2 py-1.5 px-4 bg-[#e2edf8] border border-[#cbd5e1] rounded-full cursor-pointer hover:bg-[#d2e3fc] hover:border-[#b0c6f1] transition-all" onclick="logout()" title="Log Out">
+      <span class="material-symbols-outlined text-[#004ac6] text-[18px]">account_circle</span>
+      <span class="text-slate-700 text-[12px] font-semibold animate-pulse" id="user-display-name">...</span>
+      <span class="material-symbols-outlined text-slate-500 text-[16px] hover:text-red-500 flex items-center">logout</span>
+    </div>
+  </div>
+</header>
+<!-- Main Content Area -->
+<main class="pt-[56px] h-screen overflow-y-auto bg-[#f6faff] p-md flex justify-center items-start">
+<div class="w-full max-w-[800px] mt-md">
+<!-- Form Card -->
+<div class="bg-white border border-outline-variant/40 rounded-xl p-md shadow-sm">
+<!-- Header -->
+<header class="mb-lg border-b border-surface-variant pb-md">
+<h1 class="font-headline font-extrabold text-2xl uppercase tracking-tight text-on-surface font-bold tracking-tight mb-xs uppercase">SUBMIT A TICKET</h1>
+<p class="font-body-sm text-secondary max-w-2xl">Please provide the details of your issue below so our team can assist you as quickly as possible.</p>
+</header>
+<!-- Form -->
+<form class="space-y-lg">
+<!-- Field 1: Product Select -->
+<div class="flex flex-col gap-base">
+<label class="text-[10px] font-bold text-on-surface-variant uppercase tracking-wider mb-xs" for="product">PRODUCT SELECT <span class="text-red-500">*</span></label>
+<div class="relative">
+<select class="w-full h-10 pl-sm pr-lg bg-white border border-outline-variant/60 rounded-lg text-on-surface text-xs focus:ring-0 focus:border-primary outline-none appearance-none transition-all" id="product" style="background-image: none;">
+<option disabled="" selected="" value="">Loading game list...</option>
+</select>
+<span class="material-symbols-outlined absolute right-md top-1/2 -translate-y-1/2 pointer-events-none text-secondary">expand_more</span>
+</div>
+</div>
+
+<!-- Field 2: Issue Category (Hidden by default, shown when Product selected) -->
+<div id="category-container" class="hidden flex-col gap-base">
+<label class="text-[10px] font-bold text-on-surface-variant uppercase tracking-wider mb-xs" for="category">ISSUE CATEGORY <span class="text-red-500">*</span></label>
+<div class="relative">
+<select class="w-full h-10 pl-sm pr-lg bg-white border border-outline-variant/60 rounded-lg text-on-surface text-xs focus:ring-0 focus:border-primary outline-none appearance-none transition-all" id="category" onchange="toggleFollowUp()" style="background-image: none;">
+<option disabled="" selected="" value="">Loading categories...</option>
+</select>
+<span class="material-symbols-outlined absolute right-md top-1/2 -translate-y-1/2 pointer-events-none text-secondary">expand_more</span>
+</div>
+</div>
+
+<!-- Dynamic Follow-up, Description and Submit button (Hidden by default, shown when Category selected) -->
+<div id="followup-container" class="hidden flex-col gap-md">
+<!-- Dynamic Fields Card -->
+<div id="dynamic-fields-wrapper" class="bg-surface border border-outline-variant rounded-xl p-md md:p-md">
+<h2 id="dynamic-fields-title" class="font-bold text-sm uppercase tracking-wider text-primary text-on-surface font-bold mb-xs">Account &amp; Security</h2>
+<p class="font-label-sm text-red-500 font-semibold mb-md">* Required Field</p>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-md" id="dynamic-fields">
+<!-- Injected by JavaScript -->
+</div>
+</div>
+
+<!-- Field 3: Detailed Description -->
+<div class="flex flex-col gap-base">
+<label class="text-[10px] font-bold text-on-surface-variant uppercase tracking-wider mb-xs" for="description">DETAILED DESCRIPTION <span class="text-red-500">*</span></label>
+<textarea class="w-full p-sm bg-white border border-outline-variant/60 rounded-lg text-on-surface text-xs focus:ring-0 focus:border-primary outline-none resize-none placeholder:text-outline-variant/60 transition-all" id="description" placeholder="Describe your issue in detail here..." rows="6"></textarea>
+</div>
+
+<!-- Submit Button -->
+<div class="pt-md">
+<button class="w-full h-11 bg-primary text-white font-bold rounded-lg hover:brightness-110 shadow-sm transition-all duration-150 text-xs uppercase tracking-wider" type="submit">
+                            SUBMIT TICKET
+                        </button>
+</div>
+</div>
+
+<!-- Trust/Safety Notice -->
+<div class="flex items-center justify-center gap-xs text-secondary font-label-sm pt-sm">
+<span class="material-symbols-outlined text-[16px]">verified_user</span>
+<span>Your data is protected by industry-standard encryption.</span>
+</div>
+</form>
+</div>
+</div>
+
+</main>
+<script>
+        const categoryFields = {
+            "Technical Issues": [
+                { id: "operating_system", label: "Operating System", type: "select", options: ["Windows 11", "Windows 10", "macOS", "iOS", "Android"] },
+                { id: "issue_type", label: "Issue Type", type: "select", options: ["Game crashes to desktop", "Launcher download loop", "Blue Screen of Death (BSOD)", "Performance / Low FPS", "Audio / Sound issues"] },
+                { id: "graphics_cpu_brand", label: "Graphics / CPU Brand", type: "select", options: ["NVIDIA + Intel", "AMD + Ryzen", "Intel HD Graphics", "Apple Silicon (M1/M2/M3)", "Mobile processor"] },
+                { id: "error_code", label: "Error Code (If any)", type: "text", placeholder: "e.g., VAN 1067" }
+            ],
+            "Connection & Network": [
+                { id: "connection_issue", label: "Connection Issue", type: "select", options: ["High Ping / Latency", "Cannot connect to server / Login error", "Frequent disconnections", "Voice chat not working"] },
+                { id: "isp", label: "Internet Provider (ISP)", type: "select", options: ["FPT Telecom", "Viettel", "VNPT", "Other ISP"] },
+                { id: "network_setup", label: "Network Setup", type: "select", options: ["Wi-Fi", "Ethernet (Wired)", "Mobile Hotspot (4G/5G)"] }
+            ],
+            "Account & Security": [
+                { id: "current_email", label: "Your Current Email Address", type: "text", placeholder: "e.g. email@example.com", required: true },
+                { id: "platform", label: "What Platform are you requesting assistance with", type: "select", options: ["PC", "Android", "iOS", "Xbox", "PlayStation", "Nintendo Switch"] },
+                { id: "creation_date", label: "Date of Account Creation (Approximate) (If any)", type: "text", placeholder: "e.g. MM/YYYY" },
+                { id: "original_email", label: "Original email used to register account (If any)", type: "text", placeholder: "e.g. original@email.com" }
+            ],
+            "Billing & Purchases": [
+                { id: "billing_issue", label: "Billing Issue", type: "select", options: ["Paid but did not receive items/currency", "Double charge", "Refund request", "Payment method error"] },
+                { id: "payment_method", label: "Payment Method", type: "select", options: ["E-wallet (Momo / ZaloPay / ShopeePay)", "Credit Card (Visa/Mastercard)", "ATM / Banking Transfer", "Google Play / App Store purchase"] },
+                { id: "transaction_id", label: "Transaction ID / Invoice No. (If any)", type: "text", placeholder: "e.g., TXN987654321" }
+            ],
+            "Bug Report": [
+                { id: "bug_category", label: "Bug Category", type: "select", options: ["Character / Ability / Skill bug", "Map collision / Stuck glitch", "UI / HUD display bug", "Patcher / Installer bug"] },
+                { id: "bug_severity", label: "Bug Severity", type: "select", options: ["Major gameplay impact", "Minor visual glitch", "Game crashing exploit"] },
+                { id: "reproduction_rate", label: "Reproduction Rate", type: "select", options: ["Every time / Always happens", "Sometimes", "Hard to reproduce / Happened once"] }
+            ],
+            "Report a Player": [
+                { id: "report_reason", label: "Reason for Report", type: "select", options: ["Hacking / Cheating / Exploit usage", "Toxicity / Verbal abuse", "Afk / Griefing / Feeding"] },
+                { id: "offending_player_id", label: "Offending Player ID", type: "text", placeholder: "e.g., AimBotGod#1337" },
+                { id: "match_time", label: "Match Time", type: "select", options: ["In my last match", "Within the last 24 hours", "Earlier this week"] }
+            ]
+        };
+
+        const productSelect = document.getElementById('product');
+        const categoryContainer = document.getElementById('category-container');
+        const categorySelect = document.getElementById('category');
+        const followupContainer = document.getElementById('followup-container');
+        const dynamicFields = document.getElementById('dynamic-fields');
+        const dynamicFieldsTitle = document.getElementById('dynamic-fields-title');
+        const descriptionInput = document.getElementById('description');
+        const formEl = document.querySelector('form');
+        const submitBtn = document.querySelector('button[type="submit"]');
+
+        // Retrieve games and categories dynamically from Supabase
+        document.addEventListener('DOMContentLoaded', async () => {
+            const user = getCurrentUser();
+            if (user) {
+                const nameEl = document.getElementById('user-display-name');
+                if (nameEl) {
+                    nameEl.textContent = user.full_name;
+                    nameEl.classList.remove('animate-pulse');
+                }
+            }
+
+            const client = getSupabase();
+            if (!client) return;
+
+            try {
+                // Fetch games
+                const { data: games, error: gError } = await client
+                    .from('games')
+                    .select('*')
+                    .eq('status', true);
+
+                if (!gError && games) {
+                    productSelect.innerHTML = '<option disabled selected value="">Select your game...</option>';
+                    games.forEach(g => {
+                        const opt = document.createElement('option');
+                        opt.value = g.id;
+                        opt.textContent = g.game_name;
+                        productSelect.appendChild(opt);
+                    });
+                }
+
+                // Fetch ticket categories
+                const { data: categories, error: cError } = await client
+                    .from('ticket_categories')
+                    .select('*')
+                    .eq('status', true);
+
+                if (!cError && categories) {
+                    categorySelect.innerHTML = '<option disabled selected value="">Choose a category...</option>';
+                    categories.forEach(cat => {
+                        const opt = document.createElement('option');
+                        opt.value = cat.id;
+                        opt.textContent = cat.category_name;
+                        categorySelect.appendChild(opt);
+                    });
+                }
+            } catch (err) {
+                console.error("Error loading games/categories:", err);
+            }
+        });
+
+        function checkFormValidity() {
+            let isValid = true;
+            
+            if (!productSelect.value) {
+                isValid = false;
+            }
+            
+            if (!categorySelect.value) {
+                isValid = false;
+            } else {
+                const fields = dynamicFields.querySelectorAll('.dynamic-field-item');
+                fields.forEach(field => {
+                    const isRequired = field.dataset.required === 'true';
+                    if (isRequired) {
+                        const select = field.querySelector('select');
+                        const input = field.querySelector('input');
+                        if (select && !select.value) {
+                            isValid = false;
+                        }
+                        if (input && !input.value.trim()) {
+                            isValid = false;
+                        }
+                    }
+                });
+            }
+            
+            if (!descriptionInput.value.trim()) {
+                isValid = false;
+            }
+
+            if (isValid) {
+                submitBtn.disabled = false;
+                submitBtn.className = "w-full h-11 bg-primary text-white font-bold rounded-lg hover:brightness-110 shadow-sm transition-all duration-150 text-xs uppercase tracking-wider";
+            } else {
+                submitBtn.disabled = true;
+                submitBtn.className = "w-full border-2 border-[#E0E0E0] bg-transparent text-[#A0A0A0] font-headline-md py-md rounded-lg cursor-not-allowed opacity-50 transition-all";
+            }
+        }
+
+        // Attach event listeners for form validation
+        productSelect.addEventListener('change', () => {
+            if (productSelect.value) {
+                categoryContainer.classList.remove('hidden');
+                categoryContainer.classList.add('flex');
+                categorySelect.value = '';
+                toggleFollowUp();
+            } else {
+                categoryContainer.classList.add('hidden');
+                categoryContainer.classList.remove('flex');
+                categorySelect.value = '';
+                toggleFollowUp();
+            }
+            checkFormValidity();
+        });
+
+        categorySelect.addEventListener('change', () => {
+            toggleFollowUp();
+            checkFormValidity();
+        });
+
+        descriptionInput.addEventListener('input', checkFormValidity);
+
+        function toggleFollowUp() {
+            const selectedOption = categorySelect.options[categorySelect.selectedIndex];
+            const category = selectedOption ? selectedOption.textContent.trim() : '';
+            
+            if (!categoryFields[category]) {
+                followupContainer.classList.remove('flex');
+                followupContainer.classList.add('hidden');
+                dynamicFields.innerHTML = '';
+                return;
+            }
+            
+            dynamicFieldsTitle.textContent = category;
+            dynamicFields.innerHTML = '';
+            
+            categoryFields[category].forEach(field => {
+                const wrapper = document.createElement('div');
+                wrapper.className = 'flex flex-col gap-base dynamic-field-item';
+                wrapper.dataset.id = field.id;
+                
+                // Fields are required by default unless they have explicitly required: false OR contain "if any" (case-insensitive) in the label
+                const isRequired = field.required === true || (field.required !== false && !field.label.toLowerCase().includes('if any'));
+                wrapper.dataset.required = isRequired ? 'true' : 'false';
+                
+                const label = document.createElement('label');
+                label.className = 'font-label-sm text-on-surface uppercase tracking-wider';
+                label.innerHTML = field.label + (isRequired ? ' <span class="text-red-500">*</span>' : '');
+                wrapper.appendChild(label);
+                
+                if (field.type === 'select') {
+                    const relativeDiv = document.createElement('div');
+                    relativeDiv.className = 'relative';
+                    
+                    const selectEl = document.createElement('select');
+                    selectEl.className = 'w-full h-10 pl-sm pr-lg bg-white border border-outline-variant/60 rounded-lg text-on-surface text-xs focus:ring-0 focus:border-primary outline-none appearance-none transition-all';
+                    selectEl.style.backgroundImage = 'none';
+                    
+                    // Add an empty placeholder option so it is not selected by default
+                    const placeholderOpt = document.createElement('option');
+                    placeholderOpt.value = "";
+                    placeholderOpt.textContent = "Choose an option...";
+                    placeholderOpt.disabled = true;
+                    placeholderOpt.selected = true;
+                    selectEl.appendChild(placeholderOpt);
+                    
+                    field.options.forEach(opt => {
+                        const optEl = document.createElement('option');
+                        optEl.value = opt;
+                        optEl.textContent = opt;
+                        selectEl.appendChild(optEl);
+                    });
+                    
+                    const arrowIcon = document.createElement('span');
+                    arrowIcon.className = 'material-symbols-outlined absolute right-md top-1/2 -translate-y-1/2 pointer-events-none text-secondary text-[18px]';
+                    arrowIcon.textContent = 'expand_more';
+                    
+                    relativeDiv.appendChild(selectEl);
+                    relativeDiv.appendChild(arrowIcon);
+                    wrapper.appendChild(relativeDiv);
+                    
+                    selectEl.addEventListener('change', checkFormValidity);
+                } else {
+                    const inputEl = document.createElement('input');
+                    inputEl.type = 'text';
+                    inputEl.className = 'w-full h-10 px-sm bg-white border border-outline-variant/60 rounded-lg text-on-surface text-xs focus:ring-0 focus:border-primary outline-none transition-all';
+                    inputEl.placeholder = field.placeholder;
+                    wrapper.appendChild(inputEl);
+                    
+                    inputEl.addEventListener('input', checkFormValidity);
+                }
+                
+                dynamicFields.appendChild(wrapper);
+            });
+            
+            followupContainer.classList.remove('hidden');
+            followupContainer.classList.add('flex');
+        }
+
+        formEl.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            checkFormValidity();
+            if (submitBtn.disabled) {
+                return;
+            }
+
+            const user = getCurrentUser();
+            if (!user) {
+                alert("Please log in to submit a support ticket.");
+                return;
+            }
+
+            const client = getSupabase();
+            if (!client) {
+                alert("Could not connect to the database. Please try again later.");
+                return;
+            }
+
+            submitBtn.disabled = true;
+            submitBtn.textContent = "SUBMITTING TICKET...";
+            
+            // Collect questions details
+            const dynamicFieldsDiv = document.getElementById('dynamic-fields');
+            const questions = [];
+            if (dynamicFieldsDiv && !followupContainer.classList.contains('hidden')) {
+                const fields = dynamicFieldsDiv.querySelectorAll('.dynamic-field-item');
+                fields.forEach(field => {
+                    const label = field.querySelector('label');
+                    const select = field.querySelector('select');
+                    const input = field.querySelector('input');
+                    if (label) {
+                        const q = label.textContent.replace('*', '').trim();
+                        const a = select ? select.value : (input ? input.value : '');
+                        const id = field.dataset.id;
+                        questions.push({ id, q, a });
+                    }
+                });
+            }
+            
+            const selectedProduct = productSelect.value;
+            const selectedCategory = categorySelect.value;
+            const description = descriptionInput.value.trim();
+
+            const selectedCategoryText = categorySelect.options[categorySelect.selectedIndex].textContent.trim();
+            const selectedProductText = productSelect.options[productSelect.selectedIndex].textContent.trim();
+
+            const dateStr = new Date().toISOString().slice(0, 10).replace(/-/g, "");
+            const randomNum = Math.floor(10000 + Math.random() * 90000);
+            const ticketNumber = `TCK-${dateStr}-${randomNum}`;
+
+            const firstMessage = {
+                text: description,
+                time: new Date().toLocaleString('en-US', { month: 'short', day: 'numeric', year: 'numeric', hour: '2-digit', minute: '2-digit', hour12: false }),
+                sender: "customer"
+            };
+
+            // If there are answers to specific category questions, append them to the first message description
+            let finalDescription = description;
+            if (questions.length > 0) {
+                finalDescription += "\n\n-- Category Details --\n" + questions.map(q => `${q.q}: ${q.a}`).join("\n");
+            }
+
+            const newTicket = {
+                ticket_number: ticketNumber,
+                customer_id: user.id,
+                game_id: selectedProduct,
+                category_id: selectedCategory,
+                priority: "MEDIUM",
+                status: "OPEN",
+                issue_summary: description.length > 80 ? description.substring(0, 77) + "..." : description,
+                description: finalDescription,
+                created_at: new Date().toISOString(),
+                updated_at: new Date().toISOString()
+            };
+
+            try {
+                const { data: inserted, error: insertError } = await client
+                    .from('tickets')
+                    .insert([newTicket])
+                    .select();
+
+                if (insertError) {
+                    console.error("Error creating ticket:", insertError);
+                    alert("Failed to submit support ticket, please try again later.");
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = "SUBMIT TICKET";
+                    return;
+                }
+
+                const createdTicket = inserted[0];
+                localStorage.setItem('latest_submitted_ticket', JSON.stringify({
+                    id: createdTicket.id,
+                    ticketNumber: createdTicket.ticket_number,
+                    product: selectedProductText,
+                    category: selectedCategoryText,
+                    description: createdTicket.description,
+                    dateSubmitted: new Date(createdTicket.created_at).toLocaleString()
+                }));
+
+                const targetUrl = `ticket-confirmation.html?id=${createdTicket.id}`;
+                if (typeof window.navigateTo === 'function') {
+                    window.navigateTo(targetUrl);
+                } else if (window.self !== window.top) {
+                    window.parent.postMessage({ type: 'NAVIGATE', to: targetUrl }, '*');
+                } else {
+                    window.location.href = targetUrl;
+                }
+            } catch (err) {
+                console.error("Unhandled error submitting ticket:", err);
+                alert("An unknown error occurred.");
+                submitBtn.disabled = false;
+                submitBtn.textContent = "SUBMIT TICKET";
+            }
+        });
+
+        // Initialize button state on load
+        checkFormValidity();
+    </script>
+<style>
+        /* Small utility for interactive feedback */
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-4px); }
+            75% { transform: translateX(4px); }
+        }
+        .shake {
+            animation: shake 0.2s ease-in-out 0s 2;
+            background-color: #ba1a1a !important; /* Visual error feedback */
+        }
+    </style>
+
+
+<!-- INTERACTIVE PREVIEW HELPER (DO NOT REMOVE) -->
+<script id="interactive-preview-helper">
+  (function() {
+    let isInsideIframe = false;
+    try {
+      isInsideIframe = (window.self !== window.top);
+    } catch (e) {
+      isInsideIframe = true;
+    }
+    
+    window.navigateTo = function(target) {
+      if (isInsideIframe) {
+        window.parent.postMessage({ type: 'NAVIGATE', to: target }, '*');
+      } else {
+        window.location.href = target;
+      }
+    };
+    
+    /* Run in both iframe and standalone modes */
+
+    // Bind click events on elements based on the current page URL/filename
+    document.addEventListener('DOMContentLoaded', () => {
+      // Global navigation hooks for any page
+      document.querySelectorAll('button, a').forEach(el => {
+        const text = (el.textContent || '').trim().toLowerCase();
+        if (text.includes('open a support ticket') || 
+            text.includes('submit a support ticket') || 
+            text.includes('create new ticket') ||
+            text.includes('new support case') ||
+            text.includes('submit a ticket')) {
+          el.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            navigateTo('submit-ticket.html');
+          });
+        } else if (text.includes('live chat now') || 
+                   text.includes('start live chat')) {
+          el.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            navigateTo('live-chat.html');
+          });
+        }
+      });
+      const path = window.location.pathname;
+      const file = path.substring(path.lastIndexOf('/') + 1);
+
+      // login.html
+      if (file.includes('login')) {
+        const form = document.querySelector('form');
+        if (form) {
+          form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            navigateTo('index.html');
+          });
+        }
+        const loginBtn = document.querySelector('button[type="submit"]');
+        if (loginBtn) {
+          loginBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            navigateTo('index.html');
+          });
+        }
+      }
+
+      // index.html
+      if (file.includes('index')) {
+        document.querySelectorAll('button, a, div.group').forEach(el => {
+          const text = el.textContent || '';
+          if (text.includes('Start Live Chat') || text.includes('Trò chuyện')) {
+            el.addEventListener('click', (e) => { e.preventDefault(); e.stopPropagation(); navigateTo('live-chat.html'); });
+          } else if (text.includes('Open a Ticket') || text.includes('Gửi yêu cầu') || text.includes('Submit A Ticket') || text.includes('New Support Case')) {
+            el.addEventListener('click', (e) => { e.preventDefault(); e.stopPropagation(); navigateTo('submit-ticket.html'); });
+          } else if (text.includes('Technical Issues') || text.includes('Lỗi Kỹ thuật')) {
+            el.addEventListener('click', (e) => { e.preventDefault(); e.stopPropagation(); navigateTo('knowledge-base-category.html?category=technical'); });
+          } else if (text.includes('Account & Security') || text.includes('Tài khoản & Bảo mật')) {
+            el.addEventListener('click', (e) => { e.preventDefault(); e.stopPropagation(); navigateTo('knowledge-base-category.html?category=account'); });
+          } else if (text.includes('Billing & Purchases') || text.includes('Thanh toán')) {
+            el.addEventListener('click', (e) => { e.preventDefault(); e.stopPropagation(); navigateTo('knowledge-base-category.html?category=billing'); });
+          }
+        });
+      }
+
+      // submit-ticket.html
+      // Form submit is handled by the screen's native script to respect form validation.
+
+      // ticket-confirmation.html
+      if (file.includes('ticket-confirmation')) {
+        document.querySelectorAll('button, a').forEach(el => {
+          const text = el.textContent || '';
+          if (text.toLowerCase().includes('view') || text.toLowerCase().includes('xem') || text.toLowerCase().includes('ticket')) {
+            el.addEventListener('click', (e) => { e.preventDefault(); navigateTo('ticket-detail.html'); });
+          } else if (text.toLowerCase().includes('home') || text.toLowerCase().includes('chủ') || text.toLowerCase().includes('quay lại')) {
+            el.addEventListener('click', (e) => { e.preventDefault(); navigateTo('index.html'); });
+          }
+        });
+      }
+
+      // tickets.html
+      if (file.includes('tickets')) {
+        document.querySelectorAll('tr, li, div.cursor-pointer, .border-outline-variant').forEach(el => {
+          if (el.textContent.includes('TK-') || el.textContent.includes('Ticket') || el.textContent.includes('Yêu cầu')) {
+            el.addEventListener('click', (e) => {
+              e.preventDefault();
+              navigateTo('ticket-detail.html');
+            });
+          }
+        });
+      }
+
+      // ticket-detail.html
+      if (file.includes('ticket-detail')) {
+        document.querySelectorAll('a, button').forEach(el => {
+          const text = el.textContent || '';
+          if (text.toLowerCase().includes('back') || text.toLowerCase().includes('quay lại') || text.toLowerCase().includes('danh sách')) {
+            el.addEventListener('click', (e) => { e.preventDefault(); navigateTo('tickets.html'); });
+          }
+        });
+      }
+
+      // knowledge-base.html
+      if (file.includes('knowledge-base')) {
+        // Setup View all 12 categories button interaction
+        const viewAllBtn = document.getElementById('view-all-categories-btn');
+        const grid = document.getElementById('categories-grid');
+        if (viewAllBtn && grid) {
+          viewAllBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            
+            // Check if cards already added
+            if (document.getElementById('added-card-7')) {
+              // Toggle off
+              for (let i = 7; i <= 12; i++) {
+                const card = document.getElementById('added-card-' + i);
+                if (card) card.remove();
+              }
+              viewAllBtn.innerHTML = 'View all 12 categories <span class="material-symbols-outlined text-sm">arrow_forward</span>';
+              return;
+            }
+            
+            // Append 6 new categories
+            const extraCategories = [
+              { id: 7, title: "Game Downloads & Updates", icon: "download", count: 2, bg: "#E0F7FA", desc: "Troubleshoot patcher loops, file verification, launcher freezes, and download speed optimization." },
+              { id: 8, title: "Esports & Tournaments", icon: "emoji_events", count: 2, bg: "#FFF9C4", desc: "Get schedules, team statistics, reward drops, ticket bookings, and tournament rules." },
+              { id: 9, title: "Merchandise Support", icon: "shopping_bag", count: 2, bg: "#F5F5F5", desc: "Inquire about clothing apparel sizes, order shipping status, tracking numbers, and damage refunds." },
+              { id: 10, title: "Creator Partner Program", icon: "video_camera_front", count: 2, bg: "#E1BEE7", desc: "How to join our creator network, access early updates, custom overlays, and monetization benefits." },
+              { id: 11, title: "Localization & Language", icon: "translate", count: 2, bg: "#DCEDC8", desc: "Change in-game audio dubbing, client text translation, regional settings, and server transfers." },
+              { id: 12, title: "Feedback & Suggestions", icon: "rate_review", count: 2, bg: "#FFE0B2", desc: "Submit game ideas directly to designers, vote on feature requests, and report in-game bugs." }
+            ];
+            
+            extraCategories.forEach(cat => {
+              const card = document.createElement('div');
+              card.id = 'added-card-' + cat.id;
+              card.className = 'category-card bg-white border border-[#E0E0E0] rounded-[12px] p-8 transition-all duration-300 flex flex-col group cursor-pointer';
+              card.innerHTML = `
+                <div class="flex justify-between items-start mb-6">
+                  <div class="w-14 h-14 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300" style="background-color: ${cat.bg};">
+                    <span class="material-symbols-outlined text-primary text-3xl">${cat.icon}</span>
+                  </div>
+                  <span class="text-[10px] font-bold uppercase tracking-wider text-tertiary-container bg-surface-container-low px-2 py-1 rounded">${cat.count} Articles</span>
+                </div>
+                <h3 class="font-bold text-sm uppercase tracking-wider text-primary text-on-surface mb-3 group-hover:text-primary transition-colors">${cat.title}</h3>
+                <p class="text-xs text-on-surface-variant text-on-surface-variant flex-1">${cat.desc}</p>
+                <div class="mt-6 pt-6 border-t border-outline-variant flex items-center text-primary text-xs font-bold opacity-0 group-hover:opacity-100 transition-opacity">
+                  Explore category guides
+                  <span class="material-symbols-outlined ml-2">chevron_right</span>
+                </div>
+              `;
+              
+              // Bind click to the card
+              card.addEventListener('click', (ev) => {
+                ev.preventDefault();
+                navigateTo('knowledge-base-category.html?category=technical'); // Default mock redirect
+              });
+              
+              grid.appendChild(card);
+            });
+            
+            viewAllBtn.innerHTML = 'Show less categories <span class="material-symbols-outlined text-sm">arrow_back</span>';
+          });
+        }
+
+        // Bind main categories
+        document.querySelectorAll('.category-card').forEach(el => {
+          const text = el.textContent || '';
+          let catQuery = 'technical';
+          if (text.includes('Technical Issues')) catQuery = 'technical';
+          else if (text.includes('Account & Security')) catQuery = 'account';
+          else if (text.includes('Billing & Purchases')) catQuery = 'billing';
+          else if (text.includes('In-Game Content')) catQuery = 'content';
+          else if (text.includes('Report a Player')) catQuery = 'report';
+          else if (text.includes('Community Support')) catQuery = 'community';
+          
+          el.addEventListener('click', (e) => {
+            e.preventDefault();
+            navigateTo('knowledge-base-category.html?category=' + catQuery);
+          });
+        });
+      }
+
+      // knowledge-base-category.html (Dynamic categories content rendering)
+      if (file.includes('knowledge-base-category')) {
+        const urlParams = new URLSearchParams(window.location.search);
+        const category = urlParams.get('category') || 'technical';
+        
+        const categoryData = {
+          technical: {
+            title: "Technical Issues",
+            desc: "Find solutions for crashes, lag, installation errors, and performance optimization.",
+            icon: "settings",
+            bg: "#E0F2F1",
+            articles: [
+              { title: "How to fix random client crashes after patch v11.2", desc: "Some users are experiencing unexpected crashes when entering matchmade games. Follow these steps to verify your local files and reset your shader cache.", read: "3 min read", updated: "2 days ago" },
+              { title: "Resolving high latency and packet loss issues", desc: "If you are seeing the yellow network warning icon, your connection might be experiencing instability. Check our recommended DNS settings.", read: "5 min read", updated: "1 week ago" },
+              { title: "Installation stuck at 99% - Comprehensive Guide", desc: "Common troubleshooting steps for the 'Finalizing...' stage of the installation process including disk space management and antivirus exceptions.", read: "4 min read", updated: "3 days ago" },
+              { title: "NVIDIA/AMD Driver Compatibility List", desc: "Ensure your graphics card drivers are optimized for the latest seasonal update to prevent visual glitches and stuttering.", read: "2 min read", updated: "Yesterday" }
+            ]
+          },
+          account: {
+            title: "Account & Security",
+            desc: "Manage your profile, password recovery, two-factor authentication, and account linking.",
+            icon: "security",
+            bg: "#2170e4",
+            articles: [
+              { title: "How to recover your password and security questions", desc: "Forgot your password or locked out? Here is the step-by-step guide to verifying your ownership and resetting your security credentials.", read: "4 min read", updated: "3 days ago" },
+              { title: "Setting up Two-Factor Authentication (2FA) for your account", desc: "Protect your account from unauthorized access by setting up 2FA using email, SMS, or an authenticator app.", read: "3 min read", updated: "Yesterday" },
+              { title: "Linking third-party console accounts (PlayStation/Xbox/Switch)", desc: "Step-by-step guide to cross-play account linking, progression syncing, and troubleshooting common link errors.", read: "5 min read", updated: "2 weeks ago" }
+            ]
+          },
+          billing: {
+            title: "Billing & Purchases",
+            desc: "Questions about payment methods, refund requests, and premium currencies.",
+            icon: "payments",
+            bg: "#dbe1ff",
+            articles: [
+              { title: "Refund Policy for in-game purchases and bundles", desc: "Understand our refund rules for digital skins, battle passes, and virtual currency packages before submitting a request.", read: "4 min read", updated: "1 week ago" },
+              { title: "Troubleshooting failed transactions and billing errors", desc: "If your transaction failed but you were charged, or you are seeing error code B-102, read these solutions.", read: "6 min read", updated: "5 days ago" }
+            ]
+          },
+          content: {
+            title: "In-Game Content",
+            desc: "Guides for seasons, event schedules, item descriptions, and mechanics.",
+            icon: "sports_esports",
+            bg: "#d4e3ff",
+            articles: [
+              { title: "Season pass rewards and weekly challenge guides", desc: "View the full catalog of rewards for this season and learn the most efficient ways to complete your active weekly quests.", read: "5 min read", updated: "4 days ago" },
+              { title: "Missing virtual items or quest rewards troubleshooting", desc: "If you completed a challenge or made a purchase but did not receive the items in your inventory, follow these sync steps.", read: "3 min read", updated: "2 days ago" },
+              { title: "Patch notes detail list and balance changes", desc: "Review the full developer notes for the latest game balance update, character adjustments, and system bug fixes.", read: "8 min read", updated: "Yesterday" }
+            ]
+          },
+          report: {
+            title: "Report a Player",
+            desc: "Learn how to report toxicity, cheating, or harassment.",
+            icon: "flag",
+            bg: "#FFDAD6",
+            articles: [
+              { title: "Submitting reports for toxic chat, griefing, or cheating", desc: "Help us keep matches fair and friendly. Learn how to capture evidence and file player reports in-game or via portal.", read: "3 min read", updated: "3 days ago" },
+              { title: "Ban appeals policy and security review procedure", desc: "If your account was restricted or suspended, understand the review process, code of conduct, and how to file a valid appeal.", read: "5 min read", updated: "1 week ago" }
+            ]
+          },
+          community: {
+            title: "Community Support",
+            desc: "Connect with our community forums, join discord servers, and wikis.",
+            icon: "forum",
+            bg: "#d8e2ff",
+            articles: [
+              { title: "Joining official Discord channels and community guidelines", desc: "Get in touch with other players, find groups, and chat directly with community managers in our official server.", read: "2 min read", updated: "Yesterday" },
+              { title: "Finding player-driven wikis, fansites, and tournaments", desc: "A curated list of community resources, strategic guides, gameplay wikis, and player-run competitive tournaments.", read: "4 min read", updated: "1 week ago" }
+            ]
+          }
+        };
+
+        const data = categoryData[category] || categoryData.technical;
+
+        // Update title and subtitle
+        const h1 = document.querySelector('h1');
+        if (h1) h1.textContent = data.title;
+        const pDesc = h1?.nextElementSibling;
+        if (pDesc) pDesc.textContent = data.desc;
+        
+        // Update breadcrumb
+        const breadcrumbCat = document.querySelector('span.text-primary.font-bold') || document.querySelector('.breadcrumbs span:last-child');
+        if (breadcrumbCat) breadcrumbCat.textContent = data.title;
+
+        // Render articles list
+        const section = document.querySelector('section.space-y-4');
+        if (section) {
+          section.innerHTML = '';
+          data.articles.forEach((art, aIdx) => {
+            const card = document.createElement('div');
+            card.className = 'article-card group bg-white border border-outline-variant rounded-xl p-6 transition-all hover:border-primary-container cursor-pointer';
+            card.innerHTML = `
+              <div class="flex justify-between items-start">
+                <div class="space-y-2">
+                  <h4 class="font-bold text-sm uppercase tracking-wider text-primary text-on-surface transition-colors">${art.title}</h4>
+                  <p class="text-xs text-on-surface-variant text-on-surface-variant max-w-3xl">${art.desc}</p>
+                  <div class="flex items-center gap-3 pt-2">
+                    <span class="text-[10px] font-bold uppercase tracking-wider text-tertiary">${art.read}</span>
+                    <span class="w-1.5 h-1.5 rounded-full bg-outline-variant"></span>
+                    <span class="text-[10px] font-bold uppercase tracking-wider text-tertiary">Updated ${art.updated}</span>
+                  </div>
+                </div>
+                <span class="material-symbols-outlined text-outline-variant group-hover:text-primary transition-colors">chevron_right</span>
+              </div>
+            `;
+            
+            // Add click navigation to detail page
+            card.addEventListener('click', (e) => {
+              e.preventDefault();
+              navigateTo('knowledge-base-detail.html?category=' + category + '&article=' + aIdx);
+            });
+            section.appendChild(card);
+          });
+        }
+        
+        // Add click navigation to "Back to Categories" button
+        const backBtn = document.querySelector('button:has(.material-symbols-outlined)') || document.querySelector('button:contains("Back")') || document.querySelectorAll('button')[0];
+        if (backBtn) {
+          backBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            navigateTo('knowledge-base.html');
+          });
+        }
+      }
+
+      // knowledge-base-detail.html (Dynamic articles content rendering)
+      if (file.includes('knowledge-base-detail')) {
+        const urlParams = new URLSearchParams(window.location.search);
+        const category = urlParams.get('category') || 'technical';
+        const articleIdx = parseInt(urlParams.get('article') || '0', 10);
+        
+        const categoryData = {
+          technical: {
+            catTitle: "Technical Issues",
+            articles: [
+              { title: "How to fix random client crashes after patch v11.2", read: "3 min read", updated: "2 days ago" },
+              { title: "Resolving high latency and packet loss issues", read: "5 min read", updated: "1 week ago" },
+              { title: "Installation stuck at 99% - Comprehensive Guide", read: "4 min read", updated: "3 days ago" },
+              { title: "NVIDIA/AMD Driver Compatibility List", read: "2 min read", updated: "Yesterday" }
+            ]
+          },
+          account: {
+            catTitle: "Account & Security",
+            articles: [
+              { title: "How to recover your password and security questions", read: "4 min read", updated: "3 days ago" },
+              { title: "Setting up Two-Factor Authentication (2FA) for your account", read: "3 min read", updated: "Yesterday" },
+              { title: "Linking third-party console accounts (PlayStation/Xbox/Switch)", read: "5 min read", updated: "2 weeks ago" }
+            ]
+          },
+          billing: {
+            catTitle: "Billing & Purchases",
+            articles: [
+              { title: "Refund Policy for in-game purchases and bundles", read: "4 min read", updated: "1 week ago" },
+              { title: "Troubleshooting failed transactions and billing errors", read: "6 min read", updated: "5 days ago" }
+            ]
+          },
+          content: {
+            catTitle: "In-Game Content",
+            articles: [
+              { title: "Season pass rewards and weekly challenge guides", read: "5 min read", updated: "4 days ago" },
+              { title: "Missing virtual items or quest rewards troubleshooting", read: "3 min read", updated: "2 days ago" },
+              { title: "Patch notes detail list and balance changes", read: "8 min read", updated: "Yesterday" }
+            ]
+          },
+          report: {
+            catTitle: "Report a Player",
+            articles: [
+              { title: "Submitting reports for toxic chat, griefing, or cheating", read: "3 min read", updated: "3 days ago" },
+              { title: "Ban appeals policy and security review procedure", read: "5 min read", updated: "1 week ago" }
+            ]
+          },
+          community: {
+            catTitle: "Community Support",
+            articles: [
+              { title: "Joining official Discord channels and community guidelines", read: "2 min read", updated: "Yesterday" },
+              { title: "Finding player-driven wikis, fansites, and tournaments", read: "4 min read", updated: "1 week ago" }
+            ]
+          }
+        };
+        
+        const catData = categoryData[category] || categoryData.technical;
+        const art = catData.articles[articleIdx] || catData.articles[0];
+
+        // Update Title
+        const h1 = document.querySelector('h1');
+        if (h1) h1.textContent = art.title;
+        
+        // Update breadcrumbs
+        const breadcrumbLinks = document.querySelectorAll('nav.flex.items-center a');
+        if (breadcrumbLinks.length >= 2) {
+          breadcrumbLinks[1].textContent = catData.catTitle;
+          breadcrumbLinks[1].addEventListener('click', (e) => {
+            e.preventDefault();
+            navigateTo('knowledge-base-category.html?category=' + category);
+          });
+        }
+        
+        // Update back button
+        const backBtn = document.querySelector('button:has(.material-symbols-outlined)') || document.querySelector('button:contains("Back")') || document.querySelectorAll('button')[0];
+        if (backBtn) {
+          backBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            navigateTo('knowledge-base-category.html?category=' + category);
+          });
+        }
+      }
+
+      // live-chat.html
+      if (file.includes('live-chat')) {
+        document.querySelectorAll('button, a').forEach(el => {
+          const text = el.textContent || '';
+          if (text.toLowerCase().includes('end') || text.toLowerCase().includes('kết thúc') || text.toLowerCase().includes('close') || text.toLowerCase().includes('home') || text.toLowerCase().includes('thoát')) {
+            el.addEventListener('click', (e) => { e.preventDefault(); navigateTo('index.html'); });
+          }
+        });
+      }
+    });
+  })();
+</script>
+
+</body></html>

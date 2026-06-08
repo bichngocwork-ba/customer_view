@@ -1,0 +1,1332 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Knowledge Base - Game Support</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="supabase-config.js"></script>
+<script>
+  checkAuth();
+</script>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .prose-content {
+            line-height: 1.8;
+        }
+        .shadow-soft {
+            box-shadow: 0px 4px 20px rgba(0,0,0,0.05);
+        }
+    </style>
+            <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "tertiary-fixed": "#e0e3e5",
+                        "tertiary-container": "#a2a5a7",
+                        "on-secondary-container": "#606366",
+                        "error": "#ba1a1a",
+                        "primary-container": "#2563eb",
+                        "on-error-container": "#93000a",
+                        "on-background": "#141d23",
+                        "background": "#f6faff",
+                        "on-secondary-fixed-variant": "#44474a",
+                        "tertiary": "#5c5f61",
+                        "on-primary-fixed": "#00174b",
+                        "error-container": "#ffdad6",
+                        "tertiary-fixed-dim": "#c4c7c9",
+                        "surface-variant": "#dbe4ed",
+                        "outline": "#6d797e",
+                        "on-primary": "#ffffff",
+                        "on-tertiary-fixed": "#191c1e",
+                        "on-tertiary": "#ffffff",
+                        "secondary-fixed-dim": "#c5c6ca",
+                        "secondary-fixed": "#e1e2e6",
+                        "surface-tint": "#0053db",
+                        "on-surface": "#141d23",
+                        "inverse-primary": "#b4c5ff",
+                        "outline-variant": "#bcc9ce",
+                        "secondary-container": "#dee0e4",
+                        "primary": "#004ac6",
+                        "primary-fixed": "#dbe1ff",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-dim": "#d2dbe4",
+                        "on-tertiary-container": "#383b3d",
+                        "on-surface-variant": "#3d494d",
+                        "surface-container": "#e6eff8",
+                        "inverse-surface": "#293138",
+                        "on-secondary": "#ffffff",
+                        "on-primary-container": "#eeefff",
+                        "secondary": "#5c5f62",
+                        "surface-container-highest": "#dbe4ed",
+                        "primary-fixed-dim": "#b4c5ff",
+                        "surface-container-low": "#ecf5fe",
+                        "on-secondary-fixed": "#191c1f",
+                        "on-primary-fixed-variant": "#003ea8",
+                        "inverse-on-surface": "#e9f2fb",
+                        "on-error": "#ffffff",
+                        "surface": "#f6faff",
+                        "surface-container-high": "#e0e9f2",
+                        "on-tertiary-fixed-variant": "#444749",
+                        "surface-bright": "#f6faff",
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "2xl": "1rem",
+                        "full": "9999px"
+                    },
+                    spacing: {
+                        "xl": "48px",
+                        "sm": "16px",
+                        "base": "4px",
+                        "md": "24px",
+                        "gutter": "24px",
+                        "xs": "8px",
+                        "container-max": "1440px",
+                        "lg": "32px"
+                    },
+                    fontFamily: {
+                        "sans": ["Inter", "sans-serif"],
+                        "headline": ["Inter", "sans-serif"]
+                    }
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-[#f6faff] text-on-surface font-body-md">
+<!-- SideNavBar -->
+<!-- CONSISTENT TOP BAR (RIOT STYLE) -->
+<header id="topbar-shell" class="h-[56px] bg-[#f3f7fc] border-b border-[#c3c6d7]/50 flex items-center justify-between px-6 z-50 fixed top-0 left-0 right-0">
+  <!-- Left Logo -->
+  <div class="flex items-center gap-3">
+    <div class="flex items-center gap-2 cursor-pointer" onclick="navigateTo('index.html')">
+      <svg class="w-8 h-8 text-[#004ac6] fill-current" viewBox="0 0 24 24" style="color: #004ac6; fill: #004ac6;"><path d="M21 6H3c-1.1 0-2 .9-2 2v8c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm-10 7H8v3H6v-3H3v-2h3V8h2v3h3v2zm4.5 3c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zm3-3c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/></svg>
+    </div>
+  </div>
+  
+  <!-- Center Navigation Links -->
+  <nav class="flex items-center gap-6">
+    <a id="nav-item-horiz-home" onclick="navigateTo('index.html')" class="text-slate-500 hover:text-[#004ac6] text-[12px] font-bold tracking-wider cursor-pointer py-4 uppercase transition-all">HOME</a>
+    <a id="nav-item-horiz-kb" onclick="navigateTo('knowledge-base.html')" class="text-[#004ac6] text-[12px] font-bold tracking-wider cursor-pointer py-4 uppercase transition-all">KNOWLEDGE BASE</a>
+    <a id="nav-item-horiz-submit" onclick="navigateTo('submit-ticket.html')" class="text-slate-500 hover:text-[#004ac6] text-[12px] font-bold tracking-wider cursor-pointer py-4 uppercase transition-all">SUBMIT A TICKET</a>
+    <a id="nav-item-horiz-tickets" onclick="navigateTo('tickets.html')" class="text-slate-500 hover:text-[#004ac6] text-[12px] font-bold tracking-wider cursor-pointer py-4 uppercase transition-all">MY TICKETS</a>
+  </nav>
+  
+  <!-- Right Actions -->
+  <div class="flex items-center gap-4">
+    <div class="text-slate-500 hover:text-slate-800 cursor-pointer flex items-center transition-colors" onclick="alert('English')" title="Select Language">
+      <span class="material-symbols-outlined">language</span>
+    </div>
+    
+    <div class="h-5 w-[1px] bg-slate-300 mx-1"></div>
+    
+    <div class="flex items-center gap-2 py-1.5 px-4 bg-[#e2edf8] border border-[#cbd5e1] rounded-full cursor-pointer hover:bg-[#d2e3fc] hover:border-[#b0c6f1] transition-all" onclick="logout()" title="Log Out">
+      <span class="material-symbols-outlined text-[#004ac6] text-[18px]">account_circle</span>
+      <span class="text-slate-700 text-[12px] font-semibold animate-pulse" id="user-display-name">...</span>
+      <span class="material-symbols-outlined text-slate-500 text-[16px] hover:text-red-500 flex items-center">logout</span>
+    </div>
+  </div>
+</header>
+<!-- TopAppBar - Removed as requested -->
+<!-- Main Content Area -->
+<main class="pt-[56px] min-h-screen bg-[#f6faff]">
+<div class="max-w-[800px] mx-auto py-12 px-gutter">
+<!-- Sub-navigation -->
+<div class="mb-10 flex items-center justify-between">
+<button class="flex items-center gap-2 text-primary text-xs font-bold border border-outline-variant/40 px-3 py-1.5 rounded-lg text-xs font-bold hover:bg-surface-container shadow-sm transition-all rounded-lg hover:bg-on-primary-container transition-all" onclick="window.parent.postMessage({ type: 'NAVIGATE', to: 'knowledge-base-category.html' }, '*')">
+<span class="material-symbols-outlined text-lg">arrow_back</span>
+                    Back to Category
+                </button>
+</div>
+<!-- Header Section -->
+<article>
+<header class="mb-10">
+<h1 class="font-headline font-extrabold text-xl text-on-surface mb-sm tracking-tight">
+                        ...
+                    </h1>
+<div class="flex flex-wrap items-center gap-x-6 gap-y-2 text-on-surface-variant text-[11px] text-on-surface-variant">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-base">support_agent</span>
+                            Support Team
+                        </div>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-base">update</span>
+                            Updated: ...
+                        </div>
+<div class="flex items-center gap-2 px-3 py-1 bg-surface-container-high rounded-full text-[10px] font-bold uppercase tracking-wider">
+<span class="material-symbols-outlined text-base">visibility</span>
+                            ... views
+                        </div>
+</div>
+</header></article>
+<!-- Body Section -->
+<div class="prose-content text-on-surface font-body-md space-y-8">
+  <div class="text-center py-12 text-on-surface-variant bg-white border border-outline-variant rounded-xl shadow-sm">
+    <span class="material-symbols-outlined animate-spin text-primary text-3xl">progress_activity</span>
+    <p class="mt-2 text-xs font-semibold text-slate-500 uppercase tracking-wider">Đang tải nội dung bài viết...</p>
+  </div>
+</div>
+<!-- Feedback Widget -->
+<section class="mt-16 pt-12 border-t border-outline-variant text-center">
+<p class="font-bold text-sm uppercase tracking-wider text-primary text-on-surface mb-6">Was this article helpful?</p>
+<div class="flex justify-center gap-4">
+<button class="flex items-center gap-2 px-8 py-3 bg-white border border-outline-variant text-on-surface rounded-lg text-xs font-bold hover:border-primary hover:text-primary transition-all shadow-sm">
+<span class="material-symbols-outlined text-xl">thumb_up</span>
+                            Yes
+                        </button>
+<button class="flex items-center gap-2 px-8 py-3 bg-white border border-outline-variant text-on-surface rounded-lg text-xs font-bold hover:border-primary hover:text-primary transition-all shadow-sm">
+<span class="material-symbols-outlined text-xl">thumb_down</span>
+                            No
+                        </button>
+</div>
+</section>
+<!-- CTA Footer (Authority: Style Guidance Buttons) -->
+<section class="mt-20 bg-surface-container-low rounded-2xl p-10 text-center border border-outline-variant">
+<h3 class="font-bold text-sm uppercase tracking-wider text-primary mb-2">Still need help?</h3>
+<p class="text-on-surface-variant mb-8 max-w-md mx-auto">Our support team is available 24/7 to assist with technical difficulties and account issues.</p>
+<div class="flex flex-col sm:flex-row justify-center gap-4">
+<button class="bg-primary text-on-primary px-8 py-3 rounded-lg text-xs font-bold hover:bg-primary-container transition-all flex items-center justify-center gap-2">
+<span class="material-symbols-outlined">send</span>
+                        Submit a Ticket
+                    </button>
+<button class="bg-white border border-outline-variant text-primary px-8 py-3 rounded-lg text-xs font-bold hover:bg-surface-container-high transition-all flex items-center justify-center gap-2">
+<span class="material-symbols-outlined">chat_bubble</span>
+                        Start Live Chat
+                    </button>
+</div>
+</section>
+</div>
+
+</main>
+<!-- Footer (Authority: JSON) -->
+
+<script>
+        // Micro-interactions for buttons
+        document.querySelectorAll('button').forEach(btn => {
+            btn.addEventListener('click', function() {
+                this.classList.add('scale-95');
+                setTimeout(() => this.classList.remove('scale-95'), 100);
+            });
+        });
+
+        // Feedback tracking simulation
+        const feedbackBtns = document.querySelectorAll('button:has(.material-symbols-outlined)');
+        feedbackBtns.forEach(btn => {
+            if (btn.innerText.includes('Yes') || btn.innerText.includes('No')) {
+                btn.addEventListener('click', () => {
+                    const parent = btn.parentElement;
+                    parent.innerHTML = `<div class="bg-primary-container text-on-primary-container px-6 py-3 rounded-lg font-label-md animate-pulse">Thank you for your feedback!</div>`;
+                });
+            }
+        });
+
+        document.addEventListener('DOMContentLoaded', async () => {
+            const user = getCurrentUser();
+            if (user) {
+                const nameEl = document.getElementById('user-display-name');
+                if (nameEl) nameEl.textContent = user.full_name;
+            }
+
+            const urlParams = new URLSearchParams(window.location.search);
+            const articleId = urlParams.get('id');
+
+            const client = getSupabase();
+            if (!client) return;
+
+            const h1 = document.querySelector('h1');
+            const breadcrumbBtn = document.querySelector('button:has(.material-symbols-outlined)');
+            const contentContainer = document.querySelector('.prose-content');
+            
+            let lastUpdatedEl = null;
+            let viewsEl = null;
+            document.querySelectorAll('div.flex.items-center.gap-2').forEach(el => {
+                const text = el.textContent || '';
+                if (text.includes('Last updated') || text.includes('updated') || text.includes('Cập nhật')) {
+                    lastUpdatedEl = el;
+                } else if (text.includes('read') || text.includes('view') || text.includes('views')) {
+                    viewsEl = el;
+                }
+            });
+
+            if (!articleId) {
+                if (contentContainer) contentContainer.innerHTML = '<p class="text-error">Article not found.</p>';
+                return;
+            }
+
+            try {
+                // Fetch article details
+                const { data: article, error } = await client
+                    .from('knowledge_base_articles')
+                    .select('*')
+                    .eq('id', articleId)
+                    .single();
+
+                if (error || !article) {
+                    console.error("Error loading article:", error);
+                    if (contentContainer) contentContainer.innerHTML = '<p class="text-error">Error loading article content.</p>';
+                    return;
+                }
+
+                // Update UI
+                if (h1) h1.textContent = article.title;
+                if (contentContainer) {
+                    // Replace literal \n string representations with actual newline characters
+                    let cleanContent = article.content.replace(/\\n/g, '\n');
+                    if (cleanContent.includes('<p>') || cleanContent.includes('<div>') || cleanContent.includes('<ul>')) {
+                        contentContainer.innerHTML = cleanContent;
+                    } else {
+                        contentContainer.innerHTML = cleanContent.split('\n').map(p => p.trim() ? `<p class="mb-4">${p}</p>` : '').join('');
+                    }
+                }
+
+                if (lastUpdatedEl) {
+                    lastUpdatedEl.innerHTML = `<span class="material-symbols-outlined text-base">update</span> Updated: ${new Date(article.updated_at).toLocaleDateString('en-US')}`;
+                }
+
+                if (viewsEl) {
+                    viewsEl.innerHTML = `<span class="material-symbols-outlined text-base">visibility</span> ${article.view_count || 0} views`;
+                }
+
+                // Setup back button
+                if (breadcrumbBtn) {
+                    breadcrumbBtn.innerHTML = `<span class="material-symbols-outlined text-lg">arrow_back</span> Back to Category`;
+                    breadcrumbBtn.onclick = (e) => {
+                        e.preventDefault();
+                        const targetUrl = `knowledge-base-category.html?category=${encodeURIComponent(article.category)}`;
+                        if (window.navigateTo) {
+                            window.navigateTo(targetUrl);
+                        } else {
+                            window.location.href = targetUrl;
+                        }
+                    };
+                }
+
+                // Increment view count
+                await client
+                    .from('knowledge_base_articles')
+                    .update({ view_count: (article.view_count || 0) + 1 })
+                    .eq('id', articleId);
+
+            } catch (err) {
+                console.error("Unhandled error:", err);
+            }
+        });
+    </script>
+
+
+<!-- INTERACTIVE PREVIEW HELPER (DO NOT REMOVE) -->
+<script id="interactive-preview-helper">
+  (function() {
+    let isInsideIframe = false;
+    try {
+      isInsideIframe = (window.self !== window.top);
+    } catch (e) {
+      isInsideIframe = true;
+    }
+    
+    window.navigateTo = function(target) {
+      if (isInsideIframe) {
+        window.parent.postMessage({ type: 'NAVIGATE', to: target }, '*');
+      } else {
+        window.location.href = target;
+      }
+    };
+    
+    /* Run in both iframe and standalone modes */
+
+    // Bind click events on elements based on the current page URL/filename
+    document.addEventListener('DOMContentLoaded', () => {
+      // Global navigation hooks for any page
+      document.querySelectorAll('button, a').forEach(el => {
+        const text = (el.textContent || '').trim().toLowerCase();
+        if (text.includes('open a support ticket') || 
+            text.includes('submit a support ticket') || 
+            text.includes('create new ticket') ||
+            text.includes('new support case') ||
+            text.includes('submit a ticket')) {
+          el.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            navigateTo('submit-ticket.html');
+          });
+        } else if (text.includes('live chat now') || 
+                   text.includes('start live chat')) {
+          el.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            navigateTo('live-chat.html');
+          });
+        }
+      });
+      const path = window.location.pathname;
+      const file = path.substring(path.lastIndexOf('/') + 1);
+
+      // login.html
+      if (file.includes('login')) {
+        const form = document.querySelector('form');
+        if (form) {
+          form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            navigateTo('index.html');
+          });
+        }
+        const loginBtn = document.querySelector('button[type="submit"]');
+        if (loginBtn) {
+          loginBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            navigateTo('index.html');
+          });
+        }
+      }
+
+      // index.html
+      if (file.includes('index')) {
+        document.querySelectorAll('button, a, div.group').forEach(el => {
+          const text = el.textContent || '';
+          if (text.includes('Start Live Chat') || text.includes('Trò chuyện')) {
+            el.addEventListener('click', (e) => { e.preventDefault(); e.stopPropagation(); navigateTo('live-chat.html'); });
+          } else if (text.includes('Open a Ticket') || text.includes('Gửi yêu cầu') || text.includes('Submit A Ticket') || text.includes('New Support Case')) {
+            el.addEventListener('click', (e) => { e.preventDefault(); e.stopPropagation(); navigateTo('submit-ticket.html'); });
+          } else if (text.includes('Technical Issues') || text.includes('Lỗi Kỹ thuật')) {
+            el.addEventListener('click', (e) => { e.preventDefault(); e.stopPropagation(); navigateTo('knowledge-base-category.html?category=technical'); });
+          } else if (text.includes('Account & Security') || text.includes('Tài khoản & Bảo mật')) {
+            el.addEventListener('click', (e) => { e.preventDefault(); e.stopPropagation(); navigateTo('knowledge-base-category.html?category=account'); });
+          } else if (text.includes('Billing & Purchases') || text.includes('Thanh toán')) {
+            el.addEventListener('click', (e) => { e.preventDefault(); e.stopPropagation(); navigateTo('knowledge-base-category.html?category=billing'); });
+          }
+        });
+      }
+
+      // submit-ticket.html
+      if (file.includes('submit-ticket')) {
+        const form = document.querySelector('form');
+        if (form) {
+          form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            navigateTo('ticket-confirmation.html');
+          });
+        }
+        const submitBtn = document.querySelector('button[type="submit"]');
+        if (submitBtn) {
+          submitBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            navigateTo('ticket-confirmation.html');
+          });
+        }
+      }
+
+      // ticket-confirmation.html
+      if (file.includes('ticket-confirmation')) {
+        document.querySelectorAll('button, a').forEach(el => {
+          const text = el.textContent || '';
+          if (text.toLowerCase().includes('view') || text.toLowerCase().includes('xem') || text.toLowerCase().includes('ticket')) {
+            el.addEventListener('click', (e) => { e.preventDefault(); navigateTo('ticket-detail.html'); });
+          } else if (text.toLowerCase().includes('home') || text.toLowerCase().includes('chủ') || text.toLowerCase().includes('quay lại')) {
+            el.addEventListener('click', (e) => { e.preventDefault(); navigateTo('index.html'); });
+          }
+        });
+      }
+
+      // tickets.html
+      if (file.includes('tickets')) {
+        document.querySelectorAll('tr, li, div.cursor-pointer, .border-outline-variant').forEach(el => {
+          if (el.textContent.includes('TK-') || el.textContent.includes('Ticket') || el.textContent.includes('Yêu cầu')) {
+            el.addEventListener('click', (e) => {
+              e.preventDefault();
+              navigateTo('ticket-detail.html');
+            });
+          }
+        });
+      }
+
+      // ticket-detail.html
+      if (file.includes('ticket-detail')) {
+        document.querySelectorAll('a, button').forEach(el => {
+          const text = el.textContent || '';
+          if (text.toLowerCase().includes('back') || text.toLowerCase().includes('quay lại') || text.toLowerCase().includes('danh sách')) {
+            el.addEventListener('click', (e) => { e.preventDefault(); navigateTo('tickets.html'); });
+          }
+        });
+      }
+
+      // knowledge-base.html
+      if (file.includes('knowledge-base')) {
+        // Setup View all 12 categories button interaction
+        const viewAllBtn = document.getElementById('view-all-categories-btn');
+        const grid = document.getElementById('categories-grid');
+        if (viewAllBtn && grid) {
+          viewAllBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            
+            // Check if cards already added
+            if (document.getElementById('added-card-7')) {
+              // Toggle off
+              for (let i = 7; i <= 12; i++) {
+                const card = document.getElementById('added-card-' + i);
+                if (card) card.remove();
+              }
+              viewAllBtn.innerHTML = 'View all 12 categories <span class="material-symbols-outlined text-sm">arrow_forward</span>';
+              return;
+            }
+            
+            // Append 6 new categories
+            const extraCategories = [
+              { id: 7, title: "Game Downloads & Updates", icon: "download", count: 2, bg: "#E0F7FA", desc: "Troubleshoot patcher loops, file verification, launcher freezes, and download speed optimization." },
+              { id: 8, title: "Esports & Tournaments", icon: "emoji_events", count: 2, bg: "#FFF9C4", desc: "Get schedules, team statistics, reward drops, ticket bookings, and tournament rules." },
+              { id: 9, title: "Merchandise Support", icon: "shopping_bag", count: 2, bg: "#F5F5F5", desc: "Inquire about clothing apparel sizes, order shipping status, tracking numbers, and damage refunds." },
+              { id: 10, title: "Creator Partner Program", icon: "video_camera_front", count: 2, bg: "#E1BEE7", desc: "How to join our creator network, access early updates, custom overlays, and monetization benefits." },
+              { id: 11, title: "Localization & Language", icon: "translate", count: 2, bg: "#DCEDC8", desc: "Change in-game audio dubbing, client text translation, regional settings, and server transfers." },
+              { id: 12, title: "Feedback & Suggestions", icon: "rate_review", count: 2, bg: "#FFE0B2", desc: "Submit game ideas directly to designers, vote on feature requests, and report in-game bugs." }
+            ];
+            
+            extraCategories.forEach(cat => {
+              const card = document.createElement('div');
+              card.id = 'added-card-' + cat.id;
+              card.className = 'category-card bg-white border border-[#E0E0E0] rounded-[12px] p-8 transition-all duration-300 flex flex-col group cursor-pointer';
+              card.innerHTML = `
+                <div class="flex justify-between items-start mb-6">
+                  <div class="w-14 h-14 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300" style="background-color: ${cat.bg};">
+                    <span class="material-symbols-outlined text-primary text-3xl">${cat.icon}</span>
+                  </div>
+                  <span class="text-[10px] font-bold uppercase tracking-wider text-tertiary-container bg-surface-container-low px-2 py-1 rounded">${cat.count} Articles</span>
+                </div>
+                <h3 class="font-bold text-sm uppercase tracking-wider text-primary text-on-surface mb-3 group-hover:text-primary transition-colors">${cat.title}</h3>
+                <p class="text-xs text-on-surface-variant text-on-surface-variant flex-1">${cat.desc}</p>
+                <div class="mt-6 pt-6 border-t border-outline-variant flex items-center text-primary text-xs font-bold opacity-0 group-hover:opacity-100 transition-opacity">
+                  Explore category guides
+                  <span class="material-symbols-outlined ml-2">chevron_right</span>
+                </div>
+              `;
+              
+              // Bind click to the card
+              card.addEventListener('click', (ev) => {
+                ev.preventDefault();
+                navigateTo('knowledge-base-category.html?category=technical'); // Default mock redirect
+              });
+              
+              grid.appendChild(card);
+            });
+            
+            viewAllBtn.innerHTML = 'Show less categories <span class="material-symbols-outlined text-sm">arrow_back</span>';
+          });
+        }
+
+        // Bind main categories
+        document.querySelectorAll('.category-card').forEach(el => {
+          const text = el.textContent || '';
+          let catQuery = 'technical';
+          if (text.includes('Technical Issues')) catQuery = 'technical';
+          else if (text.includes('Account & Security')) catQuery = 'account';
+          else if (text.includes('Billing & Purchases')) catQuery = 'billing';
+          else if (text.includes('In-Game Content')) catQuery = 'content';
+          else if (text.includes('Report a Player')) catQuery = 'report';
+          else if (text.includes('Community Support')) catQuery = 'community';
+          
+          el.addEventListener('click', (e) => {
+            e.preventDefault();
+            navigateTo('knowledge-base-category.html?category=' + catQuery);
+          });
+        });
+      }
+
+      // knowledge-base-category.html (Dynamic categories content rendering)
+      if (file.includes('knowledge-base-category')) {
+        const urlParams = new URLSearchParams(window.location.search);
+        const category = urlParams.get('category') || 'technical';
+        
+        const categoryData = {
+          technical: {
+            title: "Technical Issues",
+            desc: "Find solutions for crashes, lag, installation errors, and performance optimization.",
+            icon: "settings",
+            bg: "#E0F2F1",
+            articles: [
+              { title: "How to fix random client crashes after patch v11.2", desc: "Some users are experiencing unexpected crashes when entering matchmade games. Follow these steps to verify your local files and reset your shader cache.", read: "3 min read", updated: "2 days ago" },
+              { title: "Resolving high latency and packet loss issues", desc: "If you are seeing the yellow network warning icon, your connection might be experiencing instability. Check our recommended DNS settings.", read: "5 min read", updated: "1 week ago" },
+              { title: "Installation stuck at 99% - Comprehensive Guide", desc: "Common troubleshooting steps for the 'Finalizing...' stage of the installation process including disk space management and antivirus exceptions.", read: "4 min read", updated: "3 days ago" },
+              { title: "NVIDIA/AMD Driver Compatibility List", desc: "Ensure your graphics card drivers are optimized for the latest seasonal update to prevent visual glitches and stuttering.", read: "2 min read", updated: "Yesterday" }
+            ]
+          },
+          account: {
+            title: "Account & Security",
+            desc: "Manage your profile, password recovery, two-factor authentication, and account linking.",
+            icon: "security",
+            bg: "#2170e4",
+            articles: [
+              { title: "How to recover your password and security questions", desc: "Forgot your password or locked out? Here is the step-by-step guide to verifying your ownership and resetting your security credentials.", read: "4 min read", updated: "3 days ago" },
+              { title: "Setting up Two-Factor Authentication (2FA) for your account", desc: "Protect your account from unauthorized access by setting up 2FA using email, SMS, or an authenticator app.", read: "3 min read", updated: "Yesterday" },
+              { title: "Linking third-party console accounts (PlayStation/Xbox/Switch)", desc: "Step-by-step guide to cross-play account linking, progression syncing, and troubleshooting common link errors.", read: "5 min read", updated: "2 weeks ago" }
+            ]
+          },
+          billing: {
+            title: "Billing & Purchases",
+            desc: "Questions about payment methods, refund requests, and premium currencies.",
+            icon: "payments",
+            bg: "#dbe1ff",
+            articles: [
+              { title: "Refund Policy for in-game purchases and bundles", desc: "Understand our refund rules for digital skins, battle passes, and virtual currency packages before submitting a request.", read: "4 min read", updated: "1 week ago" },
+              { title: "Troubleshooting failed transactions and billing errors", desc: "If your transaction failed but you were charged, or you are seeing error code B-102, read these solutions.", read: "6 min read", updated: "5 days ago" }
+            ]
+          },
+          content: {
+            title: "In-Game Content",
+            desc: "Guides for seasons, event schedules, item descriptions, and mechanics.",
+            icon: "sports_esports",
+            bg: "#d4e3ff",
+            articles: [
+              { title: "Season pass rewards and weekly challenge guides", desc: "View the full catalog of rewards for this season and learn the most efficient ways to complete your active weekly quests.", read: "5 min read", updated: "4 days ago" },
+              { title: "Missing virtual items or quest rewards troubleshooting", desc: "If you completed a challenge or made a purchase but did not receive the items in your inventory, follow these sync steps.", read: "3 min read", updated: "2 days ago" },
+              { title: "Patch notes detail list and balance changes", desc: "Review the full developer notes for the latest game balance update, character adjustments, and system bug fixes.", read: "8 min read", updated: "Yesterday" }
+            ]
+          },
+          report: {
+            title: "Report a Player",
+            desc: "Learn how to report toxicity, cheating, or harassment.",
+            icon: "flag",
+            bg: "#FFDAD6",
+            articles: [
+              { title: "Submitting reports for toxic chat, griefing, or cheating", desc: "Help us keep matches fair and friendly. Learn how to capture evidence and file player reports in-game or via portal.", read: "3 min read", updated: "3 days ago" },
+              { title: "Ban appeals policy and security review procedure", desc: "If your account was restricted or suspended, understand the review process, code of conduct, and how to file a valid appeal.", read: "5 min read", updated: "1 week ago" }
+            ]
+          },
+          community: {
+            title: "Community Support",
+            desc: "Connect with our community forums, join discord servers, and wikis.",
+            icon: "forum",
+            bg: "#d8e2ff",
+            articles: [
+              { title: "Joining official Discord channels and community guidelines", desc: "Get in touch with other players, find groups, and chat directly with community managers in our official server.", read: "2 min read", updated: "Yesterday" },
+              { title: "Finding player-driven wikis, fansites, and tournaments", desc: "A curated list of community resources, strategic guides, gameplay wikis, and player-run competitive tournaments.", read: "4 min read", updated: "1 week ago" }
+            ]
+          }
+        };
+
+        const data = categoryData[category] || categoryData.technical;
+
+        // Update title and subtitle
+        const h1 = document.querySelector('h1');
+        if (h1) h1.textContent = data.title;
+        const pDesc = h1?.nextElementSibling;
+        if (pDesc) pDesc.textContent = data.desc;
+        
+        // Update breadcrumb
+        const breadcrumbCat = document.querySelector('span.text-primary.font-bold') || document.querySelector('.breadcrumbs span:last-child');
+        if (breadcrumbCat) breadcrumbCat.textContent = data.title;
+
+        // Render articles list
+        const section = document.querySelector('section.space-y-4');
+        if (section) {
+          section.innerHTML = '';
+          data.articles.forEach((art, aIdx) => {
+            const card = document.createElement('div');
+            card.className = 'article-card group bg-white border border-outline-variant rounded-xl p-6 transition-all hover:border-primary-container cursor-pointer';
+            card.innerHTML = `
+              <div class="flex justify-between items-start">
+                <div class="space-y-2 flex-1 pr-md">
+                  <h4 class="font-bold text-sm uppercase tracking-wider text-primary text-on-surface transition-colors">${art.title}</h4>
+                  <p class="text-xs text-on-surface-variant text-on-surface-variant max-w-3xl">${art.desc}</p>
+                  <div class="flex items-center gap-3 pt-2">
+                    <span class="text-[10px] font-bold uppercase tracking-wider text-tertiary">${art.read}</span>
+                    <span class="w-1.5 h-1.5 rounded-full bg-outline-variant"></span>
+                    <span class="text-[10px] font-bold uppercase tracking-wider text-tertiary">Updated ${art.updated}</span>
+                  </div>
+                </div>
+                <span class="material-symbols-outlined text-outline-variant group-hover:text-primary transition-colors shrink-0">chevron_right</span>
+              </div>
+            `;
+            
+            // Add click navigation to detail page
+            card.addEventListener('click', (e) => {
+              e.preventDefault();
+              navigateTo('knowledge-base-detail.html?category=' + category + '&article=' + aIdx);
+            });
+            section.appendChild(card);
+          });
+        }
+        
+        // Add click navigation to "Back to Categories" button
+        const backBtn = document.querySelector('button:has(.material-symbols-outlined)') || document.querySelector('button:contains("Back")') || document.querySelectorAll('button')[0];
+        if (backBtn) {
+          backBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            navigateTo('knowledge-base.html');
+          });
+        }
+      }
+
+      // knowledge-base-detail.html (Dynamic articles content rendering)
+      if (file.includes('knowledge-base-detail')) {
+        const urlParams = new URLSearchParams(window.location.search);
+        const category = urlParams.get('category') || 'technical';
+        const articleIdx = parseInt(urlParams.get('article') || '0', 10);
+        
+        const categoryData = {
+          technical: {
+            catTitle: "Technical Issues",
+            articles: [
+              { 
+                title: "How to fix random client crashes after patch v11.2", 
+                read: "3 min read", 
+                updated: "2 days ago",
+                body: `
+                  <p class="text-body-lg font-body-lg text-on-surface-variant">
+                    We are aware of reports regarding intermittent client stability issues following the release of patch v11.2. Our engineering team is currently investigating the root cause, but several temporary workarounds have shown high success rates in resolving these crashes.
+                  </p>
+                  <section class="space-y-4">
+                    <h2 class="font-bold text-sm uppercase tracking-wider text-primary text-on-surface pt-4">1. Clear Shader Cache</h2>
+                    <p>Most reported crashes are tied to corrupted shader data. To refresh your cache, follow these steps:</p>
+                    <ul class="list-disc pl-6 space-y-3">
+                      <li>Navigate to the game's installation directory.</li>
+                      <li>Open the <strong>/engine_data/cache</strong> folder.</li>
+                      <li>Delete all files ending in <strong>.cache</strong>.</li>
+                      <li>Restart your PC before launching the game client.</li>
+                    </ul>
+                  </section>
+                  <div class="bg-surface-container/40 border-l-4 border-primary p-md rounded-lg border border-outline-variant/30 my-md">
+                    <div class="flex gap-4">
+                      <span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">info</span>
+                      <div>
+                        <h4 class="text-xs font-bold text-primary mb-1">Important Note</h4>
+                        <p class="text-on-secondary-container text-[11px] text-on-surface-variant">
+                          Do not attempt to delete the entire <strong>/engine_data/</strong> folder, as this contains local configuration settings that are not stored on the cloud. Deleting this will reset your custom keybinds and graphics settings.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                  <section class="space-y-4">
+                    <h3 class="font-bold text-sm uppercase tracking-wider text-primary text-on-surface opacity-90 text-[20px] leading-7 pt-2">2. Update Graphics Drivers</h3>
+                    <p>Patch v11.2 introduces new rendering pipelines that require the latest driver versions from hardware manufacturers. Ensure you have the following versions installed:</p>
+                    <ul class="list-disc pl-6 space-y-3">
+                      <li><strong>NVIDIA:</strong> Version 552.44 or higher.</li>
+                      <li><strong>AMD:</strong> Adrenalin Edition 24.3.1 or higher.</li>
+                    </ul>
+                  </section>
+                `
+              },
+              { 
+                title: "Installation stuck at 99% - Comprehensive Guide", 
+                read: "4 min read", 
+                updated: "3 days ago",
+                body: `
+                  <p class="text-body-lg font-body-lg text-on-surface-variant">
+                    If your installation gets stuck at 99% (Finalizing...), the launcher is usually attempting to unpack compressed assets or is blocked by system permissions.
+                  </p>
+                  <section class="space-y-4">
+                    <h2 class="font-bold text-sm uppercase tracking-wider text-primary text-on-surface pt-4">Troubleshooting:</h2>
+                    <ul class="list-disc pl-6 space-y-3">
+                      <li><strong>Whitelist Game folder:</strong> Add the game's installation folder to your antivirus and Windows Defender exclusions list.</li>
+                      <li><strong>Free up Drive space:</strong> Ensure you have at least 15GB of free space on the destination drive for the unpacking process to complete.</li>
+                      <li><strong>Run as Admin:</strong> Close the launcher fully, then right-click the launcher icon and select 'Run as Administrator'.</li>
+                    </ul>
+                  </section>
+                `
+              },
+              { 
+                title: "NVIDIA/AMD Driver Compatibility List", 
+                read: "2 min read", 
+                updated: "Yesterday",
+                body: `
+                  <p class="text-body-lg font-body-lg text-on-surface-variant">
+                    To prevent visual glitches, flickering, and driver crashes, please ensure your graphics card drivers are updated to the following recommended versions.
+                  </p>
+                  <section class="space-y-4">
+                    <h2 class="font-bold text-sm uppercase tracking-wider text-primary text-on-surface pt-4">Driver Versions:</h2>
+                    <ul class="list-disc pl-6 space-y-3">
+                      <li><strong>NVIDIA GeForce:</strong> Version 552.44 or later (supports game optimization).</li>
+                      <li><strong>AMD Radeon:</strong> Software Adrenalin Edition 24.3.1 or later.</li>
+                      <li><strong>Intel Arc:</strong> Graphics Driver 101.5534 or later.</li>
+                    </ul>
+                  </section>
+                `
+              },
+              { 
+                title: "How to reset your game client cache file", 
+                read: "3 min read", 
+                updated: "2 days ago",
+                body: `
+                  <p class="text-body-lg font-body-lg text-on-surface-variant">
+                    Corrupted temporary cache files can lead to launcher loops or patcher verification errors.
+                  </p>
+                  <section class="space-y-4">
+                    <h2 class="font-bold text-sm uppercase tracking-wider text-primary text-on-surface pt-4">Reset Instructions:</h2>
+                    <ul class="list-disc pl-6 space-y-3">
+                      <li>Close the game client and launcher completely.</li>
+                      <li>Navigate to the game folder and open <strong>/engine_data/cache</strong>.</li>
+                      <li>Delete all files ending in <strong>.cache</strong>.</li>
+                      <li>Restart the launcher to let it download clean configuration files.</li>
+                    </ul>
+                  </section>
+                `
+              }
+            ]
+          },
+          connection: {
+            catTitle: "Connection & Network",
+            articles: [
+              { 
+                title: "Resolving high latency and packet loss issues", 
+                read: "5 min read", 
+                updated: "1 week ago",
+                body: `
+                  <p class="text-body-lg font-body-lg text-on-surface-variant">
+                    If you are experiencing high latency (ping spikes) or packet loss (teleporting in-game), the issue is usually related to local network routing or ISP congestion.
+                  </p>
+                  <section class="space-y-4">
+                    <h2 class="font-bold text-sm uppercase tracking-wider text-primary text-on-surface pt-4">Recommended Steps:</h2>
+                    <ul class="list-disc pl-6 space-y-3">
+                      <li><strong>Use Ethernet:</strong> Avoid gaming on Wi-Fi. A wired connection eliminates local interference.</li>
+                      <li><strong>Change DNS Settings:</strong> Configure your network adapter to use Cloudflare DNS (1.1.1.1 and 1.0.0.1) or Google DNS (8.8.8.8 and 8.8.4.4).</li>
+                      <li><strong>Flush DNS Cache:</strong> Open Command Prompt as Administrator and type <code>ipconfig /flushdns</code>, then press Enter.</li>
+                    </ul>
+                  </section>
+                `
+              },
+              { 
+                title: "Troubleshooting game download speeds and launcher freezes", 
+                read: "4 min read", 
+                updated: "5 days ago",
+                body: `
+                  <p class="text-body-lg font-body-lg text-on-surface-variant">
+                    If your patcher freezes or your download speed drops to 0 B/s, your firewall or proxy configuration may be blocking the download server connection.
+                  </p>
+                  <section class="space-y-4">
+                    <h2 class="font-bold text-sm uppercase tracking-wider text-primary text-on-surface pt-4">Optimizations:</h2>
+                    <ul class="list-disc pl-6 space-y-3">
+                      <li><strong>Run as Admin:</strong> Right-click the launcher and choose 'Run as Administrator' to grant write permissions.</li>
+                      <li><strong>Disable Proxies:</strong> Go to Windows Settings > Network > Proxy, and turn off 'Automatically detect settings'.</li>
+                      <li><strong>Check Ports:</strong> Ensure TCP ports 80, 443, and 8080 are forwarded in your router settings.</li>
+                    </ul>
+                  </section>
+                `
+              }
+            ]
+          },
+          account: {
+            catTitle: "Account & Security",
+            articles: [
+              { 
+                title: "How to recover your password and security questions", 
+                read: "4 min read", 
+                updated: "3 days ago",
+                body: `
+                  <p class="text-body-lg font-body-lg text-on-surface-variant">
+                    Locked out of your account? Follow this guide to securely recover your credentials.
+                  </p>
+                  <section class="space-y-4">
+                    <h2 class="font-bold text-sm uppercase tracking-wider text-primary text-on-surface pt-4">Recovery Steps:</h2>
+                    <ul class="list-disc pl-6 space-y-3">
+                      <li>Visit the Account Recovery portal.</li>
+                      <li>Enter your registered email address to receive a recovery link.</li>
+                      <li>If you have 2FA enabled, enter the OTP from your authenticator app.</li>
+                      <li>Answer your pre-configured security questions to reset your password.</li>
+                    </ul>
+                  </section>
+                `
+              },
+              { 
+                title: "Setting up Two-Factor Authentication (2FA) for your account", 
+                read: "3 min read", 
+                updated: "Yesterday",
+                body: `
+                  <p class="text-body-lg font-body-lg text-on-surface-variant">
+                    We highly recommend enabling 2FA to protect your account skins, levels, and payment details from unauthorized access.
+                  </p>
+                  <section class="space-y-4">
+                    <h2 class="font-bold text-sm uppercase tracking-wider text-primary text-on-surface pt-4">Setup Guide:</h2>
+                    <ul class="list-disc pl-6 space-y-3">
+                      <li>Log in and navigate to Settings > Security.</li>
+                      <li>Click 'Enable Two-Factor Authentication'.</li>
+                      <li>Scan the QR code using Google Authenticator, Microsoft Authenticator, or Authy.</li>
+                      <li>Save the generated backup recovery codes in a safe place.</li>
+                    </ul>
+                  </section>
+                `
+              },
+              { 
+                title: "Linking third-party console accounts (PlayStation/Xbox/Switch)", 
+                read: "5 min read", 
+                updated: "2 weeks ago",
+                body: `
+                  <p class="text-body-lg font-body-lg text-on-surface-variant">
+                    Sync your progress, cosmetic items, and virtual currency across PC, PlayStation, Xbox, and Nintendo Switch.
+                  </p>
+                  <section class="space-y-4">
+                    <h2 class="font-bold text-sm uppercase tracking-wider text-primary text-on-surface pt-4">How to Link:</h2>
+                    <ul class="list-disc pl-6 space-y-3">
+                      <li>Go to your Account Portal > Linked Accounts.</li>
+                      <li>Click 'Link' next to your console network (PSN, Xbox Live, Nintendo Account).</li>
+                      <li>Log in with your console credentials to authorize the connection.</li>
+                    </ul>
+                  </section>
+                `
+              }
+            ]
+          },
+          billing: {
+            catTitle: "Billing & Purchases",
+            articles: [
+              { 
+                title: "Refund Policy for in-game purchases and bundles", 
+                read: "4 min read", 
+                updated: "1 week ago",
+                body: `
+                  <p class="text-body-lg font-body-lg text-on-surface-variant">
+                    Learn what in-game items are eligible for self-service refunds and the conditions that apply.
+                  </p>
+                  <section class="space-y-4">
+                    <h2 class="font-bold text-sm uppercase tracking-wider text-primary text-on-surface pt-4">Policy Rules:</h2>
+                    <ul class="list-disc pl-6 space-y-3">
+                      <li><strong>Eligible Items:</strong> Weapon skins, characters, and select bundles purchased within the last 14 days, provided they have not been used/equipped in any game mode.</li>
+                      <li><strong>Non-refundable:</strong> Battle Passes, Premium Currency, and used cosmetic skins.</li>
+                    </ul>
+                  </section>
+                `
+              },
+              { 
+                title: "Troubleshooting failed transactions and billing errors", 
+                read: "6 min read", 
+                updated: "5 days ago",
+                body: `
+                  <p class="text-body-lg font-body-lg text-on-surface-variant">
+                    If your payment failed but you were still charged, the transaction is likely a temporary authorization hold.
+                  </p>
+                  <section class="space-y-4">
+                    <h2 class="font-bold text-sm uppercase tracking-wider text-primary text-on-surface pt-4">What to do:</h2>
+                    <ul class="list-disc pl-6 space-y-3">
+                      <li><strong>Authorization Holds:</strong> Banks normally release failed transaction holds within 24-48 business hours.</li>
+                      <li><strong>Submit Ticket:</strong> If the funds are not returned after 3 days, submit a billing ticket attaching your bank statement showing the transaction.</li>
+                    </ul>
+                  </section>
+                `
+              }
+            ]
+          },
+          bug: {
+            catTitle: "Bug Report",
+            articles: [
+              { 
+                title: "Reporting game exploits, bugs, and security vulnerabilities", 
+                read: "5 min read", 
+                updated: "5 days ago",
+                body: `
+                  <p class="text-body-lg font-body-lg text-on-surface-variant">
+                    Report game exploits, wall-hacks, or client vulnerabilities to help us keep matches fair.
+                  </p>
+                  <section class="space-y-4">
+                    <h2 class="font-bold text-sm uppercase tracking-wider text-primary text-on-surface pt-4">Exploit Reporting:</h2>
+                    <ul class="list-disc pl-6 space-y-3">
+                      <li>Submit a detailed ticket with coordinates or video links.</li>
+                      <li>Verified critical exploits may qualify for reward credit under our Bug Bounty program.</li>
+                    </ul>
+                  </section>
+                `
+              },
+              { 
+                title: "Character / Ability / Skill bug reproduction guide", 
+                read: "4 min read", 
+                updated: "3 days ago",
+                body: `
+                  <p class="text-body-lg font-body-lg text-on-surface-variant">
+                    To help our developers fix gameplay glitches quickly, please provide detailed reproduction steps and video footage if possible.
+                  </p>
+                  <section class="space-y-4">
+                    <h2 class="font-bold text-sm uppercase tracking-wider text-primary text-on-surface pt-4">Reproduction Checklist:</h2>
+                    <ul class="list-disc pl-6 space-y-3">
+                      <li><strong>Character & Skills:</strong> Specify which character and skill was active when the bug occurred.</li>
+                      <li><strong>Map & Location:</strong> Note the map name and the exact coordinates or landmark location.</li>
+                      <li><strong>Reproduction Steps:</strong> List the exact order of button inputs or actions needed to cause the issue.</li>
+                      <li><strong>Visual Evidence:</strong> Upload a video clip or screenshot showing the glitch.</li>
+                    </ul>
+                  </section>
+                `
+              }
+            ]
+          },
+          report: {
+            catTitle: "Report a Player",
+            articles: [
+              { 
+                title: "Submitting reports for toxic chat, griefing, or cheating", 
+                read: "3 min read", 
+                updated: "3 days ago",
+                body: `
+                  <p class="text-body-lg font-body-lg text-on-surface-variant">
+                    Help us maintain a positive and fair gaming environment.
+                  </p>
+                  <section class="space-y-4">
+                    <h2 class="font-bold text-sm uppercase tracking-wider text-primary text-on-surface pt-4">How to File a Report:</h2>
+                    <ul class="list-disc pl-6 space-y-3">
+                      <li><strong>In-game:</strong> Hold Tab, right-click the player's name, and select 'Report'.</li>
+                      <li><strong>Web Portal:</strong> Submit a ticket under 'Report a Player' with video evidence attached.</li>
+                    </ul>
+                  </section>
+                `
+              },
+              { 
+                title: "Ban appeals policy and security review procedure", 
+                read: "5 min read", 
+                updated: "1 week ago",
+                body: `
+                  <p class="text-body-lg font-body-lg text-on-surface-variant">
+                    If your account has been suspended or banned, read this to understand your options.
+                  </p>
+                  <section class="space-y-4">
+                    <h2 class="font-bold text-sm uppercase tracking-wider text-primary text-on-surface pt-4">Appeals Guidelines:</h2>
+                    <ul class="list-disc pl-6 space-y-3">
+                      <li>Bans related to active third-party cheat software are strictly non-appealable.</li>
+                      <li>For chat offenses or false positives, submit a ticket under 'Ban Appeal' for manual log review by our moderation team.</li>
+                    </ul>
+                  </section>
+                `
+              }
+            ]
+          },
+          content: {
+            catTitle: "In-Game Content",
+            articles: [
+              { 
+                title: "Season pass rewards and weekly challenge guides", 
+                read: "5 min read", 
+                updated: "4 days ago",
+                body: `
+                  <p class="text-body-lg font-body-lg text-on-surface-variant">
+                    Level up your Season Pass faster by completing weekly challenges.
+                  </p>
+                  <section class="space-y-4">
+                    <h2 class="font-bold text-sm uppercase tracking-wider text-primary text-on-surface pt-4">Tips & Tricks:</h2>
+                    <ul class="list-disc pl-6 space-y-3">
+                      <li>Challenges stack! You can complete week 1 challenges during week 4.</li>
+                      <li>Play with friends to receive an active XP boost multiplier.</li>
+                      <li>Focus on daily challenges as they provide easy XP increments.</li>
+                    </ul>
+                  </section>
+                `
+              },
+              { 
+                title: "Missing virtual items or quest rewards troubleshooting", 
+                read: "3 min read", 
+                updated: "2 days ago",
+                body: `
+                  <p class="text-body-lg font-body-lg text-on-surface-variant">
+                    If you unlocked a reward or purchased currency but it is not appearing in your inventory, follow these sync steps.
+                  </p>
+                  <section class="space-y-4">
+                    <h2 class="font-bold text-sm uppercase tracking-wider text-primary text-on-surface pt-4">Troubleshooting:</h2>
+                    <ul class="list-disc pl-6 space-y-3">
+                      <li><strong>Restart Client:</strong> Fully log out of your launcher and sign back in to force a profile sync.</li>
+                      <li><strong>Check Purchase History:</strong> Verify the transaction completed successfully in your account settings.</li>
+                    </ul>
+                  </section>
+                `
+              },
+              { 
+                title: "Patch notes detail list and balance changes", 
+                read: "8 min read", 
+                updated: "Yesterday",
+                body: `
+                  <p class="text-body-lg font-body-lg text-on-surface-variant">
+                    Review the latest changes to weapon values, character balancing, and map adjustments.
+                  </p>
+                  <section class="space-y-4">
+                    <h2 class="font-bold text-sm uppercase tracking-wider text-primary text-on-surface pt-4">Latest Adjustments:</h2>
+                    <ul class="list-disc pl-6 space-y-3">
+                      <li>Weapon recoil values tweaked for intermediate range.</li>
+                      <li>Map A visibility adjustments for competitive matches.</li>
+                      <li>Multiple game client bug fixes and exploit patches.</li>
+                    </ul>
+                  </section>
+                `
+              }
+            ]
+          },
+          community: {
+            catTitle: "Community Support",
+            articles: [
+              { 
+                title: "Joining official Discord channels and community guidelines", 
+                read: "2 min read", 
+                updated: "Yesterday",
+                body: `
+                  <p class="text-body-lg font-body-lg text-on-surface-variant">
+                    Connect with millions of other players, get live server updates, and talk to game designers.
+                  </p>
+                  <section class="space-y-4">
+                    <h2 class="font-bold text-sm uppercase tracking-wider text-primary text-on-surface pt-4">Official Channels:</h2>
+                    <ul class="list-disc pl-6 space-y-3">
+                      <li>Join our official Discord Server to chat and find teammates.</li>
+                      <li>Please follow the rules of conduct: treat others with respect and avoid spamming.</li>
+                    </ul>
+                  </section>
+                `
+              },
+              { 
+                title: "Finding player-driven wikis, fansites, and tournaments", 
+                read: "4 min read", 
+                updated: "1 week ago",
+                body: `
+                  <p class="text-body-lg font-body-lg text-on-surface-variant">
+                    Explore player-created resources to find weapon databases, lore wikis, and competitive community tournaments.
+                  </p>
+                  <section class="space-y-4">
+                    <h2 class="font-bold text-sm uppercase tracking-wider text-primary text-on-surface pt-4">Player Resources:</h2>
+                    <ul class="list-disc pl-6 space-y-3">
+                      <li>Check the fan-maintained Wiki for comprehensive stats and item formulas.</li>
+                      <li>Participate in community tournaments organized through official partner platforms.</li>
+                    </ul>
+                  </section>
+                `
+              },
+              { 
+                title: "How to submit game ideas and balance suggestions to developers", 
+                read: "3 min read", 
+                updated: "Yesterday",
+                body: `
+                  <p class="text-body-lg font-body-lg text-on-surface-variant">
+                    We value player feedback and review community suggestions regularly.
+                  </p>
+                  <section class="space-y-4">
+                    <h2 class="font-bold text-sm uppercase tracking-wider text-primary text-on-surface pt-4">Feedback Board:</h2>
+                    <ul class="list-disc pl-6 space-y-3">
+                      <li>Submit ideas on our official game forums or subreddits.</li>
+                      <li>Highly voted community threads are compiled monthly and reviewed by our design team.</li>
+                    </ul>
+                  </section>
+                `
+              }
+            ]
+          },
+          esports: {
+            catTitle: "Esports & Tournaments",
+            articles: [
+              { 
+                title: "Esports drops reward schedule and how to link account", 
+                read: "3 min read", 
+                updated: "Yesterday",
+                body: `
+                  <p class="text-body-lg font-body-lg text-on-surface-variant">
+                    Earn exclusive in-game sprays, profile banners, and gun buddies by watching official tournament broadcasts.
+                  </p>
+                  <section class="space-y-4">
+                    <h2 class="font-bold text-sm uppercase tracking-wider text-primary text-on-surface pt-4">Linking Guide:</h2>
+                    <ul class="list-disc pl-6 space-y-3">
+                      <li>Log into the Portal and go to settings > Connected Accounts.</li>
+                      <li>Authorize connection to your Twitch or YouTube account.</li>
+                      <li>Watch official streams during drops-enabled events and claim rewards in your Twitch Inventory.</li>
+                    </ul>
+                  </section>
+                `
+              },
+              { 
+                title: "Championship Series ticket sales and venue information", 
+                read: "5 min read", 
+                updated: "3 days ago",
+                body: `
+                  <p class="text-body-lg font-body-lg text-on-surface-variant">
+                    Get detailed information about ticketing timelines, venue policies, and match schedules for the upcoming World Championship finals.
+                  </p>
+                  <section class="space-y-4">
+                    <h2 class="font-bold text-sm uppercase tracking-wider text-primary text-on-surface pt-4">Tournament Info:</h2>
+                    <ul class="list-disc pl-6 space-y-3">
+                      <li><strong>Venue:</strong> International Arena, Seoul, South Korea.</li>
+                      <li><strong>Ticketing:</strong> Tickets are sold in phases. Premium tier tickets include access to fan meet-and-greets.</li>
+                    </ul>
+                  </section>
+                `
+              }
+            ]
+          },
+          merch: {
+            catTitle: "Merchandise Support",
+            articles: [
+              { 
+                title: "How to track your apparel and physical order shipments", 
+                read: "2 min read", 
+                updated: "4 days ago",
+                body: `
+                  <p class="text-body-lg font-body-lg text-on-surface-variant">
+                    Track your official apparel, collectible statues, and accessory shipments.
+                  </p>
+                  <section class="space-y-4">
+                    <h2 class="font-bold text-sm uppercase tracking-wider text-primary text-on-surface pt-4">Tracking Steps:</h2>
+                    <ul class="list-disc pl-6 space-y-3">
+                      <li>Check your email inbox for a shipping confirmation containing a tracking link.</li>
+                      <li>Please allow up to 48 hours for tracking links to update.</li>
+                      <li>For international orders, customs clearance may add up to 5 business days to the estimated arrival.</li>
+                    </ul>
+                  </section>
+                `
+              },
+              { 
+                title: "Return & exchange policy for damaged merchandise items", 
+                read: "3 min read", 
+                updated: "1 week ago",
+                body: `
+                  <p class="text-body-lg font-body-lg text-on-surface-variant">
+                    If your package arrived damaged or has sizing errors, we will exchange or refund your purchase.
+                  </p>
+                  <section class="space-y-4">
+                    <h2 class="font-bold text-sm uppercase tracking-wider text-primary text-on-surface pt-4">Exchange Process:</h2>
+                    <ul class="list-disc pl-6 space-y-3">
+                      <li>Submit a ticket under 'Merchandise' with photos of the damaged items.</li>
+                      <li>Items must be unworn and in their original packaging.</li>
+                      <li>We will provide a prepaid shipping label for returns.</li>
+                    </ul>
+                  </section>
+                `
+              }
+            ]
+          },
+          creator: {
+            catTitle: "Creator Partner Program",
+            articles: [
+              { 
+                title: "Creator Program application guidelines and eligibility requirements", 
+                read: "4 min read", 
+                updated: "Yesterday",
+                body: `
+                  <p class="text-body-lg font-body-lg text-on-surface-variant">
+                    How to join our official gaming creator network and gain promotion perks.
+                  </p>
+                  <section class="space-y-4">
+                    <h2 class="font-bold text-sm uppercase tracking-wider text-primary text-on-surface pt-4">Requirements:</h2>
+                    <ul class="list-disc pl-6 space-y-3">
+                      <li>Must have at least 5,000 active subscribers on Twitch, YouTube, or TikTok.</li>
+                      <li>Post gaming content at least twice weekly.</li>
+                      <li>Maintain a positive community standing and follow safety guidelines.</li>
+                    </ul>
+                  </section>
+                `
+              },
+              { 
+                title: "Accessing custom overlays, test servers and early game patches", 
+                read: "3 min read", 
+                updated: "3 days ago",
+                body: `
+                  <p class="text-body-lg font-body-lg text-on-surface-variant">
+                    Exclusive resources available to creator program partners.
+                  </p>
+                  <section class="space-y-4">
+                    <h2 class="font-bold text-sm uppercase tracking-wider text-primary text-on-surface pt-4">Creator Perks:</h2>
+                    <ul class="list-disc pl-6 space-y-3">
+                      <li>Download free high-resolution streaming overlays and assets.</li>
+                      <li>Get access accounts for the Public Beta Environment (PBE) test servers.</li>
+                      <li>Obtain early patch note summaries 24 hours before public release.</li>
+                    </ul>
+                  </section>
+                `
+              }
+            ]
+          },
+          language: {
+            catTitle: "Localization & Language",
+            articles: [
+              { 
+                title: "How to change in-game text and audio dubbing language", 
+                read: "2 min read", 
+                updated: "1 week ago",
+                body: `
+                  <p class="text-body-lg font-body-lg text-on-surface-variant">
+                    Play the game in your preferred language setting.
+                  </p>
+                  <section class="space-y-4">
+                    <h2 class="font-bold text-sm uppercase tracking-wider text-primary text-on-surface pt-4">Changing Languages:</h2>
+                    <ul class="list-disc pl-6 space-y-3">
+                      <li>Open the Client Launcher and click Settings.</li>
+                      <li>Under 'General', select your language from the dropdown menu.</li>
+                      <li>The client will download the respective language pack (typically 500MB - 1.5GB).</li>
+                    </ul>
+                  </section>
+                `
+              },
+              { 
+                title: "Requesting server transfers and regional account migration", 
+                read: "4 min read", 
+                updated: "2 days ago",
+                body: `
+                  <p class="text-body-lg font-body-lg text-on-surface-variant">
+                    Move your account, ranks, skins, and purchases to a new regional server.
+                  </p>
+                  <section class="space-y-4">
+                    <h2 class="font-bold text-sm uppercase tracking-wider text-primary text-on-surface pt-4">Transfer Details:</h2>
+                    <ul class="list-disc pl-6 space-y-3">
+                      <li>Purchase a Server Transfer Token in the in-game shop.</li>
+                      <li>Select your destination region.</li>
+                      <li>Ranks will reset to placement games on the new server. Skins, levels, and items are preserved.</li>
+                    </ul>
+                  </section>
+                `
+              }
+            ]
+          }
+        };
+        
+        const catData = categoryData[category] || categoryData.technical;
+        const art = catData.articles[articleIdx] || catData.articles[0];
+
+        // Update Title
+        const h1 = document.querySelector('h1');
+        if (h1) h1.textContent = art.title;
+        
+        // Update Metadata (read time & updated date)
+        const timerEl = document.querySelector('.bg-surface-container-high');
+        if (timerEl) {
+          timerEl.innerHTML = '<span class="material-symbols-outlined text-base">timer</span> ' + art.read;
+        }
+        const metaDivs = document.querySelectorAll('.flex.flex-wrap.items-center.gap-x-6 > div');
+        if (metaDivs.length >= 2) {
+          metaDivs[1].innerHTML = '<span class="material-symbols-outlined text-base">update</span> Last updated: ' + art.updated;
+        }
+
+        // Update Body Content
+        const proseContent = document.querySelector('.prose-content');
+        if (proseContent && art.body) {
+          proseContent.innerHTML = art.body;
+        }
+        
+        // Update breadcrumbs
+        const breadcrumbLinks = document.querySelectorAll('nav.flex.items-center a');
+        if (breadcrumbLinks.length >= 2) {
+          breadcrumbLinks[1].textContent = catData.catTitle;
+          breadcrumbLinks[1].addEventListener('click', (e) => {
+            e.preventDefault();
+            navigateTo('knowledge-base-category.html?category=' + category);
+          });
+        }
+        
+        // Update back button
+        const backBtn = document.querySelector('button:has(.material-symbols-outlined)') || document.querySelector('button:contains("Back")') || document.querySelectorAll('button')[0];
+        if (backBtn) {
+          backBtn.innerHTML = `<span class="material-symbols-outlined text-lg">arrow_back</span> Back to ${catData.catTitle}`;
+          backBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            navigateTo('knowledge-base-category.html?category=' + category);
+          });
+        }
+      }
+
+      // live-chat.html
+      if (file.includes('live-chat')) {
+        document.querySelectorAll('button, a').forEach(el => {
+          const text = el.textContent || '';
+          if (text.toLowerCase().includes('end') || text.toLowerCase().includes('kết thúc') || text.toLowerCase().includes('close') || text.toLowerCase().includes('home') || text.toLowerCase().includes('thoát')) {
+            el.addEventListener('click', (e) => { e.preventDefault(); navigateTo('index.html'); });
+          }
+        });
+      }
+    });
+  })();
+</script>
+
+</body></html>
