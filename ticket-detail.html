@@ -238,7 +238,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     const { data: ticket, error } = await db
       .from('tickets')
       .select(`
-        id, status, created_at, description,
+        id, ticket_number, status, created_at, description,
         game_id, category_id,
         games(game_name),
         ticket_categories(category_name)
@@ -249,7 +249,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     if (error || !ticket) throw error || new Error('Ticket not found');
 
     // Populate header fields
-    document.getElementById('ticket-id-title').textContent = 'Ticket #' + ticket.id;
+    document.getElementById('ticket-id-title').textContent = 'Ticket #' + (ticket.ticket_number || ticket.id);
     const badge = statusBadge(ticket.status || 'open');
     const statusTag = document.getElementById('ticket-status-tag');
     statusTag.textContent = badge.label;

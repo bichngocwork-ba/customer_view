@@ -181,7 +181,9 @@
         try {
           const ticket = JSON.parse(raw);
           const ticketIdSpan = document.getElementById('confirm-ticket-id');
-          if (ticketIdSpan && ticket.id) {
+          if (ticketIdSpan && ticket.ticketNumber) {
+            ticketIdSpan.textContent = '#' + ticket.ticketNumber;
+          } else if (ticketIdSpan && ticket.id) {
             ticketIdSpan.textContent = '#' + ticket.id;
           }
         } catch(e) {

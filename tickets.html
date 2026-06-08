@@ -160,7 +160,7 @@
 <table class="w-full text-left border-collapse">
 <thead class="bg-surface-container-low/50 border-b border-outline-variant/40">
 <tr>
-<th class="px-md py-3.5 text-[10px] font-bold text-on-surface-variant uppercase tracking-wider">TICKET ID</th>
+<th class="px-md py-3.5 text-[10px] font-bold text-on-surface-variant uppercase tracking-wider">TICKET NUMBER</th>
 <th class="px-md py-3.5 text-[10px] font-bold text-on-surface-variant uppercase tracking-wider">PRODUCT</th>
 <th class="px-md py-3.5 text-[10px] font-bold text-on-surface-variant uppercase tracking-wider">CATEGORY</th>
 <th class="px-md py-3.5 text-[10px] font-bold text-on-surface-variant uppercase tracking-wider">DATE CREATED</th>
@@ -245,7 +245,7 @@
         tr.setAttribute('data-id', ticket.id);
         tr.className = 'hover:bg-surface-container/50 border-b border-outline-variant/20 transition-colors group cursor-pointer';
         tr.innerHTML = `
-          <td class="px-md py-3.5 text-xs font-bold text-primary">#${ticket.id}</td>
+          <td class="px-md py-3.5 text-xs font-bold text-primary">#${ticket.ticket_number || ticket.id}</td>
           <td class="px-md py-3.5 text-xs text-on-surface">${ticket.game_name || ticket.game_id || '—'}</td>
           <td class="px-md py-3.5 text-xs text-on-surface">${ticket.category_name || ticket.category_id || '—'}</td>
           <td class="px-md py-3.5 text-xs text-on-surface-variant">${date}</td>
@@ -266,7 +266,7 @@
       const { data, error } = await db
         .from('tickets')
         .select(`
-          id, status, created_at, description,
+          id, ticket_number, status, created_at, description,
           game_id, category_id,
           games(game_name),
           ticket_categories(category_name)
