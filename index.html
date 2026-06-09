@@ -311,23 +311,32 @@
             </div>
             <p class="text-[11px] text-slate-500 mb-6 pl-3">Track the status of your support requests.</p>
 
-            <div class="grid grid-cols-2 gap-4 mb-6">
+            <div class="grid grid-cols-3 gap-2 mb-6">
               <div
-                class="bg-slate-50 border border-slate-200/60 rounded-xl p-4 text-center flex flex-col justify-between min-h-[145px]">
+                class="bg-slate-50 border border-slate-200/60 rounded-xl p-3 text-center flex flex-col justify-between min-h-[145px]">
                 <div>
-                  <span class="text-[10px] font-bold uppercase tracking-wider text-slate-500 block mb-1">Open</span>
+                  <span class="text-[9px] font-bold uppercase tracking-wider text-slate-500 block mb-1">Open</span>
                   <span id="ticket-open-count" class="text-3xl font-extrabold text-primary animate-pulse">...</span>
                 </div>
-                <p class="text-[10px] text-slate-400 font-medium leading-normal mt-3">Our support team is actively
+                <p class="text-[9px] text-slate-400 font-medium leading-normal mt-3">Our support team is actively
                   reviewing your requests.</p>
               </div>
               <div
-                class="bg-slate-50 border border-slate-200/60 rounded-xl p-4 text-center flex flex-col justify-between min-h-[145px]">
+                class="bg-slate-50 border border-slate-200/60 rounded-xl p-3 text-center flex flex-col justify-between min-h-[145px]">
                 <div>
-                  <span class="text-[10px] font-bold uppercase tracking-wider text-slate-500 block mb-1">Resolved</span>
+                  <span class="text-[9px] font-bold uppercase tracking-wider text-slate-500 block mb-1">In Progress</span>
+                  <span id="ticket-progress-count" class="text-3xl font-extrabold text-primary animate-pulse">...</span>
+                </div>
+                <p class="text-[9px] text-slate-400 font-medium leading-normal mt-3">Our support team is actively
+                  reviewing your requests.</p>
+              </div>
+              <div
+                class="bg-slate-50 border border-slate-200/60 rounded-xl p-3 text-center flex flex-col justify-between min-h-[145px]">
+                <div>
+                  <span class="text-[9px] font-bold uppercase tracking-wider text-slate-500 block mb-1">Resolved</span>
                   <span id="ticket-resolved-count" class="text-3xl font-extrabold text-primary animate-pulse">...</span>
                 </div>
-                <p class="text-[10px] text-slate-400 font-medium leading-normal mt-3">Please check your email for
+                <p class="text-[9px] text-slate-400 font-medium leading-normal mt-3">Please check your email for
                   updates and resolutions.</p>
               </div>
             </div>
@@ -499,9 +508,11 @@
 
     async function loadTicketsCounts(userId) {
       const openEl = document.getElementById('ticket-open-count');
+      const progressEl = document.getElementById('ticket-progress-count');
       const resolvedEl = document.getElementById('ticket-resolved-count');
 
       let openCount = 2; // fallback Open count
+      let progressCount = 1; // fallback In Progress count
       let resolvedCount = 14; // fallback Resolved count
 
       try {
@@ -514,6 +525,10 @@
 
           if (!error && tickets) {
             openCount = tickets.filter(t => (t.status || '').toLowerCase() === 'open').length;
+            progressCount = tickets.filter(t => {
+              const s = (t.status || '').toLowerCase();
+              return s === 'in progress' || s === 'drafting' || s === 'in_progress';
+            }).length;
             resolvedCount = tickets.filter(t => (t.status || '').toLowerCase() === 'resolved' || (t.status || '').toLowerCase() === 'closed').length;
           }
         }
@@ -524,6 +539,10 @@
       if (openEl) {
         openEl.textContent = openCount;
         openEl.classList.remove('animate-pulse');
+      }
+      if (progressEl) {
+        progressEl.textContent = progressCount;
+        progressEl.classList.remove('animate-pulse');
       }
       if (resolvedEl) {
         resolvedEl.textContent = resolvedCount;
