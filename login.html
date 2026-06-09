@@ -683,8 +683,8 @@
       // live-chat.html
       if (file.includes('live-chat')) {
         document.querySelectorAll('button, a').forEach(el => {
-          const text = el.textContent || '';
-          if (text.toLowerCase().includes('end') || text.toLowerCase().includes('kết thúc') || text.toLowerCase().includes('close') || text.toLowerCase().includes('home') || text.toLowerCase().includes('thoát')) {
+          const text = (el.textContent || '').trim().toLowerCase();
+          if ((text.includes('end') && !text.includes('send')) || text.includes('kết thúc') || text.includes('close') || text.includes('home') || text.includes('thoát')) {
             el.addEventListener('click', (e) => { e.preventDefault(); navigateTo('index.html'); });
           }
         });

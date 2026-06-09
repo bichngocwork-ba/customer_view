@@ -200,7 +200,13 @@
                 'account': 'Account & Security',
                 'billing': 'Billing & Purchases',
                 'bug': 'Bug Report',
-                'report': 'Report a Player'
+                'report': 'Report a Player',
+                'content': 'In-Game Content',
+                'community': 'Community Support',
+                'esports': 'Esports & Tournaments',
+                'merch': 'Merchandise Support',
+                'creator': 'Creator Partner Program',
+                'language': 'Localization & Language'
             };
 
             const categoryName = categoryMapping[categoryParam] || categoryParam;
@@ -212,7 +218,13 @@
                 "Account & Security": { icon: "security", bg: "#dbe1ff" },
                 "Billing & Purchases": { icon: "payments", bg: "#dbe1ff" },
                 "Bug Report": { icon: "bug_report", bg: "#FCE8E6", textClass: "text-error" },
-                "Report a Player": { icon: "flag", bg: "#FFDAD6", textClass: "text-error" }
+                "Report a Player": { icon: "flag", bg: "#FFDAD6", textClass: "text-error" },
+                "In-Game Content": { icon: "sports_esports", bg: "#EADDF6" },
+                "Community Support": { icon: "forum", bg: "#d8e2ff" },
+                "Esports & Tournaments": { icon: "emoji_events", bg: "#FFF9C4" },
+                "Merchandise Support": { icon: "shopping_bag", bg: "#F5F5F5" },
+                "Creator Partner Program": { icon: "video_camera_front", bg: "#E1BEE7" },
+                "Localization & Language": { icon: "translate", bg: "#DCEDC8" }
             };
 
             const meta = categoryMetadata[categoryName] || { icon: "settings", bg: "#E0F2F1" };
@@ -248,6 +260,28 @@
                         window.location.href = 'knowledge-base.html';
                     }
                 };
+            }
+
+            // Bind Support CTA buttons
+            const ctaButtons = document.querySelectorAll('section.mt-16 button');
+            if (ctaButtons.length >= 2) {
+                ctaButtons[0].addEventListener('click', (e) => {
+                    e.preventDefault();
+                    if (window.navigateTo) {
+                        window.navigateTo('submit-ticket.html');
+                    } else {
+                        window.location.href = 'submit-ticket.html';
+                    }
+                });
+
+                ctaButtons[1].addEventListener('click', (e) => {
+                    e.preventDefault();
+                    if (window.navigateTo) {
+                        window.navigateTo('live-chat.html');
+                    } else {
+                        window.location.href = 'live-chat.html';
+                    }
+                });
             }
 
             // Retrieve articles from Supabase
@@ -530,6 +564,7 @@
 
       // knowledge-base-category.html (Dynamic categories content rendering)
       if (file.includes('knowledge-base-category')) {
+        if (typeof getSupabase === 'function' && getSupabase()) return;
         const urlParams = new URLSearchParams(window.location.search);
         const category = urlParams.get('category') || 'technical';
         
@@ -825,8 +860,8 @@
       // live-chat.html
       if (file.includes('live-chat')) {
         document.querySelectorAll('button, a').forEach(el => {
-          const text = el.textContent || '';
-          if (text.toLowerCase().includes('end') || text.toLowerCase().includes('kết thúc') || text.toLowerCase().includes('close') || text.toLowerCase().includes('home') || text.toLowerCase().includes('thoát')) {
+          const text = (el.textContent || '').trim().toLowerCase();
+          if ((text.includes('end') && !text.includes('send')) || text.includes('kết thúc') || text.includes('close') || text.includes('home') || text.includes('thoát')) {
             el.addEventListener('click', (e) => { e.preventDefault(); navigateTo('index.html'); });
           }
         });

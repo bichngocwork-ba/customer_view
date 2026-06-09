@@ -538,7 +538,7 @@
             });
         });
 
-        document.addEventListener('DOMContentLoaded', () => {
+        document.addEventListener('DOMContentLoaded', async () => {
             const user = getCurrentUser();
             if (user) {
                 const nameEl = document.getElementById('user-display-name');
@@ -548,14 +548,61 @@
                 }
             }
 
-            // Bind click to category cards
+            const categorySlugs = {
+                'Technical Issues': 'technical',
+                'Connection & Network': 'connection',
+                'Account & Security': 'account',
+                'Billing & Purchases': 'billing',
+                'Bug Report': 'bug',
+                'Report a Player': 'report',
+                'In-Game Content': 'content',
+                'Community Support': 'community',
+                'Esports & Tournaments': 'esports',
+                'Merchandise Support': 'merch',
+                'Creator Partner Program': 'creator',
+                'Localization & Language': 'language'
+            };
+
+            // Fetch counts from Supabase
+            const counts = {};
+            const client = getSupabase();
+            if (client) {
+                try {
+                    const { data: articles, error } = await client
+                        .from('knowledge_base_articles')
+                        .select('category');
+                    if (!error && articles) {
+                        articles.forEach(art => {
+                            counts[art.category] = (counts[art.category] || 0) + 1;
+                        });
+                        
+                        // Update counts for initial cards
+                        document.querySelectorAll('.category-card').forEach(el => {
+                            const titleEl = el.querySelector('h3');
+                            if (titleEl) {
+                                const catName = titleEl.textContent.trim();
+                                const count = counts[catName] || 0;
+                                const badgeEl = el.querySelector('span.rounded-full');
+                                if (badgeEl) {
+                                    badgeEl.textContent = `${count} Article${count !== 1 ? 's' : ''}`;
+                                }
+                            }
+                        });
+                    }
+                } catch (err) {
+                    console.error("Error loading category counts:", err);
+                }
+            }
+
+            // Bind click to initial category cards using slugs
             document.querySelectorAll('.category-card').forEach(el => {
                 el.addEventListener('click', (e) => {
                     e.preventDefault();
                     const titleEl = el.querySelector('h3');
                     if (titleEl) {
                         const categoryName = titleEl.textContent.trim();
-                        const targetUrl = `knowledge-base-category.html?category=${encodeURIComponent(categoryName)}`;
+                        const slug = categorySlugs[categoryName] || 'technical';
+                        const targetUrl = `knowledge-base-category.html?category=${slug}`;
                         if (window.navigateTo) {
                             window.navigateTo(targetUrl);
                         } else {
@@ -564,6 +611,69 @@
                     }
                 });
             });
+
+            // Set up "View all 12 categories" button for Supabase active mode
+            const viewAllBtn = document.getElementById('view-all-categories-btn');
+            const grid = document.getElementById('categories-grid');
+            if (viewAllBtn && grid && client) {
+                viewAllBtn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    
+                    // Check if extra cards are already added
+                    if (document.getElementById('added-card-7')) {
+                        // Toggle off
+                        for (let i = 7; i <= 12; i++) {
+                            const card = document.getElementById('added-card-' + i);
+                            if (card) card.remove();
+                        }
+                        viewAllBtn.innerHTML = 'View all 12 categories <span class="material-symbols-outlined text-sm">arrow_forward</span>';
+                        return;
+                    }
+                    
+                    // Append 6 new categories with real database counts
+                    const extraCategories = [
+                        { id: 7, title: "In-Game Content", icon: "sports_esports", bg: "#EADDF6", desc: "Guides for seasons, event schedules, item descriptions, and mechanics for all currently supported titles." },
+                        { id: 8, title: "Community Support", icon: "forum", bg: "#d8e2ff", desc: "Connect with our community forums, join discord servers, and find player-driven wikis and resources." },
+                        { id: 9, title: "Esports & Tournaments", icon: "emoji_events", bg: "#FFF9C4", desc: "Get schedules, team statistics, reward drops, ticket bookings, and tournament rules." },
+                        { id: 10, title: "Merchandise Support", icon: "shopping_bag", bg: "#F5F5F5", desc: "Inquire about clothing apparel sizes, order shipping status, tracking numbers, and damage refunds." },
+                        { id: 11, title: "Creator Partner Program", icon: "video_camera_front", bg: "#E1BEE7", desc: "How to join our creator network, access early updates, custom overlays, and monetization benefits." },
+                        { id: 12, title: "Localization & Language", icon: "translate", bg: "#DCEDC8", desc: "Change in-game audio dubbing, client text translation, regional settings, and server transfers." }
+                    ];
+                    
+                    extraCategories.forEach(cat => {
+                        const card = document.createElement('div');
+                        card.id = 'added-card-' + cat.id;
+                        card.className = 'category-card bg-white border border-outline-variant/40 rounded-xl p-md shadow-sm hover:shadow-md hover:border-primary transition-all group cursor-pointer flex flex-col justify-between';
+                        const count = counts[cat.title] || 0;
+                        card.innerHTML = `
+                            <div class="flex justify-between items-start mb-sm">
+                                <div class="w-10 h-10 rounded-lg flex items-center justify-center text-primary mb-sm group-hover:bg-primary group-hover:text-white transition-colors" style="background-color: ${cat.bg};">
+                                    <span class="material-symbols-outlined" style="font-size: 24px;">${cat.icon}</span>
+                                </div>
+                                <span class="text-[9px] font-bold px-2 py-0.5 bg-surface-container text-primary rounded-full">${count} Article${count !== 1 ? 's' : ''}</span>
+                            </div>
+                            <h3 class="font-bold text-sm text-on-surface group-hover:text-primary transition-colors">${cat.title}</h3>
+                            <p class="text-[11px] text-on-surface-variant mt-1 leading-relaxed flex-1">${cat.desc}</p>
+                        `;
+                        
+                        const slug = categorySlugs[cat.title] || 'technical';
+                        card.addEventListener('click', (ev) => {
+                            ev.preventDefault();
+                            const targetUrl = `knowledge-base-category.html?category=${slug}`;
+                            if (window.navigateTo) {
+                                window.navigateTo(targetUrl);
+                            } else {
+                                window.location.href = targetUrl;
+                            }
+                        });
+                        
+                        grid.appendChild(card);
+                    });
+                    
+                    viewAllBtn.innerHTML = 'Show less categories <span class="material-symbols-outlined text-sm">arrow_back</span>';
+                });
+            }
         });
     </script>
 
@@ -705,6 +815,7 @@
 
       // knowledge-base.html
       if (file.includes('knowledge-base')) {
+        if (typeof getSupabase === 'function' && getSupabase()) return;
         // Setup View all 12 categories button interaction
         const viewAllBtn = document.getElementById('view-all-categories-btn');
         const grid = document.getElementById('categories-grid');
@@ -998,8 +1109,8 @@
       // live-chat.html
       if (file.includes('live-chat')) {
         document.querySelectorAll('button, a').forEach(el => {
-          const text = el.textContent || '';
-          if (text.toLowerCase().includes('end') || text.toLowerCase().includes('kết thúc') || text.toLowerCase().includes('close') || text.toLowerCase().includes('home') || text.toLowerCase().includes('thoát')) {
+          const text = (el.textContent || '').trim().toLowerCase();
+          if ((text.includes('end') && !text.includes('send')) || text.includes('kết thúc') || text.includes('close') || text.includes('home') || text.includes('thoát')) {
             el.addEventListener('click', (e) => { e.preventDefault(); navigateTo('index.html'); });
           }
         });

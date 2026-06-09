@@ -185,7 +185,7 @@
 <span class="material-symbols-outlined text-4xl text-outline mb-base">contact_support</span>
 <h3 class="font-bold text-sm uppercase tracking-wider text-primary">Need to start a new inquiry?</h3>
 <p class="text-body-sm mb-md max-w-sm">Our technical specialists are online and ready to assist you with any game-related issues.</p>
-<button class="bg-primary text-white px-lg py-2 rounded-lg font-label-md hover:bg-primary-container transition-all active:scale-95">Create New Ticket</button>
+<button onclick="navigateTo('submit-ticket.html')" class="bg-primary text-white px-lg py-2 rounded-lg font-label-md hover:bg-primary-container transition-all active:scale-95">Create New Ticket</button>
 </div>
 </div>
 
@@ -329,6 +329,29 @@
 
     // Bind click events on elements based on the current page URL/filename
     document.addEventListener('DOMContentLoaded', () => {
+      // Global navigation hooks for any page
+      document.querySelectorAll('button, a').forEach(el => {
+        const text = (el.textContent || '').trim().toLowerCase();
+        if (text.includes('open a support ticket') || 
+            text.includes('submit a support ticket') || 
+            text.includes('create new ticket') ||
+            text.includes('new support case') ||
+            text.includes('submit a ticket')) {
+          el.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            navigateTo('submit-ticket.html');
+          });
+        } else if (text.includes('live chat now') || 
+                   text.includes('start live chat')) {
+          el.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            navigateTo('live-chat.html');
+          });
+        }
+      });
+
       const path = window.location.pathname;
       const file = path.substring(path.lastIndexOf('/') + 1);
 
@@ -702,8 +725,8 @@
       // live-chat.html
       if (file.includes('live-chat')) {
         document.querySelectorAll('button, a').forEach(el => {
-          const text = el.textContent || '';
-          if (text.toLowerCase().includes('end') || text.toLowerCase().includes('kết thúc') || text.toLowerCase().includes('close') || text.toLowerCase().includes('home') || text.toLowerCase().includes('thoát')) {
+          const text = (el.textContent || '').trim().toLowerCase();
+          if ((text.includes('end') && !text.includes('send')) || text.includes('kết thúc') || text.includes('close') || text.includes('home') || text.includes('thoát')) {
             el.addEventListener('click', (e) => { e.preventDefault(); navigateTo('index.html'); });
           }
         });

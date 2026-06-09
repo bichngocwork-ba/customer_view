@@ -669,6 +669,8 @@
       // knowledge-base-detail.html (Dynamic articles content rendering)
       if (file.includes('knowledge-base-detail')) {
         const urlParams = new URLSearchParams(window.location.search);
+        const articleId = urlParams.get('id');
+        if (articleId && typeof getSupabase === 'function' && getSupabase()) return;
         const category = urlParams.get('category') || 'technical';
         const articleIdx = parseInt(urlParams.get('article') || '0', 10);
         
@@ -1319,8 +1321,8 @@
       // live-chat.html
       if (file.includes('live-chat')) {
         document.querySelectorAll('button, a').forEach(el => {
-          const text = el.textContent || '';
-          if (text.toLowerCase().includes('end') || text.toLowerCase().includes('kết thúc') || text.toLowerCase().includes('close') || text.toLowerCase().includes('home') || text.toLowerCase().includes('thoát')) {
+          const text = (el.textContent || '').trim().toLowerCase();
+          if ((text.includes('end') && !text.includes('send')) || text.includes('kết thúc') || text.includes('close') || text.includes('home') || text.includes('thoát')) {
             el.addEventListener('click', (e) => { e.preventDefault(); navigateTo('index.html'); });
           }
         });
