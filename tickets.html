@@ -150,7 +150,7 @@
 <!-- Filter Tabs -->
 <div id="ticket-tabs" class="flex items-center gap-md border-b border-outline-variant mb-md overflow-x-auto pb-1 scrollbar-hide">
 <button data-status="all" class="px-base py-2 font-bold text-xs uppercase tracking-wider text-primary border-b-[3px] border-primary whitespace-nowrap">All Tickets</button>
-<button data-status="unresolved" class="px-base py-2 font-bold text-xs uppercase tracking-wider text-on-surface-variant hover:text-primary border-b-[3px] border-transparent transition-colors whitespace-nowrap">Unresolved</button>
+<button data-status="open" class="px-base py-2 font-bold text-xs uppercase tracking-wider text-on-surface-variant hover:text-primary border-b-[3px] border-transparent transition-colors whitespace-nowrap">Open</button>
 <button data-status="in progress" class="px-base py-2 font-bold text-xs uppercase tracking-wider text-on-surface-variant hover:text-primary border-b-[3px] border-transparent transition-colors whitespace-nowrap">In Progress</button>
 <button data-status="resolved" class="px-base py-2 font-bold text-xs uppercase tracking-wider text-on-surface-variant hover:text-primary border-b-[3px] border-transparent transition-colors whitespace-nowrap">Resolved</button>
 </div>
@@ -304,10 +304,6 @@
               // Normalize: DB stores 'In Progress' as 'IN_PROGRESS' or 'DRAFTING'
               const s = (t.status || 'open').toLowerCase();
               const normalized = (s === 'drafting' || s === 'in_progress') ? 'in progress' : s;
-              // 'unresolved' tab counts both 'open' and 'in progress'
-              if (selectedStatus === 'unresolved') {
-                return normalized === 'open' || normalized === 'in progress';
-              }
               return normalized === selectedStatus;
             });
         renderRows(filtered);
