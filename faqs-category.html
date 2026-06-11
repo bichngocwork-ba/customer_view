@@ -118,7 +118,7 @@
   <!-- Center Navigation Links -->
   <nav class="flex items-center gap-6">
     <a id="nav-item-horiz-home" onclick="navigateTo('index.html')" class="text-slate-500 hover:text-[#004ac6] text-[12px] font-bold tracking-wider cursor-pointer py-4 uppercase transition-all">HOME</a>
-    <a id="nav-item-horiz-kb" onclick="navigateTo('knowledge-base.html')" class="text-[#004ac6] text-[12px] font-bold tracking-wider cursor-pointer py-4 uppercase transition-all">KNOWLEDGE BASE</a>
+    <a id="nav-item-horiz-kb" onclick="navigateTo('faqs.html')" class="text-[#004ac6] text-[12px] font-bold tracking-wider cursor-pointer py-4 uppercase transition-all">FAQs</a>
     <a id="nav-item-horiz-submit" onclick="navigateTo('submit-ticket.html')" class="text-slate-500 hover:text-[#004ac6] text-[12px] font-bold tracking-wider cursor-pointer py-4 uppercase transition-all">SUBMIT A TICKET</a>
     <a id="nav-item-horiz-tickets" onclick="navigateTo('tickets.html')" class="text-slate-500 hover:text-[#004ac6] text-[12px] font-bold tracking-wider cursor-pointer py-4 uppercase transition-all">MY TICKETS</a>
   </nav>
@@ -144,7 +144,7 @@
 <div class="max-w-[1000px] mx-auto px-gutter py-8">
 <!-- Sub-navigation -->
 <div class="flex justify-between items-center mb-10">
-<button class="flex items-center gap-2 text-primary text-xs font-bold border border-outline-variant/40 px-3 py-1.5 rounded-lg text-xs font-bold hover:bg-surface-container shadow-sm transition-all rounded-lg hover:bg-on-primary-container transition-all" onclick="window.parent.postMessage({ type: 'NAVIGATE', to: 'knowledge-base.html' }, '*')">
+<button class="flex items-center gap-2 text-primary text-xs font-bold border border-outline-variant/40 px-3 py-1.5 rounded-lg text-xs font-bold hover:bg-surface-container shadow-sm transition-all rounded-lg hover:bg-on-primary-container transition-all" onclick="window.parent.postMessage({ type: 'NAVIGATE', to: 'faqs.html' }, '*')">
 <span class="material-symbols-outlined">arrow_back</span>
                     Back to Categories
                 </button>
@@ -255,9 +255,9 @@
                 backBtn.onclick = (e) => {
                     e.preventDefault();
                     if (window.navigateTo) {
-                        window.navigateTo('knowledge-base.html');
+                        window.navigateTo('faqs.html');
                     } else {
-                        window.location.href = 'knowledge-base.html';
+                        window.location.href = 'faqs.html';
                     }
                 };
             }
@@ -325,7 +325,7 @@
 
                         card.addEventListener('click', (e) => {
                             e.preventDefault();
-                            const path = `knowledge-base-detail.html?id=${art.id}`;
+                            const path = `faqs-detail.html?id=${art.id}`;
                             if (window.navigateTo) {
                                 window.navigateTo(path);
                             } else {
@@ -420,11 +420,11 @@
           } else if (text.includes('Open a Ticket') || text.includes('Gửi yêu cầu') || text.includes('Submit A Ticket') || text.includes('New Support Case')) {
             el.addEventListener('click', (e) => { e.preventDefault(); e.stopPropagation(); navigateTo('submit-ticket.html'); });
           } else if (text.includes('Technical Issues') || text.includes('Lỗi Kỹ thuật')) {
-            el.addEventListener('click', (e) => { e.preventDefault(); e.stopPropagation(); navigateTo('knowledge-base-category.html?category=technical'); });
+            el.addEventListener('click', (e) => { e.preventDefault(); e.stopPropagation(); navigateTo('faqs-category.html?category=technical'); });
           } else if (text.includes('Account & Security') || text.includes('Tài khoản & Bảo mật')) {
-            el.addEventListener('click', (e) => { e.preventDefault(); e.stopPropagation(); navigateTo('knowledge-base-category.html?category=account'); });
+            el.addEventListener('click', (e) => { e.preventDefault(); e.stopPropagation(); navigateTo('faqs-category.html?category=account'); });
           } else if (text.includes('Billing & Purchases') || text.includes('Thanh toán')) {
-            el.addEventListener('click', (e) => { e.preventDefault(); e.stopPropagation(); navigateTo('knowledge-base-category.html?category=billing'); });
+            el.addEventListener('click', (e) => { e.preventDefault(); e.stopPropagation(); navigateTo('faqs-category.html?category=billing'); });
           }
         });
       }
@@ -481,8 +481,8 @@
         });
       }
 
-      // knowledge-base.html
-      if (file.includes('knowledge-base')) {
+      // faqs.html
+      if (file.includes('faqs')) {
         // Setup View all 12 categories button interaction
         const viewAllBtn = document.getElementById('view-all-categories-btn');
         const grid = document.getElementById('categories-grid');
@@ -534,7 +534,7 @@
               // Bind click to the card
               card.addEventListener('click', (ev) => {
                 ev.preventDefault();
-                navigateTo('knowledge-base-category.html?category=technical'); // Default mock redirect
+                navigateTo('faqs-category.html?category=technical'); // Default mock redirect
               });
               
               grid.appendChild(card);
@@ -557,13 +557,13 @@
           
           el.addEventListener('click', (e) => {
             e.preventDefault();
-            navigateTo('knowledge-base-category.html?category=' + catQuery);
+            navigateTo('faqs-category.html?category=' + catQuery);
           });
         });
       }
 
-      // knowledge-base-category.html (Dynamic categories content rendering)
-      if (file.includes('knowledge-base-category')) {
+      // faqs-category.html (Dynamic categories content rendering)
+      if (file.includes('faqs-category')) {
         if (typeof getSupabase === 'function' && getSupabase()) return;
         const urlParams = new URLSearchParams(window.location.search);
         const category = urlParams.get('category') || 'technical';
@@ -742,7 +742,7 @@
             // Add click navigation to detail page
             card.addEventListener('click', (e) => {
               e.preventDefault();
-              navigateTo('knowledge-base-detail.html?category=' + category + '&article=' + aIdx);
+              navigateTo('faqs-detail.html?category=' + category + '&article=' + aIdx);
             });
             section.appendChild(card);
           });
@@ -770,13 +770,13 @@
         if (backBtn) {
           backBtn.addEventListener('click', (e) => {
             e.preventDefault();
-            navigateTo('knowledge-base.html');
+            navigateTo('faqs.html');
           });
         }
       }
 
-      // knowledge-base-detail.html (Dynamic articles content rendering)
-      if (file.includes('knowledge-base-detail')) {
+      // faqs-detail.html (Dynamic articles content rendering)
+      if (file.includes('faqs-detail')) {
         const urlParams = new URLSearchParams(window.location.search);
         const category = urlParams.get('category') || 'technical';
         const articleIdx = parseInt(urlParams.get('article') || '0', 10);
@@ -843,7 +843,7 @@
           breadcrumbLinks[1].textContent = catData.catTitle;
           breadcrumbLinks[1].addEventListener('click', (e) => {
             e.preventDefault();
-            navigateTo('knowledge-base-category.html?category=' + category);
+            navigateTo('faqs-category.html?category=' + category);
           });
         }
         
@@ -852,7 +852,7 @@
         if (backBtn) {
           backBtn.addEventListener('click', (e) => {
             e.preventDefault();
-            navigateTo('knowledge-base-category.html?category=' + category);
+            navigateTo('faqs-category.html?category=' + category);
           });
         }
       }

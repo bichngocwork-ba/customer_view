@@ -3,7 +3,7 @@
 <html class="light" lang="en"><head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Game Support Knowledge Base</title>
+<title>Game Support FAQs</title>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="supabase-config.js"></script>
 <script>
@@ -120,7 +120,7 @@
   <!-- Center Navigation Links -->
   <nav class="flex items-center gap-6">
     <a id="nav-item-horiz-home" onclick="navigateTo('index.html')" class="text-slate-500 hover:text-[#004ac6] text-[12px] font-bold tracking-wider cursor-pointer py-4 uppercase transition-all">HOME</a>
-    <a id="nav-item-horiz-kb" onclick="navigateTo('knowledge-base.html')" class="text-[#004ac6] text-[12px] font-bold tracking-wider cursor-pointer py-4 uppercase transition-all">KNOWLEDGE BASE</a>
+    <a id="nav-item-horiz-kb" onclick="navigateTo('faqs.html')" class="text-[#004ac6] text-[12px] font-bold tracking-wider cursor-pointer py-4 uppercase transition-all">FAQs</a>
     <a id="nav-item-horiz-submit" onclick="navigateTo('submit-ticket.html')" class="text-slate-500 hover:text-[#004ac6] text-[12px] font-bold tracking-wider cursor-pointer py-4 uppercase transition-all">SUBMIT A TICKET</a>
     <a id="nav-item-horiz-tickets" onclick="navigateTo('tickets.html')" class="text-slate-500 hover:text-[#004ac6] text-[12px] font-bold tracking-wider cursor-pointer py-4 uppercase transition-all">MY TICKETS</a>
   </nav>
@@ -147,7 +147,7 @@
 <section class="relative pt-md px-lg max-w-[1400px] mx-auto space-y-md">
   <div class="flex justify-between items-end border-b border-outline-variant/40 pb-md mb-8">
       <div>
-          <h1 class="font-headline font-extrabold text-2xl text-on-surface uppercase tracking-tight">KNOWLEDGE BASE</h1>
+          <h1 class="font-headline font-extrabold text-2xl text-on-surface uppercase tracking-tight">FAQs</h1>
           <p class="text-xs text-on-surface-variant">Find instant answers to common questions, technical guides, and gameplay tips.</p>
       </div>
   </div>
@@ -274,7 +274,7 @@
 <div class="absolute bottom-0 left-0 w-48 h-48 bg-black/10 rounded-full -ml-10 -mb-10 blur-2xl"></div>
 <div class="relative z-10 lg:w-1/2">
 <h2 class="font-bold text-sm uppercase tracking-wider text-white mb-2">Still need assistance?</h2>
-<p class="text-xs text-white/90 mb-6 leading-relaxed">Our expert support team is available 24/7 to help you resolve any issues that aren't covered in our Knowledge Base.</p>
+<p class="text-xs text-white/90 mb-6 leading-relaxed">Our expert support team is available 24/7 to help you resolve any issues that aren't covered in our FAQs.</p>
 <div class="flex flex-wrap gap-sm">
 <button class="h-9 px-md bg-white text-primary rounded-lg text-xs font-bold hover:brightness-110 transition-all shadow active:scale-95">
                             Open a Support Ticket
@@ -328,7 +328,7 @@
             searchContainer.classList.remove('scale-[1.01]');
         });
 
-        // 12 help categories data matching screens/knowledge-base-category.html
+        // 12 help categories data matching screens/faqs-category.html
         const categoryData = {
           technical: {
             title: "Technical Issues",
@@ -489,7 +489,7 @@
 
                         card.addEventListener('click', (e) => {
                             e.preventDefault();
-                            const path = `knowledge-base-detail.html?id=${art.id}`;
+                            const path = `faqs-detail.html?id=${art.id}`;
                             if (window.navigateTo) {
                                 window.navigateTo(path);
                             } else {
@@ -602,7 +602,7 @@
                     if (titleEl) {
                         const categoryName = titleEl.textContent.trim();
                         const slug = categorySlugs[categoryName] || 'technical';
-                        const targetUrl = `knowledge-base-category.html?category=${slug}`;
+                        const targetUrl = `faqs-category.html?category=${slug}`;
                         if (window.navigateTo) {
                             window.navigateTo(targetUrl);
                         } else {
@@ -660,7 +660,7 @@
                         const slug = categorySlugs[cat.title] || 'technical';
                         card.addEventListener('click', (ev) => {
                             ev.preventDefault();
-                            const targetUrl = `knowledge-base-category.html?category=${slug}`;
+                            const targetUrl = `faqs-category.html?category=${slug}`;
                             if (window.navigateTo) {
                                 window.navigateTo(targetUrl);
                             } else {
@@ -752,11 +752,11 @@
           } else if (text.includes('Open a Ticket') || text.includes('Gửi yêu cầu') || text.includes('Submit A Ticket') || text.includes('New Support Case')) {
             el.addEventListener('click', (e) => { e.preventDefault(); e.stopPropagation(); navigateTo('submit-ticket.html'); });
           } else if (text.includes('Technical Issues') || text.includes('Lỗi Kỹ thuật')) {
-            el.addEventListener('click', (e) => { e.preventDefault(); e.stopPropagation(); navigateTo('knowledge-base-category.html?category=technical'); });
+            el.addEventListener('click', (e) => { e.preventDefault(); e.stopPropagation(); navigateTo('faqs-category.html?category=technical'); });
           } else if (text.includes('Account & Security') || text.includes('Tài khoản & Bảo mật')) {
-            el.addEventListener('click', (e) => { e.preventDefault(); e.stopPropagation(); navigateTo('knowledge-base-category.html?category=account'); });
+            el.addEventListener('click', (e) => { e.preventDefault(); e.stopPropagation(); navigateTo('faqs-category.html?category=account'); });
           } else if (text.includes('Billing & Purchases') || text.includes('Thanh toán')) {
-            el.addEventListener('click', (e) => { e.preventDefault(); e.stopPropagation(); navigateTo('knowledge-base-category.html?category=billing'); });
+            el.addEventListener('click', (e) => { e.preventDefault(); e.stopPropagation(); navigateTo('faqs-category.html?category=billing'); });
           }
         });
       }
@@ -813,8 +813,8 @@
         });
       }
 
-      // knowledge-base.html
-      if (file.includes('knowledge-base')) {
+      // faqs.html
+      if (file.includes('faqs')) {
         if (typeof getSupabase === 'function' && getSupabase()) return;
         // Setup View all 12 categories button interaction
         const viewAllBtn = document.getElementById('view-all-categories-btn');
@@ -871,7 +871,7 @@
               // Bind click to the card
               card.addEventListener('click', (ev) => {
                 ev.preventDefault();
-                navigateTo('knowledge-base-category.html?category=' + slug);
+                navigateTo('faqs-category.html?category=' + slug);
               });
               
               grid.appendChild(card);
@@ -894,13 +894,13 @@
           
           el.addEventListener('click', (e) => {
             e.preventDefault();
-            navigateTo('knowledge-base-category.html?category=' + catQuery);
+            navigateTo('faqs-category.html?category=' + catQuery);
           });
         });
       }
 
-      // knowledge-base-category.html (Dynamic categories content rendering)
-      if (file.includes('knowledge-base-category')) {
+      // faqs-category.html (Dynamic categories content rendering)
+      if (file.includes('faqs-category')) {
         const urlParams = new URLSearchParams(window.location.search);
         const category = urlParams.get('category') || 'technical';
         
@@ -1008,7 +1008,7 @@
             // Add click navigation to detail page
             card.addEventListener('click', (e) => {
               e.preventDefault();
-              navigateTo('knowledge-base-detail.html?category=' + category + '&article=' + aIdx);
+              navigateTo('faqs-detail.html?category=' + category + '&article=' + aIdx);
             });
             section.appendChild(card);
           });
@@ -1019,13 +1019,13 @@
         if (backBtn) {
           backBtn.addEventListener('click', (e) => {
             e.preventDefault();
-            navigateTo('knowledge-base.html');
+            navigateTo('faqs.html');
           });
         }
       }
 
-      // knowledge-base-detail.html (Dynamic articles content rendering)
-      if (file.includes('knowledge-base-detail')) {
+      // faqs-detail.html (Dynamic articles content rendering)
+      if (file.includes('faqs-detail')) {
         const urlParams = new URLSearchParams(window.location.search);
         const category = urlParams.get('category') || 'technical';
         const articleIdx = parseInt(urlParams.get('article') || '0', 10);
@@ -1092,7 +1092,7 @@
           breadcrumbLinks[1].textContent = catData.catTitle;
           breadcrumbLinks[1].addEventListener('click', (e) => {
             e.preventDefault();
-            navigateTo('knowledge-base-category.html?category=' + category);
+            navigateTo('faqs-category.html?category=' + category);
           });
         }
         
@@ -1101,7 +1101,7 @@
         if (backBtn) {
           backBtn.addEventListener('click', (e) => {
             e.preventDefault();
-            navigateTo('knowledge-base-category.html?category=' + category);
+            navigateTo('faqs-category.html?category=' + category);
           });
         }
       }

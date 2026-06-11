@@ -158,9 +158,8 @@
     <nav class="flex items-center gap-6">
       <a id="nav-item-horiz-home" onclick="navigateTo('index.html')"
         class="text-[#004ac6] text-[12px] font-bold tracking-wider cursor-pointer py-4 uppercase transition-all">HOME</a>
-      <a id="nav-item-horiz-kb" onclick="navigateTo('knowledge-base.html')"
-        class="text-slate-500 hover:text-[#004ac6] text-[12px] font-bold tracking-wider cursor-pointer py-4 uppercase transition-all">KNOWLEDGE
-        BASE</a>
+      <a id="nav-item-horiz-kb" onclick="navigateTo('faqs.html')"
+        class="text-slate-500 hover:text-[#004ac6] text-[12px] font-bold tracking-wider cursor-pointer py-4 uppercase transition-all">FAQs</a>
       <a id="nav-item-horiz-submit" onclick="navigateTo('submit-ticket.html')"
         class="text-slate-500 hover:text-[#004ac6] text-[12px] font-bold tracking-wider cursor-pointer py-4 uppercase transition-all">SUBMIT
         A TICKET</a>
@@ -203,18 +202,17 @@
       </header>
       <!-- 2. Support Banners -->
       <section class="grid grid-cols-1 lg:grid-cols-3 gap-gutter">
-        <!-- Banner 1: Knowledge Base -->
+        <!-- Banner 1: FAQs -->
         <div
           class="relative overflow-hidden group bg-white border border-outline-variant/40 rounded-xl p-md flex items-stretch gap-md hover:shadow-md transition-shadow">
           <div class="flex-grow flex flex-col justify-between">
             <div class="space-y-xs">
-              <h2 class="font-bold text-sm uppercase tracking-wider text-primary text-on-surface font-bold">Knowledge
-                Base</h2>
-              <p class="text-xs text-on-surface-variant text-secondary">Explore our knowledge base for guides,
+              <h2 class="font-bold text-sm uppercase tracking-wider text-primary text-on-surface font-bold">FAQs</h2>
+              <p class="text-xs text-on-surface-variant text-secondary">Explore our FAQs for guides,
                 troubleshooting steps, and solutions to the most common player issues.</p>
             </div>
             <div class="mt-md">
-              <button onclick="navigateTo('knowledge-base.html')"
+              <button onclick="navigateTo('faqs.html')"
                 class="h-9 px-md bg-primary hover:brightness-110 text-white rounded-lg text-xs font-bold flex items-center justify-center gap-xs transition-all">
                 Search Articles
                 <span class="material-symbols-outlined text-[18px]">search</span>
@@ -297,7 +295,7 @@
             </div>
           </div>
           <div class="mt-6 text-right">
-            <a onclick="navigateTo('knowledge-base.html')"
+            <a onclick="navigateTo('faqs.html')"
               class="text-xs font-bold text-primary hover:underline cursor-pointer uppercase tracking-wider">View all
               articles</a>
           </div>
@@ -453,10 +451,10 @@
       if (!listContainer) return;
 
       const fallbackArticles = [
-        { title: "I can't log in to my account", url: "knowledge-base-category.html?category=account" },
-        { title: "How to recover my account", url: "knowledge-base-category.html?category=account" },
-        { title: "Purchase issues and refunds", url: "knowledge-base-category.html?category=billing" },
-        { title: "Report a bug or technical issue", url: "knowledge-base-category.html?category=technical" }
+        { title: "I can't log in to my account", url: "faqs-category.html?category=account" },
+        { title: "How to recover my account", url: "faqs-category.html?category=account" },
+        { title: "Purchase issues and refunds", url: "faqs-category.html?category=billing" },
+        { title: "Report a bug or technical issue", url: "faqs-category.html?category=technical" }
       ];
 
       function renderArticles(articlesList) {
@@ -474,7 +472,7 @@
           row.addEventListener('click', (e) => {
             e.preventDefault();
             if (art.id) {
-              navigateTo(`knowledge-base-detail.html?id=${art.id}`);
+              navigateTo(`faqs-detail.html?id=${art.id}`);
             } else {
               navigateTo(art.url);
             }
@@ -625,8 +623,8 @@
               el.addEventListener('click', (e) => { e.preventDefault(); e.stopPropagation(); navigateTo('live-chat.html'); });
             } else if (text.includes('Open a Ticket') || text.includes('Gửi yêu cầu') || text.includes('Submit A Ticket') || text.includes('Submit a Ticket')) {
               el.addEventListener('click', (e) => { e.preventDefault(); e.stopPropagation(); navigateTo('submit-ticket.html'); });
-            } else if (text.includes('Search Articles') || text.includes('Knowledge Base')) {
-              el.addEventListener('click', (e) => { e.preventDefault(); e.stopPropagation(); navigateTo('knowledge-base.html'); });
+            } else if (text.includes('Search Articles') || text.includes('FAQs') || text.includes('FAQs')) {
+              el.addEventListener('click', (e) => { e.preventDefault(); e.stopPropagation(); navigateTo('faqs.html'); });
             } else if (text.includes('View My Tickets') || text.includes('My Tickets')) {
               el.addEventListener('click', (e) => { e.preventDefault(); e.stopPropagation(); navigateTo('tickets.html'); });
             }
@@ -685,8 +683,8 @@
           });
         }
 
-        // knowledge-base.html
-        if (file.includes('knowledge-base')) {
+        // faqs.html
+        if (file.includes('faqs')) {
           // Setup View all 12 categories button interaction
           const viewAllBtn = document.getElementById('view-all-categories-btn');
           const grid = document.getElementById('categories-grid');
@@ -738,7 +736,7 @@
                 // Bind click to the card
                 card.addEventListener('click', (ev) => {
                   ev.preventDefault();
-                  navigateTo('knowledge-base-category.html?category=technical'); // Default mock redirect
+                  navigateTo('faqs-category.html?category=technical'); // Default mock redirect
                 });
 
                 grid.appendChild(card);
@@ -761,13 +759,13 @@
 
             el.addEventListener('click', (e) => {
               e.preventDefault();
-              navigateTo('knowledge-base-category.html?category=' + catQuery);
+              navigateTo('faqs-category.html?category=' + catQuery);
             });
           });
         }
 
-        // knowledge-base-category.html (Dynamic categories content rendering)
-        if (file.includes('knowledge-base-category')) {
+        // faqs-category.html (Dynamic categories content rendering)
+        if (file.includes('faqs-category')) {
           const urlParams = new URLSearchParams(window.location.search);
           const category = urlParams.get('category') || 'technical';
 
@@ -875,7 +873,7 @@
               // Add click navigation to detail page
               card.addEventListener('click', (e) => {
                 e.preventDefault();
-                navigateTo('knowledge-base-detail.html?category=' + category + '&article=' + aIdx);
+                navigateTo('faqs-detail.html?category=' + category + '&article=' + aIdx);
               });
               section.appendChild(card);
             });
@@ -886,13 +884,13 @@
           if (backBtn) {
             backBtn.addEventListener('click', (e) => {
               e.preventDefault();
-              navigateTo('knowledge-base.html');
+              navigateTo('faqs.html');
             });
           }
         }
 
-        // knowledge-base-detail.html (Dynamic articles content rendering)
-        if (file.includes('knowledge-base-detail')) {
+        // faqs-detail.html (Dynamic articles content rendering)
+        if (file.includes('faqs-detail')) {
           const urlParams = new URLSearchParams(window.location.search);
           const category = urlParams.get('category') || 'technical';
           const articleIdx = parseInt(urlParams.get('article') || '0', 10);
@@ -959,7 +957,7 @@
             breadcrumbLinks[1].textContent = catData.catTitle;
             breadcrumbLinks[1].addEventListener('click', (e) => {
               e.preventDefault();
-              navigateTo('knowledge-base-category.html?category=' + category);
+              navigateTo('faqs-category.html?category=' + category);
             });
           }
 
@@ -968,7 +966,7 @@
           if (backBtn) {
             backBtn.addEventListener('click', (e) => {
               e.preventDefault();
-              navigateTo('knowledge-base-category.html?category=' + category);
+              navigateTo('faqs-category.html?category=' + category);
             });
           }
         }

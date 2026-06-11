@@ -331,11 +331,11 @@
           } else if (text.includes('Open a Ticket') || text.includes('Gửi yêu cầu') || text.includes('Submit A Ticket') || text.includes('New Support Case')) {
             el.addEventListener('click', (e) => { e.preventDefault(); e.stopPropagation(); navigateTo('submit-ticket.html'); });
           } else if (text.includes('Technical Issues') || text.includes('Lỗi Kỹ thuật')) {
-            el.addEventListener('click', (e) => { e.preventDefault(); e.stopPropagation(); navigateTo('knowledge-base-category.html?category=technical'); });
+            el.addEventListener('click', (e) => { e.preventDefault(); e.stopPropagation(); navigateTo('faqs-category.html?category=technical'); });
           } else if (text.includes('Account & Security') || text.includes('Tài khoản & Bảo mật')) {
-            el.addEventListener('click', (e) => { e.preventDefault(); e.stopPropagation(); navigateTo('knowledge-base-category.html?category=account'); });
+            el.addEventListener('click', (e) => { e.preventDefault(); e.stopPropagation(); navigateTo('faqs-category.html?category=account'); });
           } else if (text.includes('Billing & Purchases') || text.includes('Thanh toán')) {
-            el.addEventListener('click', (e) => { e.preventDefault(); e.stopPropagation(); navigateTo('knowledge-base-category.html?category=billing'); });
+            el.addEventListener('click', (e) => { e.preventDefault(); e.stopPropagation(); navigateTo('faqs-category.html?category=billing'); });
           }
         });
       }
@@ -392,8 +392,8 @@
         });
       }
 
-      // knowledge-base.html
-      if (file.includes('knowledge-base')) {
+      // faqs.html
+      if (file.includes('faqs')) {
         // Setup View all 12 categories button interaction
         const viewAllBtn = document.getElementById('view-all-categories-btn');
         const grid = document.getElementById('categories-grid');
@@ -445,7 +445,7 @@
               // Bind click to the card
               card.addEventListener('click', (ev) => {
                 ev.preventDefault();
-                navigateTo('knowledge-base-category.html?category=technical'); // Default mock redirect
+                navigateTo('faqs-category.html?category=technical'); // Default mock redirect
               });
               
               grid.appendChild(card);
@@ -468,13 +468,13 @@
           
           el.addEventListener('click', (e) => {
             e.preventDefault();
-            navigateTo('knowledge-base-category.html?category=' + catQuery);
+            navigateTo('faqs-category.html?category=' + catQuery);
           });
         });
       }
 
-      // knowledge-base-category.html (Dynamic categories content rendering)
-      if (file.includes('knowledge-base-category')) {
+      // faqs-category.html (Dynamic categories content rendering)
+      if (file.includes('faqs-category')) {
         const urlParams = new URLSearchParams(window.location.search);
         const category = urlParams.get('category') || 'technical';
         
@@ -582,7 +582,7 @@
             // Add click navigation to detail page
             card.addEventListener('click', (e) => {
               e.preventDefault();
-              navigateTo('knowledge-base-detail.html?category=' + category + '&article=' + aIdx);
+              navigateTo('faqs-detail.html?category=' + category + '&article=' + aIdx);
             });
             section.appendChild(card);
           });
@@ -593,13 +593,13 @@
         if (backBtn) {
           backBtn.addEventListener('click', (e) => {
             e.preventDefault();
-            navigateTo('knowledge-base.html');
+            navigateTo('faqs.html');
           });
         }
       }
 
-      // knowledge-base-detail.html (Dynamic articles content rendering)
-      if (file.includes('knowledge-base-detail')) {
+      // faqs-detail.html (Dynamic articles content rendering)
+      if (file.includes('faqs-detail')) {
         const urlParams = new URLSearchParams(window.location.search);
         const category = urlParams.get('category') || 'technical';
         const articleIdx = parseInt(urlParams.get('article') || '0', 10);
@@ -666,7 +666,7 @@
           breadcrumbLinks[1].textContent = catData.catTitle;
           breadcrumbLinks[1].addEventListener('click', (e) => {
             e.preventDefault();
-            navigateTo('knowledge-base-category.html?category=' + category);
+            navigateTo('faqs-category.html?category=' + category);
           });
         }
         
@@ -675,7 +675,7 @@
         if (backBtn) {
           backBtn.addEventListener('click', (e) => {
             e.preventDefault();
-            navigateTo('knowledge-base-category.html?category=' + category);
+            navigateTo('faqs-category.html?category=' + category);
           });
         }
       }
