@@ -40,7 +40,7 @@ graph TD
 
 The system consists of 10 premium HTML pages:
 
-### 1. [login.html](file:///e:/Documents/ĐẠI HỌC FTU/TÀI LIỆU HỌC/NĂM BA/KÌ 2/GĐ2/Các vấn đề đương đại trong KDS/customer/customer/login.html) - Login Page
+### 1. [login.html] - Login Page
 *   **Function:** The primary entry point of the system. Authenticates users via their registered email.
 *   **UI/UX & Code Highlights:**
     *   Secure login form featuring a password visibility toggle (show/hide).
@@ -48,7 +48,7 @@ The system consists of 10 premium HTML pages:
     *   **Login Bypass** mechanism for developers/testers: automatically logs in when using the mock account `customer@gmail.com` with password `customer` without requiring network connectivity.
     *   Client-side password hashing integration using the `bcryptjs` library.
 
-### 2. [index.html](file:///e:/Documents/ĐẠI HỌC FTU/TÀI LIỆU HỌC/NĂM BA/KÌ 2/GĐ2/Các vấn đề đương đại trong KDS/customer/customer/index.html) - Support Portal Home Page
+### 2. [index.html] - Support Portal Home Page
 *   **Function:** The main dashboard displayed post-authentication.
 *   **UI/UX & Code Highlights:**
     *   Personalized welcome banner displaying the player's name dynamically (`Hello {User Name}`).
@@ -56,28 +56,28 @@ The system consists of 10 premium HTML pages:
     *   **Popular Articles** section automatically ranked based on page views from the database.
     *   A sticky header navigation bar that is fully responsive across all devices.
 
-### 3. [faqs.html](file:///e:/Documents/ĐẠI HỌC FTU/TÀI LIỆU HỌC/NĂM BA/KÌ 2/GĐ2/Các vấn đề đương đại trong KDS/customer/customer/faqs.html) - FAQs Hub
+### 3. [faqs.html] - FAQs Hub
 *   **Function:** A centralized repository of articles addressing common issues.
 *   **UI/UX & Code Highlights:**
     *   Smart search bar: Instant full-text search query across article titles (`title`) and descriptions/contents (`content`) utilizing the Supabase Client API.
     *   Support Category Grid: Displays the 6 most popular topics by default. Clicking "View all 12 categories" triggers a smooth transition that inserts 6 additional subcategories (Game Downloads, Esports, Merch, Creator Program, Localization, Feedback).
     *   Dynamic article count indicators on each category badge.
 
-### 4. [faqs-category.html](file:///e:/Documents/ĐẠI HỌC FTU/TÀI LIỆU HỌC/NĂM BA/KÌ 2/GĐ2/Các vấn đề đương đại trong KDS/customer/customer/faqs-category.html) - Category-Specific Article List
+### 4. [faqs-category.html] - Category-Specific Article List
 *   **Function:** Lists all articles belonging to a specific selected category.
 *   **UI/UX & Code Highlights:**
     *   Parses query parameters from the URL (`?category=technical`, ...) to automatically fetch corresponding articles.
     *   Displays article cards with custom hover effects (border color change), estimated reading time, and last updated date.
     *   Hierarchical breadcrumb navigation for easy navigation.
 
-### 5. [faqs-detail.html](file:///e:/Documents/ĐẠI HỌC FTU/TÀI LIỆU HỌC/NĂM BA/KÌ 2/GĐ2/Các vấn đề đương đại trong KDS/customer/customer/faqs-detail.html) - FAQ Article Detail Page
+### 5. [faqs-detail.html] - FAQ Article Detail Page
 *   **Function:** Displays step-by-step instructions for troubleshooting specific issues.
 *   **UI/UX & Code Highlights:**
     *   Clean typographic layout featuring driver specification tables and highlighted warning callouts.
     *   Interactive feedback widget: `"Was this article helpful?"` with Yes/No choices, which changes to a thank-you note once clicked.
     *   Call-to-Action (CTA) section at the bottom of the page encouraging users to submit a ticket or start a live chat if the article does not resolve their issue.
 
-### 6. [submit-ticket.html](file:///e:/Documents/ĐẠI HỌC FTU/TÀI LIỆU HỌC/NĂM BA/KÌ 2/GĐ2/Các vấn đề đương đại trong KDS/customer/customer/submit-ticket.html) - Submit Support Ticket
+### 6. [submit-ticket.html] - Submit Support Ticket
 *   **Function:** Form to create a new support ticket and send it to the technical support team.
 *   **UI/UX & Code Highlights:**
     *   **Dynamic Form fields:** Automatically renders additional specific fields based on the selected issue category. For example:
@@ -87,26 +87,26 @@ The system consists of 10 premium HTML pages:
     *   **Form Validation:** The "SUBMIT TICKET" button remains disabled and is only enabled once all required inputs are filled and a description is provided.
     *   Secure data storage directly into the `tickets` table on Supabase.
 
-### 7. [ticket-confirmation.html](file:///e:/Documents/ĐẠI HỌC FTU/TÀI LIỆU HỌC/NĂM BA/KÌ 2/GĐ2/Các vấn đề đương đại trong KDS/customer/customer/ticket-confirmation.html) - Ticket Submission Confirmation
+### 7. [ticket-confirmation.html] - Ticket Submission Confirmation
 *   **Function:** An intermediary page confirming the successful creation and storage of the ticket.
 *   **UI/UX & Code Highlights:**
     *   Displays a randomly generated unique Ticket ID format: `TCK-YYYYMMDD-XXXXX`.
     *   Provides estimated response time expectations from the customer support team.
 
-### 8. [tickets.html](file:///e:/Documents/ĐẠI HỌC FTU/TÀI LIỆU HỌC/NĂM BA/KÌ 2/GĐ2/Các vấn đề đương đại trong KDS/customer/customer/tickets.html) - My Tickets List
+### 8. [tickets.html] - My Tickets List
 *   **Function:** Manage and monitor support requests submitted by the user.
 *   **UI/UX & Code Highlights:**
     *   Filter tab system: All, Open, In Progress, Resolved.
     *   Automatically joins database tables `games` and `ticket_categories` to display friendly game names and category names instead of raw UUID strings.
     *   Color-coded status badges (Red: Open, Orange: In Progress, Green: Resolved).
 
-### 9. [ticket-detail.html](file:///e:/Documents/ĐẠI HỌC FTU/TÀI LIỆU HỌC/NĂM BA/KÌ 2/GĐ2/Các vấn đề đương đại trong KDS/customer/customer/ticket-detail.html) - Ticket Detail View
+### 9. [ticket-detail.html] - Ticket Detail View
 *   **Function:** Review the full detail and resolution progress of a specific support ticket.
 *   **UI/UX & Code Highlights:**
     *   Two-column structural layout: The left column shows the main description/replies, and the right column contains metadata (Game, Category, Priority).
     *   Progress Banner notifying the user of the ticket's current stage with technical support agents.
 
-### 10. [live-chat.html](file:///e:/Documents/ĐẠI HỌC FTU/TÀI LIỆU HỌC/NĂM BA/KÌ 2/GĐ2/Các vấn đề đương đại trong KDS/customer/customer/live-chat.html) - Live Chat Support
+### 10. [live-chat.html] - Live Chat Support
 *   **Function:** Real-time chat interface to chat directly with support agents.
 *   **UI/UX & Code Highlights:**
     *   Displays an estimated queue wait time dynamically.
