@@ -117,42 +117,57 @@ The system consists of 10 premium HTML pages:
 
 ## 💾 Supabase Database Schema
 
-The system uses Supabase to persist application state dynamically. The database schema consists of the following key tables:
+To support dynamic features, the Supabase database is structured as follows:
 
-1. **`users` Table**: Manages account credentials, user profiles, display names, and access control permissions (`CUSTOMER`, `AGENT`, `ADMIN`).
-2. **`games` Table**: Lists supported games, feeding dropdown menus for submitting new support requests.
-3. **`ticket_categories` Table**: Organizes support classifications (e.g., Technical Issues, Billing & Purchases) to route inquiries correctly.
-4. **`tickets` Table**: Stores customer support requests, connecting user reports with game context, priorities, statuses, and dynamic metadata text.
-5. **`knowledge_base_articles` Table**: Houses FAQ articles and troubleshooting guides, tracking article view counts to rank popular topics dynamically.
+### 1. `users` Table (User Account Management)
+*   **Purpose:** Stores user authentication and profile details.
+*   **Fields:**
+    *   `id` (UUID, Primary Key, Default: `gen_random_uuid()`): Unique identifier.
+    *   `email` (VARCHAR, Unique, Not Null): Registered email used for logging in.
+    *   `password_hash` (VARCHAR, Not Null): Hashed user password.
+    *   `full_name` (VARCHAR): Display name.
+    *   `role` (VARCHAR, Default: `'CUSTOMER'`): Access level (`CUSTOMER`, `AGENT`, `ADMIN`).
+    *   `created_at` (TIMESTAMP): Account creation timestamp.
 
----
+### 2. `games` Table (Supported Games List)
+*   **Purpose:** Feeds the game selection dropdown during ticket creation.
+*   **Fields:**
+    *   `id` (UUID, Primary Key, Default: `gen_random_uuid()`): Unique game ID.
+    *   `game_name` (VARCHAR, Not Null): Game title (e.g., *Valorant*, *League of Legends*).
+    *   `status` (BOOLEAN, Default: `true`): Active status.
 
-## 🌟 Planned & Upcoming Features
+### 3. `ticket_categories` Table (Issue Categories)
+*   **Purpose:** Categorizes issues for routing to the correct support team.
+*   **Fields:**
+    *   `id` (UUID, Primary Key, Default: `gen_random_uuid()`): Category ID.
+    *   `category_name` (VARCHAR, Not Null): Category name (e.g., *Technical Issues*, *Billing & Purchases*).
+    *   `status` (BOOLEAN, Default: `true`): Active status.
 
-To turn this portal into an enterprise-grade player support ecosystem, the following features are planned for future development phases:
+### 4. `tickets` Table (Customer Support Requests)
+*   **Purpose:** Stores all support ticket information submitted by customers.
+*   **Fields:**
+    *   `id` (UUID, Primary Key, Default: `gen_random_uuid()`): Ticket ID.
+    *   `ticket_number` (VARCHAR, Unique, Not Null): User-facing reference number (e.g., `TCK-20260611-89302`).
+    *   `customer_id` (UUID, Foreign Key -> `users.id`): Creator of the ticket.
+    *   `game_id` (UUID, Foreign Key -> `games.id`): Associated game.
+    *   `category_id` (UUID, Foreign Key -> `ticket_categories.id`): Selected category.
+    *   `priority` (VARCHAR, Default: `'MEDIUM'`): Priority level (`LOW`, `MEDIUM`, `HIGH`).
+    *   `status` (VARCHAR, Default: `'OPEN'`): Progress status (`OPEN`, `IN_PROGRESS`, `RESOLVED`, `CLOSED`).
+    *   `issue_summary` (VARCHAR, Not Null): Brief summary of the problem.
+    *   `description` (TEXT, Not Null): Detailed explanation of the issue, including dynamic metadata fields.
+    *   `created_at` (TIMESTAMP): Submission time.
+    *   `updated_at` (TIMESTAMP): Last modification time.
 
-### 1. Agent & Admin Workspace Dashboard
-*   **Description:** A back-end dashboard UI for support agents to manage tickets, assign priorities, claim chats, and resolve player issues directly within the platform.
-*   **Integration:** Real-time updates via Supabase DB notifications.
-
-### 2. Media Uploads & Attachments (Supabase Storage)
-*   **Description:** Enable users to upload screenshots, videos, and log files (.zip, .log) when submitting tickets or during live chats.
-*   **Integration:** Integrates with Supabase Storage buckets, auto-linking uploaded file URLs to specific tickets.
-
-### 3. Fully Functional Live Chat Persistence
-*   **Description:** Upgrade the live chat simulation to support persistent, active sessions. Messages will be stored in a `chat_messages` table and updated in real-time.
-*   **Integration:** Supabase Realtime Subscriptions for immediate agent-to-customer communication.
-
-### 4. Automatic Notification Subsystems
-*   **Description:** Automatic email alerts (via SendGrid or AWS SES) and browser push notifications to update players whenever an agent replies to their ticket or its status changes.
-*   **Integration:** Triggered by Supabase Edge Functions listening to ticket updates.
-
-### 5. Multi-language Support (Internationalization)
-*   **Description:** Toggle between multiple languages (e.g., English, Vietnamese, Korean, Japanese) to cater to global player bases.
-*   **Integration:** Dynamic frontend localized text injection.
-
-### 6. Game Client Deep Linking & Session SSO
-*   **Description:** Allow game clients (e.g., League of Legends launcher) to open the portal via a secure SSO token, bypassing the login form entirely and pre-populating client hardware/os specifications.
+### 5. `knowledge_base_articles` Table (FAQ & Guide Library)
+*   **Purpose:** Houses all help articles and self-help troubleshooting guides.
+*   **Fields:**
+    *   `id` (UUID, Primary Key, Default: `gen_random_uuid()`): Article ID.
+    *   `title` (VARCHAR, Not Null): Article title.
+    *   `content` (TEXT, Not Null): Comprehensive article content.
+    *   `category` (VARCHAR, Not Null): Theme classification (e.g., `'Technical Issues'`, `'Account & Security'`).
+    *   `view_count` (INTEGER, Default: `0`): View statistics.
+    *   `created_at` (TIMESTAMP): Date posted.
+    *   `updated_at` (TIMESTAMP): Last updated date.
 
 ---
 
